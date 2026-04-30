@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+build
+
+# Vite
+.vite
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Git & Docker
+.git
+Dockerfile

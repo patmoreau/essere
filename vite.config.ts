@@ -1,0 +1,26 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+const config = () => {
+  return {
+    name: 'serve-local-config',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    configureServer(server: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      server.middlewares.use(async (req: any, res: any, next: any) => {
+        if (req.url === '/config.json') {
+          const content = await import('./env/prod/config.json')
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify(content.default))
+        } else {
+          next()
+        }
+      })
+    },
+  }
+}
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), config()],
+})

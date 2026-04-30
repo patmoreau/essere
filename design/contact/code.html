@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#742410",
+                    "primary-fixed-dim": "#c0dcbd",
+                    "secondary": "#6a5d51",
+                    "primary-dim": "#405840",
+                    "on-tertiary": "#fef9e9",
+                    "secondary-fixed-dim": "#e4d1c3",
+                    "on-secondary-container": "#5c4f44",
+                    "on-primary": "#e5ffe0",
+                    "primary-container": "#ceeaca",
+                    "outline-variant": "#aeb4aa",
+                    "inverse-primary": "#d9f6d5",
+                    "on-primary-container": "#40583f",
+                    "on-surface": "#2e342d",
+                    "on-background": "#2e342d",
+                    "surface-container": "#ecefe7",
+                    "on-tertiary-fixed": "#4c4a3e",
+                    "secondary-container": "#f2dfd0",
+                    "on-primary-fixed": "#2e452e",
+                    "surface-container-high": "#e5eae0",
+                    "primary": "#4c644b",
+                    "surface-bright": "#fafaf5",
+                    "tertiary": "#625f53",
+                    "outline": "#767c74",
+                    "surface-container-highest": "#dee4da",
+                    "tertiary-fixed-dim": "#eae5d6",
+                    "on-tertiary-container": "#5f5c50",
+                    "secondary-fixed": "#f2dfd0",
+                    "on-surface-variant": "#5b6159",
+                    "background": "#fafaf5",
+                    "on-error": "#fff7f6",
+                    "inverse-surface": "#0d0f0c",
+                    "tertiary-dim": "#565348",
+                    "surface-variant": "#dee4da",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#fafaf5",
+                    "on-secondary-fixed-variant": "#67594e",
+                    "tertiary-fixed": "#f9f3e4",
+                    "on-secondary-fixed": "#493d33",
+                    "error-container": "#fe8b70",
+                    "on-tertiary-fixed-variant": "#69665a",
+                    "tertiary-container": "#f9f3e4",
+                    "on-secondary": "#fff7f4",
+                    "surface-dim": "#d5dcd0",
+                    "secondary-dim": "#5e5145",
+                    "error-dim": "#5c1202",
+                    "surface-container-low": "#f3f4ee",
+                    "surface-tint": "#4c644b",
+                    "on-primary-fixed-variant": "#496249",
+                    "primary-fixed": "#ceeaca",
+                    "error": "#9e422c",
+                    "inverse-on-surface": "#9c9d99"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #fafaf5; color: #2e342d; }
+        .font-serif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fafaf5]/80 dark:bg-stone-900/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-12 py-6 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-serif italic text-[#4c644b] dark:text-emerald-500 font-['Noto_Serif'] tracking-tight">
+                The Elevated Sanctuary
+            </div>
+<div class="hidden md:flex gap-10 items-center font-['Manrope'] text-sm uppercase tracking-widest">
+<a class="text-[#6a5d51] dark:text-stone-400 hover:text-[#4c644b] transition-all duration-300 ease-out hover:opacity-80" href="#">Home</a>
+<a class="text-[#6a5d51] dark:text-stone-400 hover:text-[#4c644b] transition-all duration-300 ease-out hover:opacity-80" href="#">Schedule</a>
+<a class="text-[#6a5d51] dark:text-stone-400 hover:text-[#4c644b] transition-all duration-300 ease-out hover:opacity-80" href="#">Events</a>
+<a class="text-[#4c644b] dark:text-emerald-400 border-b-2 border-[#4c644b] pb-1 font-bold transition-all duration-300 ease-out hover:opacity-80" href="#">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-medium tracking-wide hover:bg-primary-dim transition-all duration-300 ease-out">
+                Book Now
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Hero / About Section -->
+<section class="max-w-screen-2xl mx-auto px-12 mb-32">
+<div class="flex flex-col md:flex-row items-center gap-20">
+<div class="w-full md:w-5/12 relative">
+<div class="absolute -top-6 -left-6 w-32 h-32 bg-secondary-container rounded-full mix-blend-multiply opacity-40"></div>
+<img alt="A serene professional portrait of a yoga instructor in a light-filled studio" class="relative z-10 w-full aspect-[4/5] object-cover rounded-xl shadow-2xl shadow-on-surface/5" data-alt="A serene professional portrait of a yoga instructor in a light-filled studio with soft natural light and minimal botanical accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXFYCEcZbtmIbA944DLNr05VyIvY2a4JPnfVJLJLvAuit_IFo0dbi3wDp2efMxIdOH-ad5ohF4ZQqJzwM2OZZA_WCSUU6ZGUwuA0hcjG2ho63psjiFGf_F8YiFdOvLUWFqBXy5ArK04ofTDYKvsuJIkeYgbisacacVN7gbhMTunN9pklrt17zXRNjlHiu458FXPADkqkeXk9ytGzqP3n_E2yOOK0XyixLlieCYjngz7HuXLpgo7c6MALvVZwNZPius0U5xTqusoGqg"/>
+<div class="absolute -bottom-10 -right-10 hidden md:block">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-xl max-w-[240px]">
+<p class="font-serif italic text-primary text-lg leading-snug">"Finding stillness is the highest form of movement."</p>
+<p class="mt-4 text-xs font-bold uppercase tracking-widest text-secondary">— Elena Vance</p>
+</div>
+</div>
+</div>
+<div class="w-full md:w-7/12">
+<span class="text-primary font-bold uppercase tracking-[0.2em] text-xs mb-4 block">The Heart Behind the Space</span>
+<h1 class="text-6xl md:text-8xl font-serif text-on-background leading-tight mb-8 -ml-1">Elena Vance</h1>
+<div class="space-y-6 text-on-surface-variant text-lg leading-relaxed max-w-2xl">
+<p>With over fifteen years of dedicated practice and seven years of international teaching, Elena created The Elevated Sanctuary as a response to the chaotic rhythm of modern life. Her approach is rooted in the belief that wellness is not a destination, but a tactile breath—a continuous return to center.</p>
+<p>Trained in Vinyasa, Yin, and specialized breathwork techniques, Elena blends anatomical precision with a poetic philosophy. Her classes are designed to be a meditative architectural experience, where the body moves like silk and the mind finds an expansive, luxury silence.</p>
+</div>
+<div class="mt-12 flex gap-8">
+<div>
+<span class="block text-3xl font-serif text-primary">12k+</span>
+<span class="text-xs uppercase tracking-widest text-secondary">Guided Souls</span>
+</div>
+<div class="w-px h-12 bg-outline-variant/30"></div>
+<div>
+<span class="block text-3xl font-serif text-primary">15yrs</span>
+<span class="text-xs uppercase tracking-widest text-secondary">of Devotion</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact & Map Bento Section -->
+<section class="bg-surface-container-low py-32 px-12">
+<div class="max-w-screen-2xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Contact Form Card -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-12 shadow-sm">
+<h2 class="text-4xl font-serif text-on-background mb-2">Connect with us</h2>
+<p class="text-on-surface-variant mb-10">Reach out for private sessions, collaborations, or gentle inquiries.</p>
+<form class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest font-bold text-secondary ml-1">Full Name</label>
+<input class="w-full bg-surface-container-high border-none rounded-md px-4 py-4 focus:ring-2 focus:ring-primary transition-all placeholder:text-outline/50" placeholder="Your name" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest font-bold text-secondary ml-1">Email Address</label>
+<input class="w-full bg-surface-container-high border-none rounded-md px-4 py-4 focus:ring-2 focus:ring-primary transition-all placeholder:text-outline/50" placeholder="your@email.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-widest font-bold text-secondary ml-1">Message</label>
+<textarea class="w-full bg-surface-container-high border-none rounded-md px-4 py-4 focus:ring-2 focus:ring-primary transition-all placeholder:text-outline/50" placeholder="How can we help you find your sanctuary?" rows="5"></textarea>
+</div>
+<button class="bg-primary text-on-primary px-12 py-4 rounded-full font-bold tracking-widest uppercase text-sm hover:bg-primary-dim transition-all duration-300 shadow-lg shadow-primary/20" type="submit">
+                                Send Message
+                            </button>
+</form>
+</div>
+<!-- Details & Map Sidebar -->
+<div class="lg:col-span-5 space-y-8">
+<!-- Info Card -->
+<div class="bg-primary text-on-primary rounded-xl p-10">
+<h3 class="text-2xl font-serif mb-8">Studio Details</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary-fixed">location_on</span>
+<div>
+<p class="font-bold mb-1">Our Sanctuary</p>
+<p class="text-on-primary/80 leading-relaxed">422 Ethereal Lane, Suite 10<br/>Sedona, Arizona 86336</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary-fixed">call</span>
+<div>
+<p class="font-bold mb-1">Telephone</p>
+<p class="text-on-primary/80">+1 (555) 234-9088</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary-fixed">mail</span>
+<div>
+<p class="font-bold mb-1">Email</p>
+<p class="text-on-primary/80">hello@elevatedsanctuary.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Map Card -->
+<div class="bg-surface-container-highest rounded-xl overflow-hidden aspect-video lg:aspect-square relative group">
+<img alt="A minimalist artistic map showing the studio location in Sedona" class="w-full h-full object-cover" data-alt="A minimalist artistic map with muted sage and cream colors showing a studio location in a mountainous desert region" data-location="Sedona, Arizona" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5mEE1uCxR3QBGnXRdyiYxziMoD5hwtREEfu-30AptOfJB8RKvitGEfYF_bor1OX0Dh51v4Xv_M09a3X8RTi2u2MJoAg7rtold8K-fq8P8GbYX0BGMSqmDCy9dHNegnIAQn7X2ebSrJY1ui0wMfmi-6kCxypI95u0nuluqlJVdO2PrMLy-zUz9knWkuGT2BBY0JTBF9k3TDsHSv9TY_LNSG2ISpyJnzvQLdWVinUCZTRbX0AXqEjqWIhKYVdbTHRL0jpoQLN9mvR8c"/>
+<div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500"></div>
+<div class="absolute bottom-6 left-6 right-6 bg-surface-container-lowest/90 backdrop-blur p-4 rounded-lg flex justify-between items-center">
+<span class="text-xs font-bold uppercase tracking-widest">Get Directions</span>
+<span class="material-symbols-outlined text-primary">arrow_outward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#fafaf5] dark:bg-stone-950 w-full py-16 px-12 border-t border-[#6a5d51]/10">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+<div>
+<div class="text-lg font-serif text-[#6a5d51] mb-6 font-['Noto_Serif']">The Elevated Sanctuary</div>
+<p class="text-[#6a5d51] opacity-70 font-['Manrope'] text-sm tracking-wide leading-relaxed">
+                    A curated digital space dedicated to the art of mindfulness and the luxury of quietude.
+                </p>
+</div>
+<div class="flex flex-col gap-4 font-['Manrope'] text-sm uppercase tracking-widest">
+<a class="text-[#6a5d51] opacity-70 hover:text-[#4c644b] transition-colors duration-300" href="#">Instagram</a>
+<a class="text-[#6a5d51] opacity-70 hover:text-[#4c644b] transition-colors duration-300" href="#">Facebook</a>
+<a class="text-[#6a5d51] opacity-70 hover:text-[#4c644b] transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="text-[#6a5d51] opacity-70 hover:text-[#4c644b] transition-colors duration-300" href="#">Newsletter Signup</a>
+</div>
+<div class="flex flex-col justify-between items-start md:items-end">
+<div class="text-[#6a5d51] opacity-70 text-xs font-['Manrope'] uppercase tracking-widest text-left md:text-right">
+                    © 2024 The Elevated Sanctuary. All rights reserved.
+                </div>
+<div class="mt-8 flex gap-4">
+<div class="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center text-secondary hover:border-primary hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined text-sm">spa</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center text-secondary hover:border-primary hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined text-sm">self_improvement</span>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

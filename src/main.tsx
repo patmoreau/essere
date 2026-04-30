@@ -1,11 +1,13 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
+import {CssBaseline, ThemeProvider} from '@mui/material'
 import './index.css'
 import App from './App.tsx'
 import {ConfigProvider} from "./share/config/ui/ConfigProvider.tsx";
 import {Config} from "./share/config/core/config.ts";
 import {Directus} from "./share/directus/core/directus.ts";
 import {DirectusProvider} from "./share/directus/ui/DirectusProvider.tsx";
+import {materialTheme} from './theme/material-theme.ts'
 
 const initializeApp = async () => {
   const config = await Config.load();
@@ -13,11 +15,14 @@ const initializeApp = async () => {
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <ConfigProvider config={config}>
-        <DirectusProvider directus={directus}>
-          <App/>
-        </DirectusProvider>
-      </ConfigProvider>
+      <ThemeProvider theme={materialTheme}>
+        <CssBaseline />
+        <ConfigProvider config={config}>
+          <DirectusProvider directus={directus}>
+            <App/>
+          </DirectusProvider>
+        </ConfigProvider>
+      </ThemeProvider>
     </StrictMode>,
   )
 }

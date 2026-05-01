@@ -6,13 +6,13 @@
 
 ## Tech Stack
 
-| Tool | Version |
-|------|---------|
-| React | 19 |
-| TypeScript | 6 |
-| Vite | 8 |
-| Directus SDK | 21 |
-| pnpm | (lock file present) |
+| Tool         | Version             |
+| ------------ | ------------------- |
+| React        | 19                  |
+| TypeScript   | 6                   |
+| Vite         | 8                   |
+| Directus SDK | 21                  |
+| pnpm         | (lock file present) |
 
 **No CSS framework** — styling is done with CSS custom properties (defined in `src/index.css`) and React inline styles that reference those variables. Do not suggest Tailwind, CSS modules, or styled-components.
 
@@ -58,28 +58,13 @@ Reference designs: `design/<page>/code.html` (full HTML mockups), `design/<page>
 ### Color Tokens (`src/index.css` `:root`)
 
 ```css
---primary:                  #4c644b   /* Deep Sage */
---primary-dim:              #405840   /* Hover states */
---secondary:                #6a5d51   /* Warm Taupe */
---background:               #fafaf5   /* Warm Cream */
---surface:                  #fafaf5
---surface-container-lowest: #ffffff
---surface-container-low:    #f3f4ee
---surface-container:        #ecefe7
---surface-container-high:   #e5eae0
---surface-container-highest:#dee4da
---on-background:            #2e342d
---on-surface:               #2e342d
---on-surface-variant:       #5b6159
---on-primary:               #e5ffe0
---on-secondary:             #fff7f4
---primary-container:        #ceeaca
---on-primary-container:     #40583f
---secondary-container:      #f2dfd0
---outline-variant:          #aeb4aa
---outline:                  #767c74
---radius-xl:                1.5rem
---radius-md:                0.75rem
+--primary: #4c644b /* Deep Sage */ --primary-dim: #405840 /* Hover states */ --secondary: #6a5d51
+  /* Warm Taupe */ --background: #fafaf5 /* Warm Cream */ --surface: #fafaf5
+  --surface-container-lowest: #ffffff --surface-container-low: #f3f4ee --surface-container: #ecefe7
+  --surface-container-high: #e5eae0 --surface-container-highest: #dee4da --on-background: #2e342d
+  --on-surface: #2e342d --on-surface-variant: #5b6159 --on-primary: #e5ffe0 --on-secondary: #fff7f4
+  --primary-container: #ceeaca --on-primary-container: #40583f --secondary-container: #f2dfd0
+  --outline-variant: #aeb4aa --outline: #767c74 --radius-xl: 1.5rem --radius-md: 0.75rem;
 ```
 
 ### Typography
@@ -107,6 +92,7 @@ Reference designs: `design/<page>/code.html` (full HTML mockups), `design/<page>
 Directus singleton: `home_page`
 
 Type (`share/directus/core/home-page.ts`):
+
 ```ts
 type HomePage = {
   est_year: string
@@ -116,8 +102,12 @@ type HomePage = {
   hero_cta_primary_label: string
   hero_cta_secondary_label: string
   philosophy_section_label: string
-  philosophy_card_1_icon: string; philosophy_card_1_title: string; philosophy_card_1_body: string
-  philosophy_card_2_icon: string; philosophy_card_2_title: string; philosophy_card_2_body: string
+  philosophy_card_1_icon: string
+  philosophy_card_1_title: string
+  philosophy_card_1_body: string
+  philosophy_card_2_icon: string
+  philosophy_card_2_title: string
+  philosophy_card_2_body: string
 }
 ```
 
@@ -129,10 +119,16 @@ Directus list: `events`
 
 ```ts
 type Event = {
-  id: string; title: string; date_start: string; date_end?: string
+  id: string
+  title: string
+  date_start: string
+  date_end?: string
   category: 'Intensive' | 'Workshop' | 'Guest Event' | 'Retreat'
-  description: string; location?: string; image?: string
-  featured: boolean; booking_url?: string
+  description: string
+  location?: string
+  image?: string
+  featured: boolean
+  booking_url?: string
 }
 ```
 
@@ -144,11 +140,14 @@ Directus list: `schedule_classes`
 
 ```ts
 type ScheduleClass = {
-  id: string; title: string
+  id: string
+  title: string
   category: 'Yoga' | 'Pilates' | 'Meditation' | 'Workshop'
-  instructor_name: string; level: 'Beginner' | 'Intermediate' | 'Advanced'
+  instructor_name: string
+  level: 'Beginner' | 'Intermediate' | 'Advanced'
   day_of_week: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday'
-  time: string; booking_url?: string
+  time: string
+  booking_url?: string
 }
 ```
 
@@ -160,10 +159,18 @@ Directus singleton: `studio_info`
 
 ```ts
 type StudioInfo = {
-  instructor_name: string; instructor_bio_p1: string; instructor_bio_p2: string
+  instructor_name: string
+  instructor_bio_p1: string
+  instructor_bio_p2: string
   instructor_photo?: string
-  stat_1_value: string; stat_1_label: string; stat_2_value: string; stat_2_label: string
-  address_line1: string; address_line2: string; phone: string; email: string
+  stat_1_value: string
+  stat_1_label: string
+  stat_2_value: string
+  stat_2_label: string
+  address_line1: string
+  address_line2: string
+  phone: string
+  email: string
   map_image?: string
 }
 ```
@@ -174,13 +181,13 @@ Sections: About/Hero (2-col flex: image with decorative circle + floating quote,
 
 ## Directus CMS Schema
 
-| Collection | Type | Used by |
-|---|---|---|
-| `nav_links` | list | Navbar |
-| `home_page` | singleton | Home |
-| `events` | list | Events |
-| `schedule_classes` | list | Schedule |
-| `studio_info` | singleton | Contact |
+| Collection         | Type      | Used by  |
+| ------------------ | --------- | -------- |
+| `nav_links`        | list      | Navbar   |
+| `home_page`        | singleton | Home     |
+| `events`           | list      | Events   |
+| `schedule_classes` | list      | Schedule |
+| `studio_info`      | singleton | Contact  |
 
 ---
 

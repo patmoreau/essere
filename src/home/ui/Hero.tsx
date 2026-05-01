@@ -1,27 +1,25 @@
-import {Box, Button, Link, Stack, Typography} from '@mui/material'
-import {useHomePage} from "../core/use-home-page.ts";
+import { Box, Button, Link, Stack, Typography } from '@mui/material'
+import { useHomePage } from '../core/use-home-page.ts'
 
 export default function Hero() {
-  const data = useHomePage();
-
-  if (!data) return null;
+  const data = useHomePage()
 
   return (
     <Box
-      component='section'
+      component="section"
       sx={{
         minHeight: 'calc(100vh - 104px)',
         display: 'grid',
-        gridTemplateColumns: {xs: '1fr', md: '1fr 1fr'},
+        gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
         alignItems: 'center',
-        gap: {xs: 5, md: 8},
-        px: {xs: 2, md: 6},
-        pb: {xs: 8, md: 10},
+        gap: { xs: 5, md: 8 },
+        px: { xs: 2, md: 6 },
+        pb: { xs: 8, md: 10 },
       }}
     >
       <Stack spacing={4}>
         <Typography
-          variant='overline'
+          variant="overline"
           sx={{
             letterSpacing: '0.15em',
             color: 'secondary.main',
@@ -31,9 +29,9 @@ export default function Hero() {
           Est. {data.est_year}
         </Typography>
 
-        <Box component='h1' sx={{m: 0, lineHeight: 1.05, letterSpacing: '-0.02em'}}>
+        <Box component="h1" sx={{ m: 0, lineHeight: 1.05, letterSpacing: '-0.02em' }}>
           <Typography
-            component='span'
+            component="span"
             sx={{
               display: 'block',
               fontFamily: 'Noto Serif, serif',
@@ -45,7 +43,7 @@ export default function Hero() {
             {data.hero_headline_line1}
           </Typography>
           <Typography
-            component='span'
+            component="span"
             sx={{
               display: 'block',
               fontFamily: 'Noto Serif, serif',
@@ -71,9 +69,9 @@ export default function Hero() {
           {data.hero_subheading}
         </Typography>
 
-        <Box sx={{display: 'flex', alignItems: 'center', gap: 3, mt: 1}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mt: 1 }}>
           <Button
-            variant='contained'
+            variant="contained"
             sx={{
               px: 4,
               py: 1.4,
@@ -92,10 +90,10 @@ export default function Hero() {
             {data.hero_cta_primary_label}
           </Button>
           <Link
-            href='#studio'
-            underline='none'
-            color='text.primary'
-            sx={{fontSize: '0.875rem', fontWeight: 500}}
+            href="#studio"
+            underline="none"
+            color="text.primary"
+            sx={{ fontSize: '0.875rem', fontWeight: 500 }}
           >
             {data.hero_cta_secondary_label} →
           </Link>
@@ -112,5 +110,5 @@ export default function Hero() {
         }}
       />
     </Box>
-  );
+  )
 }

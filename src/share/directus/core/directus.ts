@@ -1,38 +1,39 @@
-import {createDirectus, rest, readItems, readSingleton} from '@directus/sdk'
-import {Config} from '../../config/core/config'
-import type {NavLink} from "./nav-link.ts";
-import type {HomePage} from "./home-page.ts";
-import type {Label} from "./label.ts";
+import { createDirectus, rest, readItems, readSingleton } from '@directus/sdk'
+import { Config } from '../../config/core/config'
+import type { NavLink } from './nav-link.ts'
+import type { HomePage } from './home-page.ts'
+import type { Label } from './label.ts'
 
 type Schema = {
-  labels: Label[];
-  nav_links: NavLink[];
-  home_page: HomePage;
-};
+  labels: Label[]
+  nav_links: NavLink[]
+  home_page: HomePage
+}
 
 export type Directus = {
-  getLabels(): Promise<Record<string, string>>;
-  getNavLinks(): Promise<NavLink[]>;
-  getHomePage(): Promise<HomePage>;
-};
+  getLabels(): Promise<Record<string, string>>
+  getNavLinks(): Promise<NavLink[]>
+  getHomePage(): Promise<HomePage>
+}
 
 export const Directus = (config: Config): Directus => {
   const directus = createDirectus<Schema>(config.DIRECTUS_URL).with(rest())
 
   const getLabels = async (): Promise<Record<string, string>> => {
-    const response = await directus.request(
-      readItems('labels', {limit: -1})
-    );
+    const response = await directus.request(readItems('labels', { limit: -1 }))
 
-    return response.reduce((acc, item) => {
-      const translation = item.value || item.key;
-      acc[item.key] = translation;
-      return acc;
-    }, {} as Record<string, string>);
-  };
+    return response.reduce(
+      (acc, item) => {
+        const translation = item.value || item.key
+        acc[item.key] = translation
+        return acc
+      },
+      {} as Record<string, string>,
+    )
+  }
 
   const getNavLinks = () => {
-    return directus.request(readItems('nav_links', {sort: ['order']}))
+    return directus.request(readItems('nav_links', { sort: ['order'] }))
   }
 
   const getHomePage = () => {
@@ -45,4 +46,3 @@ export const Directus = (config: Config): Directus => {
     getHomePage: getHomePage,
   }
 }
-

@@ -1,4 +1,4 @@
 export type Label = {
-  key: string;
-  value: string;
-};
+  key: string
+  value: string
+}

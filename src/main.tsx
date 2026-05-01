@@ -1,17 +1,17 @@
-import {StrictMode} from 'react'
-import {createRoot} from 'react-dom/client'
-import {CssBaseline, ThemeProvider} from '@mui/material'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import './index.css'
 import App from './App.tsx'
-import {ConfigProvider} from "./share/config/ui/ConfigProvider.tsx";
-import {Config} from "./share/config/core/config.ts";
-import {Directus} from "./share/directus/core/directus.ts";
-import {DirectusProvider} from "./share/directus/ui/DirectusProvider.tsx";
-import {materialTheme} from './theme/material-theme.ts'
+import { ConfigProvider } from './share/config/ui/ConfigProvider.tsx'
+import { Config } from './share/config/core/config.ts'
+import { Directus } from './share/directus/core/directus.ts'
+import { DirectusProvider } from './share/directus/ui/DirectusProvider.tsx'
+import { materialTheme } from './theme/material-theme.ts'
 
 const initializeApp = async () => {
-  const config = await Config.load();
-  const directus = Directus(config);
+  const config = await Config.load()
+  const directus = Directus(config)
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -19,7 +19,7 @@ const initializeApp = async () => {
         <CssBaseline />
         <ConfigProvider config={config}>
           <DirectusProvider directus={directus}>
-            <App/>
+            <App />
           </DirectusProvider>
         </ConfigProvider>
       </ThemeProvider>
@@ -27,4 +27,4 @@ const initializeApp = async () => {
   )
 }
 
-initializeApp();
+initializeApp()

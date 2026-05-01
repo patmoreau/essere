@@ -6,13 +6,13 @@
 
 ## Tech Stack
 
-| Tool | Version |
-|------|---------|
-| React | 19 |
-| TypeScript | 6 |
-| Vite | 8 |
-| Directus SDK | 21 |
-| pnpm | (lock file present) |
+| Tool         | Version             |
+| ------------ | ------------------- |
+| React        | 19                  |
+| TypeScript   | 6                   |
+| Vite         | 8                   |
+| Directus SDK | 21                  |
+| pnpm         | (lock file present) |
 
 **No CSS framework** — styling is done with CSS custom properties (defined in `src/index.css`) and React inline styles that reference those variables.
 
@@ -58,29 +58,16 @@ Reference designs live in `design/<page>/code.html` (full HTML mockups) and `des
 ### Color Tokens (`src/index.css` `:root`)
 
 ```css
---primary:                  #4c644b   /* Deep Sage — focus/grounding */
---primary-dim:              #405840   /* Darker sage — hover states */
---secondary:                #6a5d51   /* Warm Taupe — secondary text/depth */
---background:               #fafaf5   /* Warm Cream — page canvas */
---surface:                  #fafaf5
---surface-container-lowest: #ffffff   /* "Lit from within" cards */
---surface-container-low:    #f3f4ee
---surface-container:        #ecefe7
---surface-container-high:   #e5eae0
---surface-container-highest:#dee4da
---surface-bright:           #fafaf5
---on-background:            #2e342d
---on-surface:               #2e342d
---on-surface-variant:       #5b6159
---on-primary:               #e5ffe0
---on-secondary:             #fff7f4
---primary-container:        #ceeaca
---on-primary-container:     #40583f
---secondary-container:      #f2dfd0
---outline-variant:          #aeb4aa
---outline:                  #767c74
---radius-xl:                1.5rem    /* Large containers */
---radius-md:                0.75rem   /* Interactive elements */
+--primary: #4c644b /* Deep Sage — focus/grounding */ --primary-dim: #405840
+  /* Darker sage — hover states */ --secondary: #6a5d51 /* Warm Taupe — secondary text/depth */
+  --background: #fafaf5 /* Warm Cream — page canvas */ --surface: #fafaf5
+  --surface-container-lowest: #ffffff /* "Lit from within" cards */ --surface-container-low: #f3f4ee
+  --surface-container: #ecefe7 --surface-container-high: #e5eae0
+  --surface-container-highest: #dee4da --surface-bright: #fafaf5 --on-background: #2e342d
+  --on-surface: #2e342d --on-surface-variant: #5b6159 --on-primary: #e5ffe0 --on-secondary: #fff7f4
+  --primary-container: #ceeaca --on-primary-container: #40583f --secondary-container: #f2dfd0
+  --outline-variant: #aeb4aa --outline: #767c74 --radius-xl: 1.5rem /* Large containers */
+  --radius-md: 0.75rem /* Interactive elements */;
 ```
 
 ### Typography
@@ -115,6 +102,7 @@ Each page is an independent feature in its own `src/<page>/` folder. The referen
 **Directus collection**: `home_page` (singleton)
 
 **Existing type** (`share/directus/core/home-page.ts`):
+
 ```ts
 type HomePage = {
   est_year: string
@@ -134,6 +122,7 @@ type HomePage = {
 ```
 
 **Sections** (top to bottom):
+
 1. **Hero** — 12-column grid, text left (col 6), image right (col 6). Oversized serif headline (`clamp(3rem,6vw,5rem)`), italic accent in primary color, eyebrow label ("Est. 20XX"), two CTAs (primary pill button + text link with arrow icon). Decorative blurred circle behind the image.
 2. **Philosophy** — `background: var(--surface-container)`. Two-column flex: title left ("Our Philosophy"), two icon cards right. No dividers; 24px gap between cards. Use Material Symbols icons for `spa` and `self_improvement`.
 3. **Meet Instructor** — `background: var(--background)`. Full-bleed card (`surface-container-lowest`) with image left, bio right. Floating "Founder" label on the image. Stats grid (years, certification). Secondary button.
@@ -147,6 +136,7 @@ type HomePage = {
 **Directus collection**: `events` (list) + possibly `featured_event` (singleton)
 
 **Suggested type**:
+
 ```ts
 type Event = {
   id: string
@@ -156,13 +146,14 @@ type Event = {
   category: 'Intensive' | 'Workshop' | 'Guest Event' | 'Retreat'
   description: string
   location?: string
-  image?: string   // Directus file ID
+  image?: string // Directus file ID
   featured: boolean
   booking_url?: string
 }
 ```
 
 **Sections** (top to bottom):
+
 1. **Hero** — Two-column: editorial headline left ("Gatherings / for the Soul." — italic serif accent), hero image right (4:5 aspect ratio, xl radius, heavy shadow). Floating teaser card bottom-left over the image (glassmorphism, "Upcoming Signature Retreat").
 2. **Events Bento Grid** — 12-column CSS Grid:
    - Large card (col 8): horizontal image + text; category badge (pill, `primary-container` bg); "Learn More" text link with arrow icon.
@@ -179,6 +170,7 @@ type Event = {
 **Directus collection**: `schedule_classes` (list)
 
 **Suggested type**:
+
 ```ts
 type ScheduleClass = {
   id: string
@@ -187,12 +179,13 @@ type ScheduleClass = {
   instructor_name: string
   level: 'Beginner' | 'Intermediate' | 'Advanced'
   day_of_week: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday'
-  time: string          // "07:00 AM"
-  booking_url?: string  // external booking link
+  time: string // "07:00 AM"
+  booking_url?: string // external booking link
 }
 ```
 
 **Sections** (top to bottom):
+
 1. **Hero** — 12-column grid: editorial serif headline left ("A Rhythm / for Your Practice"), descriptive body copy, image right (4:5 aspect ratio, xl radius). Floating pull-quote card bottom-left.
 2. **Filter + Date Navigation** — sticky controls row. Filter chips (pill buttons: All Sessions, Yoga, Pilates, Meditation) + week navigator (Prev/Next with chevron icons, current week range centered). Separated from grid by thin `border-bottom: 1px solid rgba(var(--outline-variant), 0.2)`.
 3. **Weekly Grid** — 7-column CSS grid (Mon–Sun). Each day column: day name + date number header. Class cards alternate between `surface-container-lowest` and `surface-container-low` backgrounds (no dividers). Card layout: category label + time (top row), serif class title, instructor + level, Register button (hover: fill to primary). Workshop-type cards use a `primary-container` tint.
@@ -206,25 +199,27 @@ type ScheduleClass = {
 **Directus collection**: `studio_info` (singleton) + form submission (client-side only or Directus flow)
 
 **Suggested type**:
+
 ```ts
 type StudioInfo = {
   instructor_name: string
   instructor_bio_p1: string
   instructor_bio_p2: string
-  instructor_photo?: string  // Directus file ID
-  stat_1_value: string       // "12k+"
-  stat_1_label: string       // "Guided Souls"
+  instructor_photo?: string // Directus file ID
+  stat_1_value: string // "12k+"
+  stat_1_label: string // "Guided Souls"
   stat_2_value: string
   stat_2_label: string
   address_line1: string
   address_line2: string
   phone: string
   email: string
-  map_image?: string         // Directus file ID
+  map_image?: string // Directus file ID
 }
 ```
 
 **Sections** (top to bottom):
+
 1. **About / Hero** — Two-column flex: image left (4:5 ratio, xl radius, decorative circle overlay top-left, floating pull-quote card bottom-right), bio right. Oversized serif name as heading. Two paragraphs of body copy. Stats row (two figures separated by a thin `outline-variant` divider).
 2. **Contact Bento** — `background: var(--surface-container-low)`. 12-column grid:
    - Contact Form (col 7): `surface-container-lowest` card with shadow. Grid of Full Name + Email inputs (`surface-container-high` fill, rounded-md, no border, primary focus ring). Textarea. Primary pill submit button.
@@ -236,12 +231,14 @@ type StudioInfo = {
 ## Shared Components
 
 ### Navbar (`src/components/Navbar.tsx`) — already implemented
+
 - Glassmorphism fixed header
 - Nav links from Directus `nav_links` collection
 - Active page link: `border-bottom: 2px solid var(--primary)`, full opacity
 - "Book Now" gradient pill button
 
 ### Footer
+
 - Not yet extracted as a component; each page currently inlines it.
 - Consider extracting to `src/components/Footer.tsx` if pages share the exact same markup.
 
@@ -249,13 +246,13 @@ type StudioInfo = {
 
 ## Directus CMS Schema (to create)
 
-| Collection | Type | Used by |
-|---|---|---|
-| `nav_links` | list | Navbar (all pages) |
-| `home_page` | singleton | Home |
-| `events` | list | Events |
-| `schedule_classes` | list | Schedule |
-| `studio_info` | singleton | Contact |
+| Collection         | Type      | Used by            |
+| ------------------ | --------- | ------------------ |
+| `nav_links`        | list      | Navbar (all pages) |
+| `home_page`        | singleton | Home               |
+| `events`           | list      | Events             |
+| `schedule_classes` | list      | Schedule           |
+| `studio_info`      | singleton | Contact            |
 
 ---
 

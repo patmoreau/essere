@@ -1,4 +1,4 @@
-import {createContext} from "react";
-import type {Directus} from "../core/directus.ts";
+import { createContext } from 'react'
+import type { Directus } from '../core/directus.ts'
 
-export const DirectusContext = createContext<Directus | undefined>(undefined);
+export const DirectusContext = createContext<Directus | undefined>(undefined)

@@ -1,19 +1,10 @@
-import {useCallback, useEffect, useState} from "react";
-import {useDirectus} from "../../share/directus/core/use-directus.ts";
-import type {HomePage} from "../../share/directus/core/home-page.ts";
+import { use, useState } from 'react'
+import { useDirectus } from '../../share/directus/core/use-directus.ts'
 
 export const useHomePage = () => {
-  const [data, setData] = useState<HomePage | undefined>(undefined);
-  const {getHomePage} = useDirectus();
+  const { getHomePage } = useDirectus()
 
-  const fetch = useCallback(async () => {
-    const result = await getHomePage();
-    setData(result);
-  }, []);
+  const [dataPromise] = useState(() => getHomePage())
 
-  useEffect(() => {
-    fetch().then();
-  }, [fetch])
-
-  return data;
+  return use(dataPromise)
 }

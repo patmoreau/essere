@@ -1,4 +1,4 @@
-import {createContext} from "react";
-import type {Config} from "../core/config";
+import { createContext } from 'react'
+import type { Config } from '../core/config'
 
-export const ConfigContext = createContext<Config | undefined>(undefined);
+export const ConfigContext = createContext<Config | undefined>(undefined)

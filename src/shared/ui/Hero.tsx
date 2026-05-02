@@ -1,9 +1,26 @@
 import { Box, Button, Link, Stack, Typography } from '@mui/material'
-import { useHomePage } from '../core/use-home-page.ts'
 
-export default function Hero() {
-  const data = useHomePage()
+export type HeroProps = {
+  estYear: string
+  heroImage: string
+  heroImageText: string
+  heroHeadlineLine1: string
+  heroHeadlineLine2: string
+  heroSubheading: string
+  heroCtaPrimaryLabel: string
+  heroCtaSecondaryLabel: string
+};
 
+export default function Hero({
+  estYear,
+  heroImage,
+  heroImageText,
+  heroHeadlineLine1,
+  heroHeadlineLine2,
+  heroSubheading,
+  heroCtaPrimaryLabel,
+  heroCtaSecondaryLabel,
+}: HeroProps) {
   return (
     <Box
       component="section"
@@ -26,7 +43,7 @@ export default function Hero() {
             fontWeight: 600,
           }}
         >
-          Est. {data.estYear}
+          Est. {estYear}
         </Typography>
 
         <Box component="h1" sx={{ m: 0, lineHeight: 1.05, letterSpacing: '-0.02em' }}>
@@ -40,7 +57,7 @@ export default function Hero() {
               color: 'text.primary',
             }}
           >
-            {data.heroHeadlineLine1}
+            {heroHeadlineLine1}
           </Typography>
           <Typography
             component="span"
@@ -53,7 +70,7 @@ export default function Hero() {
               color: 'primary.main',
             }}
           >
-            {data.heroHeadlineLine2}
+            {heroHeadlineLine2}
           </Typography>
         </Box>
 
@@ -66,7 +83,7 @@ export default function Hero() {
             maxWidth: '38ch',
           }}
         >
-          {data.heroSubheading}
+          {heroSubheading}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mt: 1 }}>
@@ -87,15 +104,15 @@ export default function Hero() {
               },
             }}
           >
-            {data.heroCtaPrimaryLabel}
+            {heroCtaPrimaryLabel}
           </Button>
           <Link
-            href="#studio"
+            href="/"
             underline="none"
             color="text.primary"
             sx={{ fontSize: '0.875rem', fontWeight: 500 }}
           >
-            {data.heroCtaSecondaryLabel} →
+            {heroCtaSecondaryLabel} →
           </Link>
         </Box>
       </Stack>
@@ -110,11 +127,11 @@ export default function Hero() {
           boxShadow: '0px 12px 32px rgba(46, 52, 45, 0.06)',
         }}
       >
-        {data.heroImage ? (
+        {heroImage ? (
           <Box
             component="img"
-            src={data.heroImage}
-            alt={data.heroImageText}
+            src={heroImage}
+            alt={heroImageText}
             sx={{
               width: '100%',
               height: '100%',
@@ -134,3 +151,4 @@ export default function Hero() {
     </Box>
   )
 }
+

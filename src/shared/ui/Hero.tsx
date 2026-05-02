@@ -1,14 +1,14 @@
-import { Box, Button, Link, Stack, Typography } from '@mui/material'
+import { Box, Button, Link, Stack, Typography } from '@mui/material';
 
 export type HeroProps = {
-  estYear: string
-  heroImage: string
-  heroImageText: string
-  heroHeadlineLine1: string
-  heroHeadlineLine2: string
-  heroSubheading: string
-  heroCtaPrimaryLabel: string
-  heroCtaSecondaryLabel: string
+  estYear: string;
+  heroImage: string;
+  heroImageText: string;
+  heroHeadlineLine1: string;
+  heroHeadlineLine2: string;
+  heroSubheading: string;
+  heroCtaPrimaryLabel: string;
+  heroCtaSecondaryLabel: string;
 };
 
 export default function Hero({
@@ -149,6 +149,5 @@ export default function Hero({
         )}
       </Box>
     </Box>
-  )
+  );
 }
-

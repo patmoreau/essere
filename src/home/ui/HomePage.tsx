@@ -1,8 +1,8 @@
-import Hero from '../../shared/ui/Hero.tsx'
-import { useHomePage } from '../core/use-home-page.ts'
+import Hero from '../../shared/ui/Hero.tsx';
+import { useHomePage } from '../core/use-home-page.ts';
 
 const HomePage = () => {
-  const data = useHomePage()
+  const data = useHomePage();
 
   return (
     <Hero
@@ -15,7 +15,7 @@ const HomePage = () => {
       heroCtaPrimaryLabel={data.heroCtaPrimaryLabel}
       heroCtaSecondaryLabel={data.heroCtaSecondaryLabel}
     />
-  )
+  );
 };
 
 export default HomePage;

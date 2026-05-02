@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 const config = () => {
   return {
@@ -9,21 +9,21 @@ const config = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       server.middlewares.use(async (req: any, res: any, next: any) => {
         if (req.url === '/config.json') {
-          const content = await import('./env/prod/config.json')
+          const content = await import('./env/prod/config.json');
           const localConfig = {
             ...content.default,
             // Use Vite proxy in local dev to keep API calls same-origin.
             DIRECTUS_URL: 'http://localhost:5173/directus/',
-          }
-          res.setHeader('Content-Type', 'application/json')
-          res.end(JSON.stringify(localConfig))
+          };
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(localConfig));
         } else {
-          next()
+          next();
         }
-      })
+      });
     },
-  }
-}
+  };
+};
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -37,4 +37,4 @@ export default defineConfig({
       },
     },
   },
-})
+});

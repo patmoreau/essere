@@ -1,9 +1,9 @@
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 type LoadingFallbackProps = {
-  label?: string
-  fullScreen?: boolean
-}
+  label?: string;
+  fullScreen?: boolean;
+};
 
 export default function LoadingFallback({
   label = 'Loading...',
@@ -27,6 +27,5 @@ export default function LoadingFallback({
         </Typography>
       </Box>
     </Box>
-  )
+  );
 }
-

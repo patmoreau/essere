@@ -1,6 +1,6 @@
 import { use } from 'react'
-import type { Directus } from './directus.ts'
-import {useDirectus} from './use-directus.ts'
+import type { Directus } from '../../directus/core/directus.ts'
+import {useDirectus} from '../../directus/core/use-directus.ts'
 
 const labelRequests = new WeakMap<Directus, Promise<Record<string, string>>>()
 

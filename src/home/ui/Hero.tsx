@@ -26,7 +26,7 @@ export default function Hero() {
             fontWeight: 600,
           }}
         >
-          Est. {data.est_year}
+          Est. {data.estYear}
         </Typography>
 
         <Box component="h1" sx={{ m: 0, lineHeight: 1.05, letterSpacing: '-0.02em' }}>
@@ -40,7 +40,7 @@ export default function Hero() {
               color: 'text.primary',
             }}
           >
-            {data.hero_headline_line1}
+            {data.heroHeadlineLine1}
           </Typography>
           <Typography
             component="span"
@@ -53,7 +53,7 @@ export default function Hero() {
               color: 'primary.main',
             }}
           >
-            {data.hero_headline_line2}
+            {data.heroHeadlineLine2}
           </Typography>
         </Box>
 
@@ -66,7 +66,7 @@ export default function Hero() {
             maxWidth: '38ch',
           }}
         >
-          {data.hero_subheading}
+          {data.heroSubheading}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mt: 1 }}>
@@ -87,7 +87,7 @@ export default function Hero() {
               },
             }}
           >
-            {data.hero_cta_primary_label}
+            {data.heroCtaPrimaryLabel}
           </Button>
           <Link
             href="#studio"
@@ -95,20 +95,42 @@ export default function Hero() {
             color="text.primary"
             sx={{ fontSize: '0.875rem', fontWeight: 500 }}
           >
-            {data.hero_cta_secondary_label} →
+            {data.heroCtaSecondaryLabel} →
           </Link>
         </Box>
       </Stack>
 
       <Box
         sx={{
+          position: 'relative',
           backgroundColor: '#ecefe7',
           borderRadius: 3,
           aspectRatio: '4/5',
           overflow: 'hidden',
           boxShadow: '0px 12px 32px rgba(46, 52, 45, 0.06)',
         }}
-      />
+      >
+        {data.heroImage ? (
+          <Box
+            component="img"
+            src={data.heroImage}
+            alt={data.heroImageText}
+            sx={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        ) : (
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(135deg, #ecefe7 0%, #dee4da 100%)',
+            }}
+          />
+        )}
+      </Box>
     </Box>
   )
 }

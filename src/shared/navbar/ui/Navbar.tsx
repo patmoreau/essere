@@ -1,6 +1,6 @@
 import {AppBar, Box, Button, Link, Toolbar, Typography} from '@mui/material'
 import {useNavLinks} from '../core/use-nav-links.ts'
-import {useLabels} from '../../directus/core/use-labels.ts'
+import {useLabels} from '../../labels/core/use-labels.ts'
 
 export default function Navbar() {
   const labels = useLabels()

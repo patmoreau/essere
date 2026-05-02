@@ -1,6 +1,6 @@
 import { useDirectus } from '../../directus/core/use-directus.ts'
 import { useCallback, useEffect, useState } from 'react'
-import type { NavLink } from '../../directus/core/nav-link.ts'
+import type {NavLink} from "./nav-link.ts";
 
 export const useNavLinks = () => {
   const [links, setLinks] = useState<NavLink[]>([])
@@ -12,6 +12,7 @@ export const useNavLinks = () => {
   }, [getNavLinks])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetch().then()
   }, [fetch])
 

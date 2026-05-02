@@ -1,5 +1,5 @@
 import { use } from 'react'
-import type { HomePage } from '../../shared/directus/core/home-page.ts'
+import type { HomePage } from './home-page.ts'
 import type { Directus } from '../../shared/directus/core/directus.ts'
 import { useDirectus } from '../../shared/directus/core/use-directus.ts'
 

@@ -1,4 +1,4 @@
-export type Label = {
+export type LabelSchema = {
   key: string
   value: string
 }

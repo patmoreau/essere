@@ -111,8 +111,10 @@ const Footer = () => {
           paddingTop: '2rem',
           borderTop: '1px solid var(--outline-variant)',
           display: 'flex',
+          flexWrap: 'wrap',
           justifyContent: 'space-between',
           alignItems: 'center',
+          gap: '1rem',
           fontSize: '0.875rem',
           color: 'var(--on-surface-variant)',
         }}

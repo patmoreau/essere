@@ -1,7 +1,10 @@
 import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
 
+import type { Event } from '../../../events/core/event.ts';
 import type { HomePage as HomePageModel } from '../../../home/core/home-page.ts';
 import { Config } from '../../config/core/config';
+import { EventSchema } from './event-schema.ts';
+import { FooterLinkSchema } from './footer-link-schema.ts';
 import { HomePageSchema } from './home-page-schema.ts';
 import type { LabelSchema } from './label-schema.ts';
 import { NavLinkSchema } from './nav-link-schema.ts';
@@ -9,13 +12,17 @@ import { NavLinkSchema } from './nav-link-schema.ts';
 type Schema = {
   labels: LabelSchema[];
   nav_links: NavLinkSchema[];
+  footer_links: FooterLinkSchema[];
   home_page: HomePageSchema;
+  events: EventSchema[];
 };
 
 export type Directus = {
   getLabels(): Promise<Record<string, string>>;
   getNavLinks(): Promise<NavLinkSchema[]>;
+  getFooterLinks(): Promise<ReturnType<typeof FooterLinkSchema.toFooterLink>[]>;
   getHomePage(): Promise<HomePageModel>;
+  getEvents(): Promise<Event[]>;
 };
 
 export const Directus = (config: Config): Directus => {
@@ -57,6 +64,12 @@ export const Directus = (config: Config): Directus => {
     return response.map(NavLinkSchema.toNavLink);
   };
 
+  const getFooterLinks = async () => {
+    const response = await directus.request(readItems('footer_links', { sort: ['order'] }));
+
+    return response.map(FooterLinkSchema.toFooterLink);
+  };
+
   const getHomePage = async () => {
     const response = await directus.request(readSingleton('home_page'));
 
@@ -66,9 +79,21 @@ export const Directus = (config: Config): Directus => {
     });
   };
 
+  const getEvents = async (): Promise<Event[]> => {
+    const response = await directus.request(
+      readItems('events', { sort: ['date_start'], limit: 4 }),
+    );
+
+    return response.map((item) =>
+      EventSchema.toEvent({ ...item, image: resolveAssetUrl(item.image) }),
+    );
+  };
+
   return {
     getLabels: getLabels,
     getNavLinks: getNavLinks,
+    getFooterLinks: getFooterLinks,
     getHomePage: getHomePage,
+    getEvents: getEvents,
   };
 };

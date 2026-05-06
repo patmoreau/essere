@@ -7,6 +7,7 @@ import EventsPage from './events/ui/EventsPage.tsx';
 import HomePage from './home/ui/HomePage.tsx';
 import SchedulePage from './schedule/ui/SchedulePage.tsx';
 import Navbar from './shared/navbar/ui/Navbar';
+import Footer from './shared/ui/Footer.tsx';
 import LoadingFallback from './shared/ui/LoadingFallback';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/cours" element={<SchedulePage />} />
           </Routes>
         </Box>
+        <Footer />
       </Box>
     </Suspense>
   );

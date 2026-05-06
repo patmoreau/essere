@@ -2,7 +2,12 @@
 
 ## Project Overview
 
-**essere** is a wellness/yoga studio web app called "The Elevated Sanctuary." It is a React 19 + TypeScript SPA powered by Vite, backed by a Directus headless CMS, and styled with a bespoke design system (CSS custom properties + inline styles). The package manager is **pnpm**.
+**essere** is a pilates/yoga studio web app called "Fusion pilates yoga." It is a React 19 + TypeScript SPA powered by Vite, backed by a Directus headless CMS, and styled with MUI (Material UI) themed to a bespoke design system. The codebase follows **Clean Code** principles. The package manager is **pnpm**.
+
+## Language Rules
+
+- **Website content** (UI text, labels, copy, CMS data) → **French**
+- **Development code** (variable names, function names, comments, type names, file names) → **English**
 
 ## Tech Stack
 
@@ -11,10 +16,11 @@
 | React        | 19                  |
 | TypeScript   | 6                   |
 | Vite         | 8                   |
+| MUI          | 6                   |
 | Directus SDK | 21                  |
 | pnpm         | (lock file present) |
 
-**No CSS framework** — styling is done with CSS custom properties (defined in `src/index.css`) and React inline styles that reference those variables.
+**MUI with a custom theme** — all styling goes through the MUI theme (`src/theme.ts`). Do not use raw CSS files, inline styles, or CSS modules.
 
 ## Architecture
 
@@ -24,12 +30,11 @@ src/
 ├── main.tsx                       ← Entry point; mounts providers
 ├── index.css                      ← Global CSS variables (design tokens)
 ├── assets/                        ← Static images
-├── components/                    ← Shared layout components (Navbar, etc.)
 ├── home/                          ← Home page feature
 ├── events/                        ← Events page feature
 ├── schedule/                      ← Schedule page feature
 ├── contact/                       ← Contact page feature
-└── share/
+└── shared/
     ├── config/                    ← App config (env vars)
     │   ├── core/config.ts
     │   ├── core/use-config.ts
@@ -44,16 +49,18 @@ src/
 
 ### Patterns to follow
 
+- **Clean Code** — small, single-responsibility functions and components; meaningful names; no dead code; no comments that restate what the code already says.
 - **Feature folder**: every page lives in its own folder (e.g. `src/home/`). Keep `core/` (types, data queries) separate from `ui/` (React components) inside each feature if the feature grows beyond one file.
-- **Directus data**: add new collection types in `share/directus/core/` and expose them through the `Directus` factory and `useDirectus` hook. Never call the Directus SDK directly from a component.
-- **Inline styles only** — do not introduce Tailwind, CSS modules, or styled-components. Use `var(--token-name)` CSS custom properties that mirror the design tokens defined in `index.css`.
+- **Directus data**: add new collection types in `shared/directus/core/` and expose them through the `Directus` factory. Never call the Directus SDK directly from a component.
+- **One hook per collection**: every collection exposed by the Directus context must have its own dedicated hook (e.g. `use-labels.ts` → `useLabels`). Follow the pattern in `src/shared/labels/core/use-labels.ts`: call `useDirectus()`, cache the promise in a `WeakMap<Directus, Promise<T>>`, and return `use(promise)` (React 19 Suspense). Place the hook in `src/shared/<feature>/core/use-<feature>.ts`.
+- **MUI + theme only** — use MUI components (`Box`, `Typography`, `Button`, `Stack`, …) and the MUI theme (`src/theme.ts`) for all styling. Do not introduce raw CSS files, inline styles, CSS modules, Tailwind, or styled-components.
 - **No CSS borders for sectioning** — use background color transitions instead (design rule: "No-Line Rule").
 
 ---
 
 ## Design System: "The Elevated Sanctuary"
 
-Reference designs live in `design/<page>/code.html` (full HTML mockups) and `design/<page>/DESIGN.md` (shared design philosophy).
+Reference designs live in `design/<page>/code.html` (full HTML/CSS mockups) and `design/<page>/DESIGN.md` (shared design philosophy). These files describe **what to build visually** — use them as the source of truth for layout, spacing, colors, and typography. **Do not copy their HTML/CSS directly.** Translate the design intent into MUI components and theme tokens.
 
 ### Color Tokens (`src/index.css` `:root`)
 
@@ -215,6 +222,8 @@ type StudioInfo = {
   phone: string
   email: string
   map_image?: string // Directus file ID
+  instagram_url?: string
+  facebook_url?: string
 }
 ```
 

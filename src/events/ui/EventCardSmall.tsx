@@ -1,16 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 
 import type { Event } from '../core/event.ts';
-
-const categoryLabel: Record<Event['category'], string> = {
-  Intensive: 'Intensif',
-  Workshop: 'Atelier',
-  'Guest Event': 'Événement Invité',
-  Retreat: 'Retraite',
-};
-
-const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+import { formatEventDateRange } from '../core/format-event-date.ts';
 
 type Props = {
   event: Event;
@@ -55,7 +46,7 @@ const EventCardSmall = ({ event, ctaLabel, variant = 'default' }: Props) => (
           mb: 1,
         }}
       >
-        {categoryLabel[event.category]} · {formatDate(event.dateStart)}
+        {event.category} · {formatEventDateRange(event.dateStart, event.dateEnd)}
       </Typography>
       <Typography
         component="h3"

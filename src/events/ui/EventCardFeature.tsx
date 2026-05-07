@@ -1,9 +1,7 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 
 import type { Event } from '../core/event.ts';
-
-const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+import {formatEventDateRange} from "../core/format-event-date.ts";
 
 type Props = { event: Event };
 
@@ -79,8 +77,7 @@ const EventCardFeature = ({ event }: Props) => (
             letterSpacing: '0.1em',
           }}
         >
-          {formatDate(event.dateStart)}
-          {event.dateEnd ? ` – ${formatDate(event.dateEnd)}` : ''}
+          {formatEventDateRange(event.dateStart, event.dateEnd)}
         </Box>
         {event.location && (
           <Box

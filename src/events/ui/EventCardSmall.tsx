@@ -67,9 +67,8 @@ const EventCardSmall = ({ event, ctaLabel, variant = 'default' }: Props) => (
           color: 'text.secondary',
           lineHeight: 1.6,
         }}
-      >
-        {event.description}
-      </Typography>
+        dangerouslySetInnerHTML={{ __html: event.description }}
+      />
     </Box>
     <Button
       component="a"

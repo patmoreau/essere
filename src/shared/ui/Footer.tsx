@@ -1,137 +1,125 @@
-import React from 'react';
+import { Box, Stack, Typography } from '@mui/material';
 
-import type { FooterLink } from '../directus/core/footer-link-schema.ts';
-import { useDirectus } from '../directus/core/use-directus';
+import { useLabels } from '../labels/core/use-labels.ts';
+
+const FooterLink = ({ href, children }: { href: string; children: string }) => (
+  <Box
+    component="a"
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{
+      fontFamily: 'Manrope, sans-serif',
+      fontSize: '0.875rem',
+      textTransform: 'uppercase',
+      letterSpacing: '0.1em',
+      color: 'text.secondary',
+      textDecoration: 'none',
+      transition: 'color 300ms ease-out',
+      '&:hover': { color: 'primary.main' },
+    }}
+  >
+    {children}
+  </Box>
+);
+
+const FooterColumnHeading = ({ children }: { children: string }) => (
+  <Typography
+    sx={{
+      fontFamily: 'Manrope, sans-serif',
+      fontSize: '0.75rem',
+      fontWeight: 700,
+      textTransform: 'uppercase',
+      letterSpacing: '0.1em',
+      color: 'primary.main',
+    }}
+  >
+    {children}
+  </Typography>
+);
 
 const Footer = () => {
-  const { getLabels, getFooterLinks } = useDirectus();
-  const [labels, setLabels] = React.useState<Record<string, string>>({});
-  const [links, setLinks] = React.useState<FooterLink[]>([]);
-
-  React.useEffect(() => {
-    Promise.all([getLabels(), getFooterLinks()]).then(([l, lnks]) => {
-      setLabels(l);
-      setLinks(lnks);
-    });
-  }, [getLabels, getFooterLinks]);
-
-  const categories = Array.from(new Set(links.map(l => l.category)));
+  const labels = useLabels();
 
   return (
-    <footer
-      style={{
-        backgroundColor: 'var(--background)',
-        color: 'var(--on-background)',
-        padding: '4rem 2rem 2rem 2rem',
-        fontFamily: 'var(--font-functional)',
+    <Box
+      component="footer"
+      sx={{
+        bgcolor: 'background.default',
+        py: { xs: 8, md: 10 },
+        px: { xs: 3, md: 6 },
       }}
     >
-      <div
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
+      <Box
+        sx={{
+          maxWidth: '87.5rem',
+          mx: 'auto',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '3rem',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+          gap: { xs: 6, md: 12 },
         }}
       >
-        <div>
-          <h3
-            style={{
-              fontFamily: 'var(--font-editorial)',
-              fontSize: '1.5rem',
-              marginBottom: '1rem',
+        <Stack gap={3}>
+          <Typography
+            sx={{
+              fontFamily: 'Noto Serif, serif',
+              fontSize: '1.25rem',
               letterSpacing: '-0.02em',
+              color: 'secondary.main',
             }}
           >
-            {labels['footer_brand_title'] || 'The Elevated Sanctuary'}
-          </h3>
-          <p
-            style={{
-              color: 'var(--on-surface-variant)',
-              lineHeight: '1.6',
-              marginBottom: '2rem',
+            {labels['footer.brand_title']}
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Manrope, sans-serif',
+              fontSize: '0.875rem',
+              color: 'text.secondary',
+              lineHeight: 1.6,
             }}
           >
-            {labels['footer_tagline'] || 'A mindful space for grounding and growth.'}
-          </p>
-        </div>
+            {labels['footer.tagline']}
+          </Typography>
+        </Stack>
 
-        {categories.map(category => (
-          <div key={category}>
-            <h4
-              style={{
-                fontFamily: 'var(--font-editorial)',
-                fontSize: '1.1rem',
-                marginBottom: '1.5rem',
-                color: 'var(--on-background)',
+        <Stack gap={3}>
+          <FooterColumnHeading>
+            {labels['footer.connect_label'] ?? 'Connexion'}
+          </FooterColumnHeading>
+          <Stack component="nav" gap={2}>
+            <FooterLink href={labels['footer.instagram_url'] ?? '#'}>
+              {labels['footer.instagram_label'] ?? 'Instagram'}
+            </FooterLink>
+            <FooterLink href={labels['footer.facebook_url']}>
+              {labels['footer.facebook_label'] ?? 'Facebook'}
+            </FooterLink>
+          </Stack>
+        </Stack>
+
+        <Stack gap={3}>
+          <FooterColumnHeading>
+            {labels['footer.legal_label'] ?? 'Légal'}
+          </FooterColumnHeading>
+          <Stack component="nav" gap={2}>
+            <FooterLink href={labels['footer.privacy_url'] ?? '#'}>
+              {labels['footer.privacy_label'] ?? 'Politique de confidentialité'}
+            </FooterLink>
+            <Typography
+              sx={{
+                fontFamily: 'Manrope, sans-serif',
+                fontSize: '0.875rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                color: 'text.secondary',
+                mt: 2,
               }}
             >
-              {labels[`footer_cat_${category.toLowerCase()}`] || category}
-            </h4>
-            <ul
-              style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-              }}
-            >
-              {links
-                .filter(l => l.category === category)
-                .map((link, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={link.href}
-                      style={{
-                        color: 'var(--on-surface-variant)',
-                        textDecoration: 'none',
-                        transition: 'all 300ms ease-out',
-                        cursor: 'pointer',
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--primary)')}
-                      onMouseLeave={e =>
-                        (e.currentTarget.style.color = 'var(--on-surface-variant)')
-                      }
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      <div
-        style={{
-          marginTop: '4rem',
-          paddingTop: '2rem',
-          borderTop: '1px solid var(--outline-variant)',
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '1rem',
-          fontSize: '0.875rem',
-          color: 'var(--on-surface-variant)',
-        }}
-      >
-        <span>
-          © {new Date().getFullYear()} {labels['footer_copyright'] || 'The Elevated Sanctuary'}
-        </span>
-        <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>
-            {labels['footer_privacy'] || 'Privacy'}
-          </a>
-          <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>
-            {labels['footer_terms'] || 'Terms'}
-          </a>
-        </div>
-      </div>
-    </footer>
+              © {new Date().getFullYear()} {labels['footer.brand_title']}
+            </Typography>
+          </Stack>
+        </Stack>
+      </Box>
+    </Box>
   );
 };
 

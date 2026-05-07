@@ -6,7 +6,6 @@ import type {HomePage} from '../../../home/core/home-page.ts';
 import {Config} from '../../config/core/config';
 import {EventSchema} from './event-schema.ts';
 import {EventsPageSchema} from "./events-page-schema.ts";
-import {FooterLinkSchema} from './footer-link-schema.ts';
 import {HomePageSchema} from './home-page-schema.ts';
 import type {LabelSchema} from './label-schema.ts';
 import {NavLinkSchema} from './nav-link-schema.ts';
@@ -14,7 +13,6 @@ import {NavLinkSchema} from './nav-link-schema.ts';
 type Schema = {
   labels: LabelSchema[];
   nav_links: NavLinkSchema[];
-  footer_links: FooterLinkSchema[];
   home_page: HomePageSchema;
   events: EventSchema[];
   events_page: EventsPageSchema;
@@ -23,7 +21,6 @@ type Schema = {
 export type Directus = {
   getLabels(): Promise<Record<string, string>>;
   getNavLinks(): Promise<NavLinkSchema[]>;
-  getFooterLinks(): Promise<ReturnType<typeof FooterLinkSchema.toFooterLink>[]>;
   getHomePage(): Promise<HomePage>;
   getEvents(): Promise<Event[]>;
   getEventsPage(): Promise<EventsPage>;
@@ -68,12 +65,6 @@ export const Directus = (config: Config): Directus => {
     return response.map(NavLinkSchema.toNavLink);
   };
 
-  const getFooterLinks = async () => {
-    const response = await directus.request(readItems('footer_links', {sort: ['order']}));
-
-    return response.map(FooterLinkSchema.toFooterLink);
-  };
-
   const getHomePage = async () => {
     const response = await directus.request(readSingleton('home_page'));
 
@@ -93,7 +84,7 @@ export const Directus = (config: Config): Directus => {
 
   const getEvents = async (): Promise<Event[]> => {
     const response = await directus.request(
-      readItems('events', {sort: ['date_start'], limit: 4}),
+      readItems('events', {sort: ['date_start']}),
     );
 
     return response.map((item) =>
@@ -104,7 +95,6 @@ export const Directus = (config: Config): Directus => {
   return {
     getLabels: getLabels,
     getNavLinks: getNavLinks,
-    getFooterLinks: getFooterLinks,
     getHomePage: getHomePage,
     getEvents: getEvents,
     getEventsPage: getEventsPage,

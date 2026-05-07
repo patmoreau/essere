@@ -1,4 +1,4 @@
-import type { Event } from '../../../events/core/event.ts';
+import type {Event} from '../../../events/core/event.ts';
 
 export type EventSchema = {
   id: string;
@@ -6,11 +6,11 @@ export type EventSchema = {
   date_start: string;
   date_end?: string;
   category: 'Intensive' | 'Workshop' | 'Guest Event' | 'Retreat';
-  description: string;
+  description?: string | null;
   location?: string;
   image: string;
   featured: boolean;
-  booking_url?: string;
+  booking_url?: string | null;
 };
 
 const toEvent = (schema: EventSchema): Event => ({
@@ -19,11 +19,11 @@ const toEvent = (schema: EventSchema): Event => ({
   dateStart: schema.date_start,
   dateEnd: schema.date_end,
   category: schema.category,
-  description: schema.description,
+  description: schema.description ?? '',
   location: schema.location,
   imageUrl: schema.image,
   featured: schema.featured,
-  bookingUrl: schema.booking_url,
+  bookingUrl: schema.booking_url ?? '',
 });
 
-export const EventSchema = { toEvent } as const;
+export const EventSchema = {toEvent} as const;

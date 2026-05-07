@@ -11,8 +11,8 @@ const HomePage = () => {
   return (
     <Hero
       eyebrow={`${labels['home.est']} ${data.estYear}`}
-      headline={data.heroHeadlineLine1}
-      headlineAccent={data.heroHeadlineLine2}
+      headline={data.heroHeadline}
+      headlineAccent={data.heroHeadlineAccent}
       subheading={data.heroSubheading}
       imageUrl={data.heroImage}
       imageAlt={data.heroImageText}

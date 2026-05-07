@@ -9,8 +9,15 @@ type Props = {
   events: Event[];
 };
 
+const isLargeCard = (index: number): boolean => {
+  const pairIndex = Math.floor(index / 2);
+  const isFirstInPair = index % 2 === 0;
+  const isLargeFirst = pairIndex % 2 === 0;
+  return isLargeFirst ? isFirstInPair : !isFirstInPair;
+};
+
 const EventsBentoGrid = ({ events }: Props) => {
-  const [card1, card2, card3, card4] = events;
+  let nonFeaturedIndex = 0;
 
   return (
     <Box
@@ -27,10 +34,17 @@ const EventsBentoGrid = ({ events }: Props) => {
           gap: 4,
         }}
       >
-        {card1 && <EventCardLarge event={card1} />}
-        {card2 && <EventCardSmall event={card2} ctaLabel="Réserver" />}
-        {card3 && <EventCardSmall event={card3} ctaLabel="En savoir plus" variant="featured" />}
-        {card4 && <EventCardFeature event={card4} />}
+        {events.map((event) => {
+          if (event.featured) {
+            return <EventCardFeature key={event.id} event={event} />;
+          }
+          const i = nonFeaturedIndex++;
+          return isLargeCard(i) ? (
+            <EventCardLarge key={event.id} event={event} />
+          ) : (
+            <EventCardSmall key={event.id} event={event} ctaLabel="En savoir plus" />
+          );
+        })}
       </Box>
     </Box>
   );

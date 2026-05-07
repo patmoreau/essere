@@ -1,13 +1,15 @@
-import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
+import {createDirectus, readItems, readSingleton, rest} from '@directus/sdk';
 
-import type { Event } from '../../../events/core/event.ts';
-import type { HomePage as HomePageModel } from '../../../home/core/home-page.ts';
-import { Config } from '../../config/core/config';
-import { EventSchema } from './event-schema.ts';
-import { FooterLinkSchema } from './footer-link-schema.ts';
-import { HomePageSchema } from './home-page-schema.ts';
-import type { LabelSchema } from './label-schema.ts';
-import { NavLinkSchema } from './nav-link-schema.ts';
+import type {Event} from '../../../events/core/event.ts';
+import type {EventsPage} from "../../../events/core/events-page.ts";
+import type {HomePage} from '../../../home/core/home-page.ts';
+import {Config} from '../../config/core/config';
+import {EventSchema} from './event-schema.ts';
+import {EventsPageSchema} from "./events-page-schema.ts";
+import {FooterLinkSchema} from './footer-link-schema.ts';
+import {HomePageSchema} from './home-page-schema.ts';
+import type {LabelSchema} from './label-schema.ts';
+import {NavLinkSchema} from './nav-link-schema.ts';
 
 type Schema = {
   labels: LabelSchema[];
@@ -15,14 +17,16 @@ type Schema = {
   footer_links: FooterLinkSchema[];
   home_page: HomePageSchema;
   events: EventSchema[];
+  events_page: EventsPageSchema;
 };
 
 export type Directus = {
   getLabels(): Promise<Record<string, string>>;
   getNavLinks(): Promise<NavLinkSchema[]>;
   getFooterLinks(): Promise<ReturnType<typeof FooterLinkSchema.toFooterLink>[]>;
-  getHomePage(): Promise<HomePageModel>;
+  getHomePage(): Promise<HomePage>;
   getEvents(): Promise<Event[]>;
+  getEventsPage(): Promise<EventsPage>;
 };
 
 export const Directus = (config: Config): Directus => {
@@ -47,7 +51,7 @@ export const Directus = (config: Config): Directus => {
   };
 
   const getLabels = async (): Promise<Record<string, string>> => {
-    const response = await directus.request(readItems('labels', { limit: -1 }));
+    const response = await directus.request(readItems('labels', {limit: -1}));
 
     return response.reduce(
       (acc, item) => {
@@ -59,13 +63,13 @@ export const Directus = (config: Config): Directus => {
   };
 
   const getNavLinks = async () => {
-    const response = await directus.request(readItems('nav_links', { sort: ['order'] }));
+    const response = await directus.request(readItems('nav_links', {sort: ['order']}));
 
     return response.map(NavLinkSchema.toNavLink);
   };
 
   const getFooterLinks = async () => {
-    const response = await directus.request(readItems('footer_links', { sort: ['order'] }));
+    const response = await directus.request(readItems('footer_links', {sort: ['order']}));
 
     return response.map(FooterLinkSchema.toFooterLink);
   };
@@ -79,13 +83,21 @@ export const Directus = (config: Config): Directus => {
     });
   };
 
+  const getEventsPage = async () => {
+    const response = await directus.request(readSingleton('events_page'));
+
+    return EventsPageSchema.toEventsPage({
+      ...response,
+    });
+  };
+
   const getEvents = async (): Promise<Event[]> => {
     const response = await directus.request(
-      readItems('events', { sort: ['date_start'], limit: 4 }),
+      readItems('events', {sort: ['date_start'], limit: 4}),
     );
 
     return response.map((item) =>
-      EventSchema.toEvent({ ...item, image: resolveAssetUrl(item.image) }),
+      EventSchema.toEvent({...item, image: resolveAssetUrl(item.image)}),
     );
   };
 
@@ -95,5 +107,6 @@ export const Directus = (config: Config): Directus => {
     getFooterLinks: getFooterLinks,
     getHomePage: getHomePage,
     getEvents: getEvents,
+    getEventsPage: getEventsPage,
   };
 };

@@ -4,8 +4,8 @@ export type HomePageSchema = {
   est_year: string;
   hero_image: string;
   hero_image_text: string;
-  hero_headline_line1: string;
-  hero_headline_line2: string;
+  hero_headline: string;
+  hero_headline_accent: string;
   hero_subheading: string;
   hero_cta_primary_label: string;
   hero_cta_secondary_label: string;
@@ -22,8 +22,8 @@ const toHomePage = (schema: HomePageSchema): HomePageModel => ({
   estYear: schema.est_year,
   heroImage: schema.hero_image,
   heroImageText: schema.hero_image_text,
-  heroHeadlineLine1: schema.hero_headline_line1,
-  heroHeadlineLine2: schema.hero_headline_line2,
+  heroHeadline: schema.hero_headline,
+  heroHeadlineAccent: schema.hero_headline_accent,
   heroSubheading: schema.hero_subheading,
   heroCtaPrimaryLabel: schema.hero_cta_primary_label,
   heroCtaSecondaryLabel: schema.hero_cta_secondary_label,

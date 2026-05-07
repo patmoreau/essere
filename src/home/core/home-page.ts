@@ -2,8 +2,8 @@ export type HomePage = {
   estYear: string;
   heroImage: string;
   heroImageText: string;
-  heroHeadlineLine1: string;
-  heroHeadlineLine2: string;
+  heroHeadline: string;
+  heroHeadlineAccent: string;
   heroSubheading: string;
   heroCtaPrimaryLabel: string;
   heroCtaSecondaryLabel: string;

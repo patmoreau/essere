@@ -11,7 +11,7 @@ const EventCardFeature = ({ event }: Props) => (
   <Box
     component="article"
     sx={{
-      gridColumn: { md: 'span 8' },
+      gridColumn: { md: 'span 12' },
       bgcolor: 'primary.main',
       borderRadius: 'var(--radius-xl)',
       overflow: 'hidden',

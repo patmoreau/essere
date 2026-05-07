@@ -4,10 +4,6 @@ import { useState } from 'react';
 const EventsNewsletterSection = () => {
   const [email, setEmail] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
   return (
     <Box
       component="section"
@@ -47,7 +43,7 @@ const EventsNewsletterSection = () => {
         </Typography>
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={(e) => e.preventDefault()}
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },

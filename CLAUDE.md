@@ -1,4 +1,6 @@
-# essere — Claude Agent Skills
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
@@ -26,256 +28,331 @@
 
 ```
 src/
-├── App.tsx                        ← Root component; wires pages together
+├── App.tsx                        ← Root component; routes + shared layout
 ├── main.tsx                       ← Entry point; mounts providers
 ├── index.css                      ← Global CSS variables (design tokens)
 ├── assets/                        ← Static images
 ├── home/                          ← Home page feature
+│   ├── core/                      ← home-page.ts, use-home-page.ts
+│   └── ui/                        ← HomePage, PhilosophySection, PhilosophyCard
 ├── events/                        ← Events page feature
+│   ├── core/                      ← event.ts, events-page.ts, use-events.ts, use-events-page.ts, format-event-date.ts
+│   └── ui/                        ← EventsPage, EventsBentoGrid, EventCard*, EventTeaserCard, EventsNewsletterSection
 ├── schedule/                      ← Schedule page feature
+│   ├── core/                      ← schedule-class.ts, classes-page.ts, use-schedule-classes.ts, use-classes-page.ts, schedule-utils.ts
+│   └── ui/                        ← SchedulePage, ScheduleFilterBar, ScheduleWeekGrid, ScheduleDayColumn, ScheduleClassCard, SchedulePullQuote, ScheduleMembershipCta
 ├── contact/                       ← Contact page feature
+│   └── ui/ContactPage.tsx
 └── shared/
     ├── config/                    ← App config (env vars)
-    │   ├── core/config.ts
-    │   ├── core/use-config.ts
-    │   └── ui/{ConfigContext,ConfigProvider}.tsx
-    └── directus/                  ← Directus CMS integration
-        ├── core/directus.ts       ← Client factory + typed queries
-        ├── core/nav-link.ts       ← NavLink type
-        ├── core/home-page.ts      ← HomePage type
-        ├── core/use-directus.ts   ← Hook: useDirectus()
-        └── ui/{DirectusContext,DirectusProvider}.tsx
+    │   ├── core/{config.ts, use-config.ts}
+    │   └── ui/{ConfigContext, ConfigProvider}.tsx
+    ├── directus/                  ← Directus CMS integration
+    │   ├── core/directus.ts       ← Client factory + all typed queries
+    │   ├── core/*-schema.ts       ← One schema file per collection
+    │   ├── core/use-directus.ts
+    │   └── ui/{DirectusContext, DirectusProvider}.tsx
+    ├── labels/
+    │   └── core/use-labels.ts     ← useLabels() hook
+    ├── navbar/
+    │   ├── core/{nav-link.ts, use-nav-links.ts}
+    │   └── ui/Navbar.tsx
+    └── ui/
+        ├── Hero.tsx               ← Shared hero component (all pages)
+        ├── Footer.tsx             ← Shared footer component (all pages)
+        ├── DynamicMuiIcon.tsx     ← Registry-based MUI icon renderer
+        └── LoadingFallback.tsx
 ```
+
+### Routes
+
+| Path          | Component       |
+| ------------- | --------------- |
+| `/accueil`    | `HomePage`      |
+| `/evenements` | `EventsPage`    |
+| `/cours`      | `SchedulePage`  |
+| `/contact`    | `ContactPage`   |
 
 ### Patterns to follow
 
-- **Clean Code** — small, single-responsibility functions and components; meaningful names; no dead code; no comments that restate what the code already says.
-- **Feature folder**: every page lives in its own folder (e.g. `src/home/`). Keep `core/` (types, data queries) separate from `ui/` (React components) inside each feature if the feature grows beyond one file.
+- **Clean Code** — small, single-responsibility functions and components; meaningful names; no dead code.
+- **Feature folder**: every page lives in its own folder (e.g. `src/home/`). Keep `core/` (types, data) separate from `ui/` (components).
 - **Directus data**: add new collection types in `shared/directus/core/` and expose them through the `Directus` factory. Never call the Directus SDK directly from a component.
-- **One hook per collection**: every collection exposed by the Directus context must have its own dedicated hook (e.g. `use-labels.ts` → `useLabels`). Follow the pattern in `src/shared/labels/core/use-labels.ts`: call `useDirectus()`, cache the promise in a `WeakMap<Directus, Promise<T>>`, and return `use(promise)` (React 19 Suspense). Place the hook in `src/shared/<feature>/core/use-<feature>.ts`.
-- **MUI + theme only** — use MUI components (`Box`, `Typography`, `Button`, `Stack`, …) and the MUI theme (`src/theme.ts`) for all styling. Do not introduce raw CSS files, inline styles, CSS modules, Tailwind, or styled-components.
-- **No CSS borders for sectioning** — use background color transitions instead (design rule: "No-Line Rule").
+- **One hook per collection**: follow the pattern in `use-labels.ts` — call `useDirectus()`, cache the promise in a `WeakMap<Directus, Promise<T>>`, return `use(promise)` (React 19 Suspense).
+- **Schema files**: one `*-schema.ts` per Directus collection. Export a type (`FooSchema`) and a namespace with the converter (`FooSchema.toFoo`). The factory in `directus.ts` calls `resolveAssetUrl()` on any image file IDs before passing to the converter.
+- **MUI + theme only** — use MUI components (`Box`, `Typography`, `Button`, `Stack`, …) and `sx` props with CSS variable tokens. No raw CSS, inline styles, CSS modules, Tailwind, or styled-components.
+- **No CSS borders for sectioning** — use background color transitions (design rule: "No-Line Rule").
+- **External links** — always use `component="a"` + `target="_blank"` + `rel="noopener noreferrer"` on MUI `Button` for external URLs.
 
 ---
 
 ## Design System: "The Elevated Sanctuary"
 
-Reference designs live in `design/<page>/code.html` (full HTML/CSS mockups) and `design/<page>/DESIGN.md` (shared design philosophy). These files describe **what to build visually** — use them as the source of truth for layout, spacing, colors, and typography. **Do not copy their HTML/CSS directly.** Translate the design intent into MUI components and theme tokens.
+Reference designs live in `design/<page>/code.html` (full HTML/CSS mockups) and `design/<page>/DESIGN.md`. Use them as source of truth for layout, spacing, colors, and typography. **Translate intent into MUI + theme tokens — do not copy HTML/CSS directly.**
 
 ### Color Tokens (`src/index.css` `:root`)
 
 ```css
---primary: #4c644b /* Deep Sage — focus/grounding */ --primary-dim: #405840
-  /* Darker sage — hover states */ --secondary: #6a5d51 /* Warm Taupe — secondary text/depth */
-  --background: #fafaf5 /* Warm Cream — page canvas */ --surface: #fafaf5
-  --surface-container-lowest: #ffffff /* "Lit from within" cards */ --surface-container-low: #f3f4ee
-  --surface-container: #ecefe7 --surface-container-high: #e5eae0
-  --surface-container-highest: #dee4da --surface-bright: #fafaf5 --on-background: #2e342d
-  --on-surface: #2e342d --on-surface-variant: #5b6159 --on-primary: #e5ffe0 --on-secondary: #fff7f4
-  --primary-container: #ceeaca --on-primary-container: #40583f --secondary-container: #f2dfd0
-  --outline-variant: #aeb4aa --outline: #767c74 --radius-xl: 1.5rem /* Large containers */
-  --radius-md: 0.75rem /* Interactive elements */;
+--primary: #4c644b                  /* Deep Sage */
+--primary-dim: #405840              /* Hover states */
+--secondary: #6a5d51                /* Warm Taupe */
+--background: #fafaf5               /* Warm Cream */
+--surface-container-lowest: #ffffff
+--surface-container-low: #f3f4ee
+--surface-container: #ecefe7
+--surface-container-high: #e5eae0
+--surface-container-highest: #dee4da
+--on-background: #2e342d
+--on-surface: #2e342d
+--on-surface-variant: #5b6159
+--on-primary: #e5ffe0
+--primary-container: #ceeaca
+--on-primary-container: #40583f
+--secondary-container: #f2dfd0
+--outline-variant: #aeb4aa
+--outline: #767c74
+--radius-xl: 1.5rem
+--radius-md: 0.75rem
 ```
 
 ### Typography
 
-- **Headlines / Display** → `font-family: 'Noto Serif', serif` — "Editorial Voice"
-  - Letter-spacing: `-0.02em`
-  - Use italic weight for emphasis / accents
-- **Body / Labels** → `font-family: 'Manrope', sans-serif` — "Functional Voice"
-- Fonts are imported via Google Fonts in `src/index.css`
+- **Headlines / Display** → `'Noto Serif', serif` — letter-spacing `-0.02em`; use italic for accents
+- **Body / Labels** → `'Manrope', sans-serif`
 
 ### Key Design Rules
 
-1. **No-Line Rule** — never use `1px solid border` for sectioning; separate sections by background-color changes.
-2. **No pure black** — always use `var(--on-background)` (`#2e342d`) for text.
-3. **No sharp corners** — minimum `var(--radius-md)` (0.75rem) on interactive elements, `var(--radius-xl)` (1.5rem) on containers.
-4. **Glassmorphism nav** — `background: rgba(250,250,245,0.80); backdrop-filter: blur(20px)`.
-5. **Gradient CTAs** — primary buttons use `linear-gradient(135deg, var(--primary), var(--primary-dim))`.
-6. **Slow hover transitions** — `transition: all 300ms ease-out` to mimic mindful movement.
-7. **Ambient shadows** — `box-shadow: 0px 12px 32px rgba(46, 52, 45, 0.06)` (sage-tinted, never black).
+1. **No-Line Rule** — never use `1px solid border` for sectioning; use background-color changes.
+2. **No pure black** — always use `var(--on-background)` / `var(--on-surface)` for text.
+3. **No sharp corners** — minimum `var(--radius-md)` on interactive elements, `var(--radius-xl)` on containers.
+4. **Glassmorphism** — `background: rgba(250,250,245,0.80); backdrop-filter: blur(20px)`.
+5. **Gradient CTAs** — `linear-gradient(135deg, var(--primary), var(--primary-dim))`.
+6. **Slow hover transitions** — `transition: all 300ms ease-out`.
+7. **Ambient shadows** — `box-shadow: 0px 12px 32px rgba(46, 52, 45, 0.06)`.
 8. **Whitespace as luxury** — add 20% more whitespace than feels sufficient.
 
 ---
 
 ## Features (Pages)
 
-Each page is an independent feature in its own `src/<page>/` folder. The reference HTML for each is in `design/<page>/code.html`.
+Each page is an independent feature in its own `src/<page>/` folder. Reference HTML lives in `design/<page>/code.html`.
 
 ---
 
 ### 1. Home (`src/home/`)
 
-**Directus collection**: `home_page` (singleton)
+**Directus collections**: `home_page` (singleton)
 
-**Existing type** (`share/directus/core/home-page.ts`):
+**Domain type** (`home/core/home-page.ts`):
 
 ```ts
 type HomePage = {
-  est_year: string
-  hero_headline_line1: string
-  hero_headline_line2: string
-  hero_subheading: string
-  hero_cta_primary_label: string
-  hero_cta_secondary_label: string
-  philosophy_section_label: string
-  philosophy_card_1_icon: string
-  philosophy_card_1_title: string
-  philosophy_card_1_body: string
-  philosophy_card_2_icon: string
-  philosophy_card_2_title: string
-  philosophy_card_2_body: string
+  estYear: string
+  heroImage: string          // pre-resolved asset URL
+  heroImageText: string
+  heroHeadline: string
+  heroHeadlineAccent: string
+  heroSubheading: string
+  heroCtaPrimaryLabel: string
+  heroCtaSecondaryLabel: string
+  philosophySectionLabel: string
+  philosophyCard1Icon: string  // MUI icon name (e.g. "Spa", "SelfImprovement")
+  philosophyCard1Title: string
+  philosophyCard1Body: string
+  philosophyCard2Icon: string
+  philosophyCard2Title: string
+  philosophyCard2Body: string
 }
 ```
 
 **Sections** (top to bottom):
 
-1. **Hero** — 12-column grid, text left (col 6), image right (col 6). Oversized serif headline (`clamp(3rem,6vw,5rem)`), italic accent in primary color, eyebrow label ("Est. 20XX"), two CTAs (primary pill button + text link with arrow icon). Decorative blurred circle behind the image.
-2. **Philosophy** — `background: var(--surface-container)`. Two-column flex: title left ("Our Philosophy"), two icon cards right. No dividers; 24px gap between cards. Use Material Symbols icons for `spa` and `self_improvement`.
-3. **Meet Instructor** — `background: var(--background)`. Full-bleed card (`surface-container-lowest`) with image left, bio right. Floating "Founder" label on the image. Stats grid (years, certification). Secondary button.
-4. **Seasonal Workshops** — `background: var(--surface-container-low)`. 3-column asymmetric grid; middle card offset upward (`margin-top: -3rem`). Each card: image (md radius), date badge (glassmorphism), title, excerpt. Hover: image scale + title color shift to primary.
-5. **Footer** — 3-column: brand/tagline, Connect links, Legal links.
+1. **Hero** — 2-col grid: oversized serif headline + italic accent, eyebrow label, two CTAs (gradient pill button + text arrow link), hero image right (4:5 ratio).
+2. **Philosophy** — `var(--surface-container)` bg. Flex row: title left (1/3), two icon cards right (2/3). `DynamicMuiIcon` renders icon by name string.
+3. **Meet Instructor** — `var(--background)` bg. *(not yet implemented)*
+4. **Seasonal Workshops** — `var(--surface-container-low)` bg. *(not yet implemented)*
+5. **Footer** — shared `<Footer />` component.
 
 ---
 
 ### 2. Events (`src/events/`)
 
-**Directus collection**: `events` (list) + possibly `featured_event` (singleton)
+**Directus collections**: `events_page` (singleton), `events` (list)
 
-**Suggested type**:
+**Domain type** (`events/core/events-page.ts`):
+
+```ts
+type EventsPage = {
+  heroEyebrow: string
+  heroHeadline: string
+  heroHeadlineAccent: string
+  heroSubheading: string
+  eventFeaturedHeadline: string
+}
+```
+
+**Domain type** (`events/core/event.ts`):
 
 ```ts
 type Event = {
   id: string
   title: string
-  date_start: string
-  date_end?: string
+  dateStart: string
+  dateEnd?: string
   category: 'Intensive' | 'Workshop' | 'Guest Event' | 'Retreat'
   description: string
   location?: string
-  image?: string // Directus file ID
+  imageUrl: string       // pre-resolved asset URL
   featured: boolean
-  booking_url?: string
+  bookingUrl?: string
 }
 ```
 
 **Sections** (top to bottom):
 
-1. **Hero** — Two-column: editorial headline left ("Gatherings / for the Soul." — italic serif accent), hero image right (4:5 aspect ratio, xl radius, heavy shadow). Floating teaser card bottom-left over the image (glassmorphism, "Upcoming Signature Retreat").
-2. **Events Bento Grid** — 12-column CSS Grid:
-   - Large card (col 8): horizontal image + text; category badge (pill, `primary-container` bg); "Learn More" text link with arrow icon.
-   - Small card (col 4): square image, event metadata, "Reserve Spot" pill button.
-   - Small card (col 4): square image, "Learn More" primary pill button.
-   - Wide feature card (col 8): full `var(--primary)` background with texture overlay, centered text, location + date pills (glassmorphism), inverted CTA button.
-3. **Newsletter signup** — centered, max-width 4xl. Italic serif heading. Email input (pill, `surface-container-high` fill, no border, primary focus ring) + Subscribe button (secondary).
-4. **Footer** — same 3-column structure as Home.
+1. **Hero** — shared `<Hero>` with `EventTeaserCard` floating card (glassmorphism, shows the `featured: true` event).
+2. **Events Bento Grid** — 12-col CSS grid. Featured event → `EventCardFeature` (full width). Others alternate `EventCardLarge` (span 8) / `EventCardSmall` (span 4) via `isLargeCard(index)`.
+3. **Newsletter signup** — centered email input + subscribe button.
+4. **Footer** — shared `<Footer />`.
 
 ---
 
 ### 3. Schedule (`src/schedule/`)
 
-**Directus collection**: `classes` (list)
+**Directus collections**: `classes_page` (singleton), `classes` (list)
 
-**Suggested type**:
+**Domain type** (`schedule/core/classes-page.ts`):
 
 ```ts
-type Class = {
-  id: string
-  class_title: string
-  category: 'yoga' | 'pilates' | 'meditation'
-  instructor_name: string
-  start_date: string // "2024-04-20"
-  end_date: string // "2024-04-27"
-  start_time: string // "16:00"
-  end_time: string // "17:00"
-  booking_url?: string // external booking link
+type ClassesPage = {
+  heroEyebrow: string
+  heroImage: string          // pre-resolved asset URL
+  heroHeadline: string
+  heroHeadlineAccent: string
+  heroSubheading: string
+  classesFeaturedHeadline: string
 }
 ```
 
+**Domain type** (`schedule/core/schedule-class.ts`):
+
+```ts
+type ScheduleClass = {
+  id: string
+  title: string
+  category: 'Yoga' | 'Pilates' | 'Meditation'
+  instructorName: string
+  startDate: string   // "2024-04-20" — first occurrence; day-of-week is derived from this
+  endDate: string     // "2024-04-27" — last occurrence
+  startTime: string   // "HH:MM" (seconds stripped in converter)
+  endTime: string     // "HH:MM"
+  bookingUrl?: string
+}
+```
+
+**Directus schema** (`schedule-class-schema.ts`): `category` is lowercase (`'yoga'|'pilates'|'meditation'`); `class_title` maps to `title`.
+
+**Schedule logic** (`schedule/core/schedule-utils.ts`):
+- `getDayOfWeek(dateStr)` — derives `DayOfWeek` from `startDate` using local-time parsing.
+- `isActiveInWeek(cls, weekStart)` — checks if `[startDate, endDate]` overlaps the displayed week.
+- Week grid filters by `isActiveInWeek`, then groups by `getDayOfWeek(startDate)`.
+
 **Sections** (top to bottom):
 
-1. **Hero** — 12-column grid: editorial serif headline left ("A Rhythm / for Your Practice"), descriptive body copy, image right (4:5 aspect ratio, xl radius). Floating pull-quote card bottom-left.
-2. **Filter + Date Navigation** — sticky controls row. Filter chips (pill buttons: All Sessions, Yoga, Pilates, Méditation) + week navigator (Prev/Next with chevron icons, current week range centered). Separated from grid by thin `border-bottom: 1px solid rgba(var(--outline-variant), 0.2)`.
-3. **Weekly Grid** — 7-column CSS grid (Mon–Sun). Each day column: day name + date number header. Class cards alternate between `surface-container-lowest` and `surface-container-low` backgrounds (no dividers). Card layout: category label + time (top row), serif class title, instructor + level, Register button (hover: fill to primary). Workshop-type cards use a `primary-container` tint.
-   - Each class is a weekly occurrence.
-   - start_date is the first class until end_date. It represents a session.
-   - start_time is the first class until end_time.
-4. **Footer** — same 3-column structure.
+1. **Hero** — shared `<Hero>` with `SchedulePullQuote` floating card (shows `classesFeaturedHeadline`).
+2. **Filter bar** — sticky; 4 chips (Toutes, Yoga, Pilates, Méditation) + week Prev/Next navigator.
+3. **Weekly Grid** — 7-col grid (Mon–Sun), `minWidth: 980px` + `overflowX: auto` for mobile. Cards tinted by category: Yoga = sage (`rgba(206,234,202,0.35)`), Pilates = taupe (`rgba(242,223,208,0.55)`), Meditation = neutral (`rgba(98,95,83,0.07)`).
+4. **Membership CTA** — gradient headline + subscribe button.
+5. **Footer** — shared `<Footer />`.
 
 ---
 
 ### 4. Contact (`src/contact/`)
 
-**Directus collection**: `studio_info` (singleton) + form submission (client-side only or Directus flow)
+**Directus collection**: `studio_info` (singleton) — *not yet implemented*
 
 **Suggested type**:
 
 ```ts
 type StudioInfo = {
-  instructor_name: string
-  instructor_bio_p1: string
-  instructor_bio_p2: string
-  instructor_photo?: string // Directus file ID
-  stat_1_value: string // "12k+"
-  stat_1_label: string // "Guided Souls"
-  stat_2_value: string
-  stat_2_label: string
-  address_line1: string
-  address_line2: string
+  instructorName: string
+  instructorBioP1: string
+  instructorBioP2: string
+  instructorPhoto?: string   // pre-resolved asset URL
+  stat1Value: string
+  stat1Label: string
+  stat2Value: string
+  stat2Label: string
+  addressLine1: string
+  addressLine2: string
   phone: string
   email: string
-  map_image?: string // Directus file ID
-  instagram_url?: string
-  facebook_url?: string
+  mapImage?: string          // pre-resolved asset URL
+  instagramUrl?: string
+  facebookUrl?: string
 }
 ```
-
-**Sections** (top to bottom):
-
-1. **About / Hero** — Two-column flex: image left (4:5 ratio, xl radius, decorative circle overlay top-left, floating pull-quote card bottom-right), bio right. Oversized serif name as heading. Two paragraphs of body copy. Stats row (two figures separated by a thin `outline-variant` divider).
-2. **Contact Bento** — `background: var(--surface-container-low)`. 12-column grid:
-   - Contact Form (col 7): `surface-container-lowest` card with shadow. Grid of Full Name + Email inputs (`surface-container-high` fill, rounded-md, no border, primary focus ring). Textarea. Primary pill submit button.
-   - Sidebar (col 5): Studio Details card (`primary` background, `on-primary` text) with location, phone, email + Material Symbol icons. Map card (`surface-container-highest`, image with tint overlay, "Get Directions" bar bottom glassmorphism).
-3. **Footer** — same 3-column structure.
 
 ---
 
 ## Shared Components
 
-### Navbar (`src/components/Navbar.tsx`) — already implemented
+### `Hero` (`src/shared/ui/Hero.tsx`)
 
-- Glassmorphism fixed header
-- Nav links from Directus `nav_links` collection
-- Active page link: `border-bottom: 2px solid var(--primary)`, full opacity
-- "Book Now" gradient pill button
+Used by all pages. Props:
 
-### Footer
+```ts
+type HeroProps = {
+  eyebrow?: string
+  headline: string
+  headlineAccent?: string     // rendered italic in primary color
+  subheading: string
+  imageUrl: string
+  imageAlt?: string
+  actions?: ReactNode         // CTA buttons
+  floatingCard?: ReactNode    // absolutely positioned over image column
+  fullViewport?: boolean
+}
+```
 
-- Not yet extracted as a component; each page currently inlines it.
-- Consider extracting to `src/components/Footer.tsx` if pages share the exact same markup.
+### `Footer` (`src/shared/ui/Footer.tsx`)
+
+Shared footer rendered in `App.tsx`. Uses `useLabels()` for link text. Three columns: brand/tagline, Connect links, Legal links.
+
+### `DynamicMuiIcon` (`src/shared/ui/DynamicMuiIcon.tsx`)
+
+Renders a MUI icon by name string. Uses an explicit curated registry of ~20 wellness icons to avoid bundle bloat. Supports both PascalCase (`"SelfImprovement"`) and snake_case (`"self_improvement"`) via `toPascalCase` fallback. To add an icon: import it explicitly and add to `REGISTRY`.
+
+### `Navbar` (`src/shared/navbar/ui/Navbar.tsx`)
+
+Glassmorphism fixed header. Nav links from `nav_links` collection. Responsive: hamburger + MUI `Drawer` on mobile. Active link: `border-bottom: 2px solid var(--primary)`. "Réserver" gradient pill CTA.
 
 ---
 
-## Directus CMS Schema (to create)
+## Directus CMS Collections
 
-| Collection         | Type      | Used by            |
-| ------------------ | --------- | ------------------ |
-| `nav_links`        | list      | Navbar (all pages) |
-| `home_page`        | singleton | Home               |
-| `events`           | list      | Events             |
-| `schedule_classes` | list      | Schedule           |
-| `studio_info`      | singleton | Contact            |
+| Collection    | Type      | Used by          |
+| ------------- | --------- | ---------------- |
+| `labels`      | list      | All pages        |
+| `nav_links`   | list      | Navbar           |
+| `home_page`   | singleton | Home             |
+| `events_page` | singleton | Events           |
+| `events`      | list      | Events           |
+| `classes_page`| singleton | Schedule         |
+| `classes`     | list      | Schedule         |
+| `studio_info` | singleton | Contact          |
 
 ---
 
 ## Adding a New Page — Checklist
 
-1. Add the Directus type to `src/share/directus/core/<collection>.ts`
-2. Add the query to `src/share/directus/core/directus.ts` (both the `Schema` type and the `Directus` factory)
-3. Expose via `useDirectus` hook
-4. Create the page component in `src/<page>/`
-5. Wire the page into `src/App.tsx` routing
-6. Reference `design/<page>/code.html` for the exact layout and `design/<page>/DESIGN.md` for design rules
+1. Create domain type in `src/<page>/core/<type>.ts`
+2. Create schema + converter in `src/shared/directus/core/<collection>-schema.ts`
+3. Add collection to `Schema` type and factory method in `src/shared/directus/core/directus.ts`
+4. Create hook in `src/<page>/core/use-<collection>.ts` (WeakMap + `use()` pattern)
+5. Build UI components in `src/<page>/ui/`
+6. Wire route in `src/App.tsx`
+7. Reference `design/<page>/code.html` for layout and `design/<page>/DESIGN.md` for design rules
 
 ---
 

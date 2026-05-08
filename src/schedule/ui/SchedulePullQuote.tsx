@@ -1,11 +1,15 @@
 import { Box, Typography } from '@mui/material';
 
-const SchedulePullQuote = () => (
+type Props = {
+  headline: string;
+};
+
+const SchedulePullQuote = ({ headline }: Props) => (
   <Box
     sx={{
       position: 'absolute',
-      bottom: '2rem',
-      left: '-2rem',
+      bottom: '1.5rem',
+      left: { xs: '1rem', md: '-1.5rem' },
       width: '18rem',
       bgcolor: 'rgba(250,250,245,0.92)',
       backdropFilter: 'blur(16px)',
@@ -22,22 +26,21 @@ const SchedulePullQuote = () => (
         fontStyle: 'italic',
         lineHeight: 1.5,
         color: 'var(--on-surface)',
-        mb: 1.5,
       }}
     >
-      "Le mouvement est une méditation, chaque séance un retour à soi."
-    </Typography>
-    <Typography
-      sx={{
-        fontFamily: 'Manrope, sans-serif',
-        fontSize: '0.75rem',
-        fontWeight: 600,
-        color: 'var(--primary)',
-        textTransform: 'uppercase',
-        letterSpacing: '0.08em',
-      }}
-    >
-      — Instructeur
+      <Box
+        component="span"
+        sx={{ fontSize: '1.5rem', color: 'var(--primary)', fontStyle: 'normal', userSelect: 'none' }}
+      >
+        "
+      </Box>
+      {headline}
+      <Box
+        component="span"
+        sx={{ fontSize: '1.5rem', color: 'var(--primary)', fontStyle: 'normal', userSelect: 'none' }}
+      >
+        "
+      </Box>
     </Typography>
   </Box>
 );

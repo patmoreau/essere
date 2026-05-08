@@ -29,7 +29,16 @@ const ScheduleClassCard = ({ scheduleClass }: Props) => {
         },
       }}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 1,
+          gap: 0.25,
+        }}
+      >
         <Typography
           sx={{
             fontSize: '0.6875rem',
@@ -47,6 +56,7 @@ const ScheduleClassCard = ({ scheduleClass }: Props) => {
             fontSize: '0.6875rem',
             fontFamily: 'Manrope, sans-serif',
             color: 'var(--on-surface-variant)',
+            whiteSpace: 'nowrap',
           }}
         >
           {scheduleClass.startTime} – {scheduleClass.endTime}

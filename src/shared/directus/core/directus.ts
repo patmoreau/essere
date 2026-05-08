@@ -1,14 +1,16 @@
-import {createDirectus, readItems, readSingleton, rest} from '@directus/sdk';
+import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
 
-import type {Event} from '../../../events/core/event.ts';
-import type {EventsPage} from "../../../events/core/events-page.ts";
-import type {HomePage} from '../../../home/core/home-page.ts';
-import {Config} from '../../config/core/config';
-import {EventSchema} from './event-schema.ts';
-import {EventsPageSchema} from "./events-page-schema.ts";
-import {HomePageSchema} from './home-page-schema.ts';
-import type {LabelSchema} from './label-schema.ts';
-import {NavLinkSchema} from './nav-link-schema.ts';
+import type { Event } from '../../../events/core/event.ts';
+import type { EventsPage } from '../../../events/core/events-page.ts';
+import type { HomePage } from '../../../home/core/home-page.ts';
+import type { ScheduleClass } from '../../../schedule/core/schedule-class.ts';
+import { Config } from '../../config/core/config';
+import { EventSchema } from './event-schema.ts';
+import { EventsPageSchema } from './events-page-schema.ts';
+import { HomePageSchema } from './home-page-schema.ts';
+import type { LabelSchema } from './label-schema.ts';
+import { NavLinkSchema } from './nav-link-schema.ts';
+import { ScheduleClassSchema } from './schedule-class-schema.ts';
 
 type Schema = {
   labels: LabelSchema[];
@@ -16,6 +18,7 @@ type Schema = {
   home_page: HomePageSchema;
   events: EventSchema[];
   events_page: EventsPageSchema;
+  classes: ScheduleClassSchema[];
 };
 
 export type Directus = {
@@ -24,6 +27,7 @@ export type Directus = {
   getHomePage(): Promise<HomePage>;
   getEvents(): Promise<Event[]>;
   getEventsPage(): Promise<EventsPage>;
+  getScheduleClasses(): Promise<ScheduleClass[]>;
 };
 
 export const Directus = (config: Config): Directus => {
@@ -48,7 +52,7 @@ export const Directus = (config: Config): Directus => {
   };
 
   const getLabels = async (): Promise<Record<string, string>> => {
-    const response = await directus.request(readItems('labels', {limit: -1}));
+    const response = await directus.request(readItems('labels', { limit: -1 }));
 
     return response.reduce(
       (acc, item) => {
@@ -60,7 +64,7 @@ export const Directus = (config: Config): Directus => {
   };
 
   const getNavLinks = async () => {
-    const response = await directus.request(readItems('nav_links', {sort: ['order']}));
+    const response = await directus.request(readItems('nav_links', { sort: ['order'] }));
 
     return response.map(NavLinkSchema.toNavLink);
   };
@@ -83,13 +87,19 @@ export const Directus = (config: Config): Directus => {
   };
 
   const getEvents = async (): Promise<Event[]> => {
+    const response = await directus.request(readItems('events', { sort: ['date_start'] }));
+
+    return response.map(item =>
+      EventSchema.toEvent({ ...item, image: resolveAssetUrl(item.image) }),
+    );
+  };
+
+  const getScheduleClasses = async (): Promise<ScheduleClass[]> => {
     const response = await directus.request(
-      readItems('events', {sort: ['date_start']}),
+      readItems('classes', { sort: ['start_date', 'start_time'], limit: -1 }),
     );
 
-    return response.map((item) =>
-      EventSchema.toEvent({...item, image: resolveAssetUrl(item.image)}),
-    );
+    return response.map(ScheduleClassSchema.toScheduleClass);
   };
 
   return {
@@ -98,5 +108,6 @@ export const Directus = (config: Config): Directus => {
     getHomePage: getHomePage,
     getEvents: getEvents,
     getEventsPage: getEventsPage,
+    getScheduleClasses: getScheduleClasses,
   };
 };

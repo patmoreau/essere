@@ -174,19 +174,20 @@ type Event = {
 
 ### 3. Schedule (`src/schedule/`)
 
-**Directus collection**: `schedule_classes` (list)
+**Directus collection**: `classes` (list)
 
 **Suggested type**:
 
 ```ts
-type ScheduleClass = {
+type Class = {
   id: string
-  title: string
-  category: 'Yoga' | 'Pilates' | 'Meditation' | 'Workshop'
+  class_title: string
+  category: 'yoga' | 'pilates' | 'meditation'
   instructor_name: string
-  level: 'Beginner' | 'Intermediate' | 'Advanced'
-  day_of_week: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday'
-  time: string // "07:00 AM"
+  start_date: string // "2024-04-20"
+  end_date: string // "2024-04-27"
+  start_time: string // "16:00"
+  end_time: string // "17:00"
   booking_url?: string // external booking link
 }
 ```
@@ -194,10 +195,12 @@ type ScheduleClass = {
 **Sections** (top to bottom):
 
 1. **Hero** — 12-column grid: editorial serif headline left ("A Rhythm / for Your Practice"), descriptive body copy, image right (4:5 aspect ratio, xl radius). Floating pull-quote card bottom-left.
-2. **Filter + Date Navigation** — sticky controls row. Filter chips (pill buttons: All Sessions, Yoga, Pilates, Meditation) + week navigator (Prev/Next with chevron icons, current week range centered). Separated from grid by thin `border-bottom: 1px solid rgba(var(--outline-variant), 0.2)`.
+2. **Filter + Date Navigation** — sticky controls row. Filter chips (pill buttons: All Sessions, Yoga, Pilates, Méditation) + week navigator (Prev/Next with chevron icons, current week range centered). Separated from grid by thin `border-bottom: 1px solid rgba(var(--outline-variant), 0.2)`.
 3. **Weekly Grid** — 7-column CSS grid (Mon–Sun). Each day column: day name + date number header. Class cards alternate between `surface-container-lowest` and `surface-container-low` backgrounds (no dividers). Card layout: category label + time (top row), serif class title, instructor + level, Register button (hover: fill to primary). Workshop-type cards use a `primary-container` tint.
-4. **Membership CTA** — rounded `surface-container` card (`border-radius: 1.5rem`), text left + studio image right. Primary pill button "Explore Memberships."
-5. **Footer** — same 3-column structure.
+   - Each class is a weekly occurrence.
+   - start_date is the first class until end_date. It represents a session.
+   - start_time is the first class until end_time.
+4. **Footer** — same 3-column structure.
 
 ---
 

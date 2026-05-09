@@ -37,11 +37,14 @@ const HomePage = () => {
                   boxShadow: 'none',
                 },
               }}
+              onClick={() => {
+                window.location.href = '/evenements';
+              }}
             >
               {data.heroCtaPrimaryLabel}
             </Button>
             <Link
-              href="/"
+              href="/cours"
               underline="none"
               color="text.primary"
               sx={{ fontSize: '0.875rem', fontWeight: 500 }}

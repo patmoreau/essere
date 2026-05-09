@@ -42,7 +42,7 @@ export default function Navbar() {
           </Typography>
 
           <Box component="nav" sx={{ display: { xs: 'none', md: 'flex' }, gap: 5 }}>
-            {links.map((link) => (
+            {links.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -55,24 +55,26 @@ export default function Navbar() {
             ))}
           </Box>
 
-          <Button
-            variant="contained"
-            sx={{
-              display: { xs: 'none', md: 'inline-flex' },
-              px: 3,
-              py: 1.1,
-              color: 'primary.contrastText',
-              background: 'linear-gradient(135deg, #4c644b, #405840)',
-              boxShadow: 'none',
-              '&:hover': {
+          {labels['nav.cta'] && (
+            <Button
+              variant="contained"
+              sx={{
+                display: { xs: 'none', md: 'inline-flex' },
+                px: 3,
+                py: 1.1,
+                color: 'primary.contrastText',
                 background: 'linear-gradient(135deg, #4c644b, #405840)',
-                opacity: 0.92,
                 boxShadow: 'none',
-              },
-            }}
-          >
-            {labels['nav.cta'] || 'Book Now'}
-          </Button>
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #4c644b, #405840)',
+                  opacity: 0.92,
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              {labels['nav.cta']}
+            </Button>
+          )}
 
           <IconButton
             onClick={() => setOpen(true)}
@@ -109,7 +111,7 @@ export default function Navbar() {
         </Box>
 
         <Stack component="nav" spacing={4} sx={{ flex: 1 }}>
-          {links.map((link) => (
+          {links.map(link => (
             <Link
               key={link.href}
               href={link.href}

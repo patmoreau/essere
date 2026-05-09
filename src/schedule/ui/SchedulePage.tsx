@@ -6,7 +6,6 @@ import { addDays, getWeekStart } from '../core/schedule-utils.ts';
 import { useClassesPage } from '../core/use-classes-page.ts';
 import { useScheduleClasses } from '../core/use-schedule-classes.ts';
 import ScheduleFilterBar, { type ScheduleFilter } from './ScheduleFilterBar.tsx';
-import ScheduleMembershipCta from './ScheduleMembershipCta.tsx';
 import SchedulePullQuote from './SchedulePullQuote.tsx';
 import ScheduleWeekGrid from './ScheduleWeekGrid.tsx';
 
@@ -51,8 +50,6 @@ const SchedulePage = () => {
       >
         <ScheduleWeekGrid classes={filteredClasses} weekStart={weekStart} />
       </Box>
-
-      <ScheduleMembershipCta />
     </Box>
   );
 };

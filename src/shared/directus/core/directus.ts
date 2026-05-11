@@ -1,5 +1,6 @@
 import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
 
+import type { Instructor } from '../../../contact/core/instructor.ts';
 import type { Event } from '../../../events/core/event.ts';
 import type { EventsPage } from '../../../events/core/events-page.ts';
 import type { HomePage } from '../../../home/core/home-page.ts';
@@ -10,6 +11,7 @@ import { ClassesPageSchema } from './classes-page-schema.ts';
 import { EventSchema } from './event-schema.ts';
 import { EventsPageSchema } from './events-page-schema.ts';
 import { HomePageSchema } from './home-page-schema.ts';
+import { InstructorSchema } from './instructor-schema.ts';
 import type { LabelSchema } from './label-schema.ts';
 import { NavLinkSchema } from './nav-link-schema.ts';
 import { ScheduleClassSchema } from './schedule-class-schema.ts';
@@ -22,6 +24,7 @@ type Schema = {
   events_page: EventsPageSchema;
   classes: ScheduleClassSchema[];
   classes_page: ClassesPageSchema;
+  instructors: InstructorSchema[];
 };
 
 export type Directus = {
@@ -32,6 +35,7 @@ export type Directus = {
   getEventsPage(): Promise<EventsPage>;
   getScheduleClasses(): Promise<ScheduleClass[]>;
   getClassesPage(): Promise<ClassesPage>;
+  getInstructors(): Promise<Instructor[]>;
 };
 
 export const Directus = (config: Config): Directus => {
@@ -114,6 +118,13 @@ export const Directus = (config: Config): Directus => {
     });
   };
 
+  const getInstructors = async (): Promise<Instructor[]> => {
+    const response = await directus.request(readItems('instructors', { limit: -1 }));
+    return response.map(item =>
+      InstructorSchema.toInstructor({ ...item, picture: resolveAssetUrl(item.picture) }),
+    );
+  };
+
   return {
     getLabels: getLabels,
     getNavLinks: getNavLinks,
@@ -122,5 +133,6 @@ export const Directus = (config: Config): Directus => {
     getEventsPage: getEventsPage,
     getScheduleClasses: getScheduleClasses,
     getClassesPage: getClassesPage,
+    getInstructors: getInstructors,
   };
 };

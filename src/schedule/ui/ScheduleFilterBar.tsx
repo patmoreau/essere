@@ -22,7 +22,13 @@ const FILTERS: { value: ScheduleFilter; label: string }[] = [
   { value: 'Meditation', label: 'Méditation' },
 ];
 
-const ScheduleFilterBar = ({ activeFilter, onFilterChange, weekStart, onPrevWeek, onNextWeek }: Props) => (
+const ScheduleFilterBar = ({
+  activeFilter,
+  onFilterChange,
+  weekStart,
+  onPrevWeek,
+  onNextWeek,
+}: Props) => (
   <Box
     sx={{
       position: 'sticky',

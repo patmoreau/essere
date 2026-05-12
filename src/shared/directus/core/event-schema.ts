@@ -1,4 +1,4 @@
-import type {Event} from '../../../events/core/event.ts';
+import type { Event } from '../../../events/core/event.ts';
 
 export type EventSchema = {
   id: string;
@@ -26,4 +26,4 @@ const toEvent = (schema: EventSchema): Event => ({
   bookingUrl: schema.booking_url ?? '',
 });
 
-export const EventSchema = {toEvent} as const;
+export const EventSchema = { toEvent } as const;

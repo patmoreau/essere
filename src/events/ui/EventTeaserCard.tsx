@@ -42,9 +42,7 @@ const EventTeaserCard = ({ headline, event }: Props) => (
       }}
     >
       {event.title} —{' '}
-      {event.description.length > 80
-        ? `${event.description.slice(0, 80)}…`
-        : event.description}
+      {event.description.length > 80 ? `${event.description.slice(0, 80)}…` : event.description}
     </Typography>
   </Box>
 );

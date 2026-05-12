@@ -1,4 +1,4 @@
-import type {EventsPage} from "../../../events/core/events-page.ts";
+import type { EventsPage } from '../../../events/core/events-page.ts';
 
 export type EventsPageSchema = {
   hero_eyebrow: string;

@@ -1,15 +1,15 @@
-import {Box, Button, Stack, Typography} from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
-import type {Event} from '../core/event.ts';
-import {formatEventDateRange} from "../core/format-event-date.ts";
+import type { Event } from '../core/event.ts';
+import { formatEventDateRange } from '../core/format-event-date.ts';
 
 type Props = { event: Event };
 
-const EventCardFeature = ({event}: Props) => (
+const EventCardFeature = ({ event }: Props) => (
   <Box
     component="article"
     sx={{
-      gridColumn: {md: 'span 12'},
+      gridColumn: { md: 'span 12' },
       bgcolor: 'primary.main',
       borderRadius: 'var(--radius-xl)',
       overflow: 'hidden',
@@ -17,7 +17,7 @@ const EventCardFeature = ({event}: Props) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      p: {xs: 6, md: 8},
+      p: { xs: 6, md: 8 },
       textAlign: 'center',
     }}
   >
@@ -37,12 +37,12 @@ const EventCardFeature = ({event}: Props) => (
         pointerEvents: 'none',
       }}
     />
-    <Box sx={{position: 'relative', zIndex: 1, maxWidth: '32rem'}}>
+    <Box sx={{ position: 'relative', zIndex: 1, maxWidth: '32rem' }}>
       <Typography
         component="h2"
         sx={{
           fontFamily: 'Noto Serif, serif',
-          fontSize: {xs: '2rem', md: '2.5rem'},
+          fontSize: { xs: '2rem', md: '2.5rem' },
           fontWeight: 400,
           color: 'primary.contrastText',
           mb: 3,
@@ -57,9 +57,9 @@ const EventCardFeature = ({event}: Props) => (
           mb: 4,
           lineHeight: 1.7,
         }}
-        dangerouslySetInnerHTML={{__html: event.description}}
+        dangerouslySetInnerHTML={{ __html: event.description }}
       />
-      <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" sx={{mb: 5}}>
+      <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" sx={{ mb: 5 }}>
         <Box
           component="span"
           sx={{
@@ -113,7 +113,7 @@ const EventCardFeature = ({event}: Props) => (
           px: 5,
           py: 2,
           transition: 'all 300ms ease-out',
-          '&:hover': {transform: 'scale(1.05)', bgcolor: 'primary.light'},
+          '&:hover': { transform: 'scale(1.05)', bgcolor: 'primary.light' },
         }}
       >
         Explorer l'Itinéraire

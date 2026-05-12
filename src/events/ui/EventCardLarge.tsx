@@ -89,8 +89,13 @@ const EventCardLarge = ({ event }: Props) => (
           {event.title}
         </Typography>
         <Typography
-          sx={{ fontFamily: 'Manrope, sans-serif', color: 'text.secondary', lineHeight: 1.7, mb: 3 }}
-          dangerouslySetInnerHTML={{__html: event.description}}
+          sx={{
+            fontFamily: 'Manrope, sans-serif',
+            color: 'text.secondary',
+            lineHeight: 1.7,
+            mb: 3,
+          }}
+          dangerouslySetInnerHTML={{ __html: event.description }}
         />
       </Box>
       <Button

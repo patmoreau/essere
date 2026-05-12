@@ -67,9 +67,7 @@ const ScheduleDayColumn = ({ day, date, classes }: Props) => (
           </Typography>
         </Box>
       ) : (
-        classes.map((cls) => (
-          <ScheduleClassCard key={cls.id} scheduleClass={cls} />
-        ))
+        classes.map(cls => <ScheduleClassCard key={cls.id} scheduleClass={cls} />)
       )}
     </Box>
   </Box>

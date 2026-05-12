@@ -9,7 +9,11 @@ const ContactPage = () => {
       <InstructorsSection />
       <Box
         component="section"
-        sx={{ bgcolor: 'var(--surface-container-low)', py: { xs: 10, md: 16 }, px: { xs: 2, md: 6 } }}
+        sx={{
+          bgcolor: 'var(--surface-container-low)',
+          py: { xs: 10, md: 16 },
+          px: { xs: 2, md: 6 },
+        }}
       >
         <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
           <Box

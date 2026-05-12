@@ -1,8 +1,8 @@
-import {use} from 'react';
+import { use } from 'react';
 
-import type {Directus} from '../../shared/directus/core/directus.ts';
-import {useDirectus} from '../../shared/directus/core/use-directus.ts';
-import type {EventsPage} from "./events-page.ts";
+import type { Directus } from '../../shared/directus/core/directus.ts';
+import { useDirectus } from '../../shared/directus/core/use-directus.ts';
+import type { EventsPage } from './events-page.ts';
 
 const eventsRequests = new WeakMap<Directus, Promise<EventsPage>>();
 

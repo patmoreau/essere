@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 
 import Hero from '../../shared/ui/Hero.tsx';
 import { useEvents } from '../core/use-events.ts';
-import {useEventsPage} from "../core/use-events-page.ts";
+import { useEventsPage } from '../core/use-events-page.ts';
 import EventsBentoGrid from './EventsBentoGrid.tsx';
 import EventsNewsletterSection from './EventsNewsletterSection.tsx';
 import EventTeaserCard from './EventTeaserCard.tsx';
@@ -10,7 +10,7 @@ import EventTeaserCard from './EventTeaserCard.tsx';
 const EventsPage = () => {
   const eventsPage = useEventsPage();
   const events = useEvents();
-  const featuredEvent = events.find((e) => e.featured);
+  const featuredEvent = events.find(e => e.featured);
 
   return (
     <Box>
@@ -21,7 +21,11 @@ const EventsPage = () => {
         subheading={eventsPage.heroSubheading}
         imageUrl={events[0]?.imageUrl ?? ''}
         imageAlt={events[0]?.title}
-        floatingCard={featuredEvent && <EventTeaserCard headline={eventsPage.eventFeaturedHeadline} event={featuredEvent} />}
+        floatingCard={
+          featuredEvent && (
+            <EventTeaserCard headline={eventsPage.eventFeaturedHeadline} event={featuredEvent} />
+          )
+        }
       />
       <EventsBentoGrid events={events} />
       <EventsNewsletterSection />

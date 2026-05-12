@@ -47,7 +47,7 @@ const REGISTRY: Record<string, ComponentType<SvgIconProps>> = {
 const toPascalCase = (name: string) =>
   name
     .split('_')
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .map(s => s.charAt(0).toUpperCase() + s.slice(1))
     .join('');
 
 type Props = SvgIconProps & { name: string };

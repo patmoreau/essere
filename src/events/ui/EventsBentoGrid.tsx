@@ -34,7 +34,7 @@ const EventsBentoGrid = ({ events }: Props) => {
           gap: 4,
         }}
       >
-        {events.map((event) => {
+        {events.map(event => {
           if (event.featured) {
             return <EventCardFeature key={event.id} event={event} />;
           }

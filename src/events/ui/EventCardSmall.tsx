@@ -26,9 +26,7 @@ const EventCardSmall = ({ event, ctaLabel, variant = 'default' }: Props) => (
     }}
   >
     <Box>
-      <Box
-        sx={{ aspectRatio: '1/1', borderRadius: 'var(--radius-md)', overflow: 'hidden', mb: 3 }}
-      >
+      <Box sx={{ aspectRatio: '1/1', borderRadius: 'var(--radius-md)', overflow: 'hidden', mb: 3 }}>
         <Box
           component="img"
           src={event.imageUrl}

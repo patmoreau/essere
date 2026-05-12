@@ -30,14 +30,24 @@ const SchedulePullQuote = ({ headline }: Props) => (
     >
       <Box
         component="span"
-        sx={{ fontSize: '1.5rem', color: 'var(--primary)', fontStyle: 'normal', userSelect: 'none' }}
+        sx={{
+          fontSize: '1.5rem',
+          color: 'var(--primary)',
+          fontStyle: 'normal',
+          userSelect: 'none',
+        }}
       >
         "
       </Box>
       {headline}
       <Box
         component="span"
-        sx={{ fontSize: '1.5rem', color: 'var(--primary)', fontStyle: 'normal', userSelect: 'none' }}
+        sx={{
+          fontSize: '1.5rem',
+          color: 'var(--primary)',
+          fontStyle: 'normal',
+          userSelect: 'none',
+        }}
       >
         "
       </Box>

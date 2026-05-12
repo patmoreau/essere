@@ -43,7 +43,7 @@ const EventsNewsletterSection = () => {
         </Typography>
         <Box
           component="form"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={e => e.preventDefault()}
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
@@ -56,7 +56,7 @@ const EventsNewsletterSection = () => {
             type="email"
             placeholder="Adresse e-mail"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             required
             sx={{
               flex: 1,

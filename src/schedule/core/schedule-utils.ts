@@ -1,9 +1,22 @@
 import type { ScheduleClass } from './schedule-class.ts';
 
-export type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+export type DayOfWeek =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday';
 
 export const DAYS_OF_WEEK: DayOfWeek[] = [
-  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
 ];
 
 export const DAY_LABELS_FR: Record<DayOfWeek, string> = {
@@ -34,7 +47,13 @@ const parseLocalDate = (dateStr: string): Date => {
 };
 
 const JS_DAY_TO_DOW: DayOfWeek[] = [
-  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
 ];
 
 export const getDayOfWeek = (dateStr: string): DayOfWeek =>
@@ -63,8 +82,18 @@ export const addDays = (date: Date, days: number): Date => {
 };
 
 const MONTH_SHORT_FR = [
-  'jan', 'fév', 'mar', 'avr', 'mai', 'juin',
-  'juil', 'août', 'sep', 'oct', 'nov', 'déc',
+  'jan',
+  'fév',
+  'mar',
+  'avr',
+  'mai',
+  'juin',
+  'juil',
+  'août',
+  'sep',
+  'oct',
+  'nov',
+  'déc',
 ];
 
 export const formatDayDate = (date: Date): string => {

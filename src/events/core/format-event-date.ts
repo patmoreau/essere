@@ -3,7 +3,10 @@ const timePart = (iso: string) => (iso.split('T')[1] ?? '').slice(0, 5);
 
 const formatDate = (iso: string): string => {
   const [year, month, day] = datePart(iso).split('-').map(Number);
-  return new Date(year, month - 1, day).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  return new Date(year, month - 1, day).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+  });
 };
 
 const isSameDay = (a: string, b: string): boolean => datePart(a) === datePart(b);

@@ -15,7 +15,7 @@ export default function App() {
     <Suspense fallback={<LoadingFallback />}>
       <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
         <Navbar />
-        <Box component="main" sx={{ pt: { xs: 11, md: 13 } }}>
+        <Box component="main" sx={{ pt: 14 }}>
           <Routes>
             <Route path="/" element={<Navigate to="/accueil" replace />} />
             <Route path="/accueil" element={<HomePage />} />

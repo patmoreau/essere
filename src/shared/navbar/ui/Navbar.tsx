@@ -34,12 +34,20 @@ export default function Navbar() {
         }}
       >
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 6 }, py: 2.5 }}>
-          <Typography
-            variant="subtitle1"
-            sx={{ fontFamily: 'Noto Serif, serif', color: 'text.primary' }}
-          >
-            {labels['nav.title']}
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Box
+              component="img"
+              src="/essere_logo_round.png"
+              alt="Essere logo"
+              sx={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover' }}
+            />
+            <Typography
+              variant="subtitle1"
+              sx={{ fontFamily: 'Noto Serif, serif', color: 'text.primary' }}
+            >
+              {labels['nav.title']}
+            </Typography>
+          </Stack>
 
           <Box component="nav" sx={{ display: { xs: 'none', md: 'flex' }, gap: 5 }}>
             {links.map(link => (

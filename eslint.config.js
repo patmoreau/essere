@@ -27,31 +27,25 @@ export default defineConfig([
     extends: [js.configs.recommended],
     languageOptions: {
       parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
+        ecmaFeatures: { jsx: true },
       },
       globals: globals.browser,
     },
     plugins: {
-      react,
       'unused-imports': unusedImports,
       'simple-import-sort': simpleImportSort,
-      prettier: prettierPlugin,
     },
     rules: {
-      'react/jsx-uses-react': 'error',
-      'react/jsx-uses-vars': 'error',
       'unused-imports/no-unused-imports': 'error',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-      'prettier/prettier': ['error', prettierOptions],
     },
   },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
       tseslint.configs.recommended,
+      react.configs.flat['jsx-runtime'],
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       jsxA11y.flatConfigs.recommended,
@@ -64,6 +58,14 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    },
+  },
+  {
+    plugins: {
+      prettier: prettierPlugin,
+    },
+    rules: {
+      'prettier/prettier': ['error', prettierOptions],
     },
   },
   eslintConfigPrettier,

@@ -2,6 +2,8 @@ import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
 
 import type { Event } from '../../../events/core/event.ts';
 import type { EventsPage } from '../../../events/core/events-page.ts';
+import type { ContactData } from './contact-data.ts';
+import type { RegistrationData } from './registration-data.ts';
 import type { HomePage } from '../../../home/core/home-page.ts';
 import type { Instructor } from '../../../instructors/core/instructor.ts';
 import type { ClassesPage } from '../../../schedule/core/classes-page.ts';
@@ -36,6 +38,8 @@ export type Directus = {
   getScheduleClasses(): Promise<ScheduleClass[]>;
   getClassesPage(): Promise<ClassesPage>;
   getInstructors(): Promise<Instructor[]>;
+  submitContactForm(data: ContactData): Promise<void>;
+  submitRegistration(data: RegistrationData): Promise<void>;
 };
 
 export const Directus = (config: Config): Directus => {
@@ -125,6 +129,24 @@ export const Directus = (config: Config): Directus => {
     );
   };
 
+  const submitContactForm = async (data: ContactData): Promise<void> => {
+    const response = await fetch('/directus/flows/trigger/2dba2ee5-6e53-4a21-b263-559b6d6abe9c', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error(`Erreur ${response.status}`);
+  };
+
+  const submitRegistration = async (data: RegistrationData): Promise<void> => {
+    const response = await fetch('/directus/flows/trigger/55434e74-19c5-4847-a9a6-a12f464941ae', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error(`Erreur ${response.status}`);
+  };
+
   return {
     getLabels: getLabels,
     getNavLinks: getNavLinks,
@@ -134,5 +156,7 @@ export const Directus = (config: Config): Directus => {
     getScheduleClasses: getScheduleClasses,
     getClassesPage: getClassesPage,
     getInstructors: getInstructors,
+    submitContactForm: submitContactForm,
+    submitRegistration: submitRegistration,
   };
 };

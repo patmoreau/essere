@@ -1,8 +1,8 @@
 import { Box, Button, InputBase, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 
+import { useDirectus } from '../../shared/directus/core/use-directus.ts';
 import { useLabels } from '../../shared/labels/core/use-labels.ts';
-import { submitContactForm } from '../core/contact';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -36,6 +36,7 @@ const labelSx = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const ConnectWithUsCard = () => {
+  const directus = useDirectus();
   const labels = useLabels();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ const ConnectWithUsCard = () => {
     }
     setState('submitting');
     try {
-      await submitContactForm({ name, email, message });
+      await directus.submitContactForm({ name, email, message });
       setState('success');
       setName('');
       setEmail('');

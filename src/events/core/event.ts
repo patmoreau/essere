@@ -9,4 +9,5 @@ export type Event = {
   imageUrl: string;
   featured: boolean;
   bookingUrl?: string;
+  deposit?: string;
 };

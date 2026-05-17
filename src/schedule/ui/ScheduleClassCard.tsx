@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 
+import { useLabels } from '../../shared/labels/core/use-labels.ts';
 import type { ScheduleClass } from '../core/schedule-class.ts';
 import { CATEGORY_COLORS, CATEGORY_LABELS_FR } from '../core/schedule-utils.ts';
 
@@ -14,6 +15,7 @@ const CATEGORY_BG: Record<ScheduleClass['category'], string> = {
 };
 
 const ScheduleClassCard = ({ scheduleClass }: Props) => {
+  const labels = useLabels();
   const categoryColor = CATEGORY_COLORS[scheduleClass.category];
 
   return (
@@ -87,12 +89,9 @@ const ScheduleClassCard = ({ scheduleClass }: Props) => {
         {scheduleClass.instructorName}
       </Typography>
 
-      {scheduleClass.bookingUrl && (
+      {scheduleClass.full ? (
         <Button
-          component="a"
-          href={scheduleClass.bookingUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          disabled
           size="small"
           sx={{
             fontSize: '0.6875rem',
@@ -100,20 +99,42 @@ const ScheduleClassCard = ({ scheduleClass }: Props) => {
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.06em',
-            color: 'var(--primary)',
             px: 1.5,
             py: 0.5,
             borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--primary)',
-            '&:hover': {
-              bgcolor: 'var(--primary)',
-              color: 'var(--on-primary)',
-            },
-            transition: 'all 300ms ease-out',
           }}
         >
-          Réserver
+          {labels['button_full']}
         </Button>
+      ) : (
+        scheduleClass.bookingUrl && (
+          <Button
+            component="a"
+            href={scheduleClass.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="small"
+            sx={{
+              fontSize: '0.6875rem',
+              fontFamily: 'Manrope, sans-serif',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+              color: 'var(--primary)',
+              px: 1.5,
+              py: 0.5,
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--primary)',
+              '&:hover': {
+                bgcolor: 'var(--primary)',
+                color: 'var(--on-primary)',
+              },
+              transition: 'all 300ms ease-out',
+            }}
+          >
+            Réserver
+          </Button>
+        )
       )}
     </Box>
   );

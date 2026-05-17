@@ -10,6 +10,7 @@ export type ScheduleClassSchema = {
   start_time: string;
   end_time: string;
   booking_url?: string | null;
+  full: boolean;
 };
 
 const CATEGORY_MAP: Record<ScheduleClassSchema['category'], ScheduleClass['category']> = {
@@ -28,6 +29,7 @@ const toScheduleClass = (schema: ScheduleClassSchema): ScheduleClass => ({
   startTime: schema.start_time.slice(0, 5),
   endTime: schema.end_time.slice(0, 5),
   bookingUrl: schema.booking_url ?? undefined,
+  full: schema.full,
 });
 
 export const ScheduleClassSchema = { toScheduleClass } as const;

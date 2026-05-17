@@ -63,6 +63,7 @@ The Directus instance is created from Config at app startup via `Directus(config
 | `pnpm dev` | Start Vite + custom config middleware; proxy Directus |
 | `pnpm build` | Run `tsc -b` type check, then `vite build` (outputs dist/) |
 | `pnpm lint` | ESLint on all .ts/.tsx files |
+| `pnpm run deploy` | Build and push the Docker image (`essere-app`, linux/amd64) — run this when asked to deploy |
 | `docker build` | Creates `essere-app` image (see Dockerfile + nginx.conf) |
 
 Docker build:

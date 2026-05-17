@@ -359,8 +359,9 @@ Glassmorphism fixed header. Nav links from `nav_links` collection. Responsive: h
 ## Commands
 
 ```bash
-pnpm dev        # Start dev server
-pnpm build      # TypeScript check + Vite build
-pnpm lint       # ESLint
-pnpm preview    # Preview production build
+pnpm dev           # Start dev server
+pnpm build         # TypeScript check + Vite build
+pnpm lint          # ESLint
+pnpm preview       # Preview production build
+pnpm run deploy    # Build and push Docker image — use this when asked to deploy
 ```

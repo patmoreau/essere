@@ -1,3 +1,4 @@
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
@@ -32,6 +33,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<FormErrors>({ fullName: '', email: '' });
+  const [submitted, setSubmitted] = useState(false);
 
   const validate = (): boolean => {
     const next: FormErrors = { fullName: '', email: '' };
@@ -46,14 +48,14 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    if (event.bookingUrl) window.open(event.bookingUrl, '_blank', 'noopener,noreferrer');
-    handleClose();
+    setSubmitted(true);
   };
 
   const handleClose = () => {
     setFullName('');
     setEmail('');
     setErrors({ fullName: '', email: '' });
+    setSubmitted(false);
     onClose();
   };
 
@@ -120,49 +122,99 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
       </DialogTitle>
 
       <DialogContent sx={{ p: { xs: 3, md: 4 } }}>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
-          <TextField
-            label="Nom complet"
-            value={fullName}
-            onChange={e => setFullName(e.target.value)}
-            error={!!errors.fullName}
-            helperText={errors.fullName}
-            fullWidth
-            required
-            autoComplete="name"
-            sx={{ mb: 3 }}
-          />
-          <TextField
-            label="Adresse courriel"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            error={!!errors.email}
-            helperText={errors.email}
-            fullWidth
-            required
-            autoComplete="email"
-            sx={{ mb: 4 }}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            sx={{
-              background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
-              color: 'var(--on-primary)',
-              borderRadius: '9999px',
-              fontFamily: 'Manrope, sans-serif',
-              fontWeight: 700,
-              py: 1.75,
-              fontSize: '0.9375rem',
-              textTransform: 'none',
-              transition: 'all 300ms ease-out',
-              '&:hover': { opacity: 0.9, transform: 'translateY(-1px)' },
-            }}
-          >
-            Confirmer l'inscription
-          </Button>
-        </Box>
+        {submitted ? (
+          <Box sx={{ textAlign: 'center', py: { xs: 4, md: 6 } }}>
+            <CheckCircleOutlineIcon sx={{ fontSize: '3.5rem', color: 'var(--primary)', mb: 2 }} />
+            <Typography
+              component="h3"
+              sx={{
+                fontFamily: 'Noto Serif, serif',
+                fontSize: '1.5rem',
+                fontWeight: 400,
+                color: 'var(--on-background)',
+                mb: 1.5,
+              }}
+            >
+              Demande reçue !
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily: 'Manrope, sans-serif',
+                color: 'var(--on-surface-variant)',
+                lineHeight: 1.7,
+                mb: 4,
+              }}
+            >
+              Merci, {fullName.trim().split(' ')[0]}. Vous recevrez sous peu un courriel à{' '}
+              <Box component="span" sx={{ fontWeight: 700, color: 'var(--on-surface)' }}>
+                {email}
+              </Box>{' '}
+              avec les instructions pour finaliser votre inscription.
+            </Typography>
+            <Button
+              onClick={handleClose}
+              sx={{
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
+                color: 'var(--on-primary)',
+                borderRadius: '9999px',
+                fontFamily: 'Manrope, sans-serif',
+                fontWeight: 700,
+                py: 1.5,
+                px: 4,
+                fontSize: '0.9375rem',
+                textTransform: 'none',
+                transition: 'all 300ms ease-out',
+                '&:hover': { opacity: 0.9 },
+              }}
+            >
+              Fermer
+            </Button>
+          </Box>
+        ) : (
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
+            <TextField
+              label="Nom complet"
+              value={fullName}
+              onChange={e => setFullName(e.target.value)}
+              error={!!errors.fullName}
+              helperText={errors.fullName}
+              fullWidth
+              required
+              autoComplete="name"
+              sx={{ mb: 3 }}
+            />
+            <TextField
+              label="Adresse courriel"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              error={!!errors.email}
+              helperText={errors.email}
+              fullWidth
+              required
+              autoComplete="email"
+              sx={{ mb: 4 }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              sx={{
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
+                color: 'var(--on-primary)',
+                borderRadius: '9999px',
+                fontFamily: 'Manrope, sans-serif',
+                fontWeight: 700,
+                py: 1.75,
+                fontSize: '0.9375rem',
+                textTransform: 'none',
+                transition: 'all 300ms ease-out',
+                '&:hover': { opacity: 0.9, transform: 'translateY(-1px)' },
+              }}
+            >
+              Confirmer l'inscription
+            </Button>
+          </Box>
+        )}
       </DialogContent>
     </Dialog>
   );

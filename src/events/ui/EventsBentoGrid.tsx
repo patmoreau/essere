@@ -42,7 +42,7 @@ const EventsBentoGrid = ({ events }: Props) => {
           return isLargeCard(i) ? (
             <EventCardLarge key={event.id} event={event} />
           ) : (
-            <EventCardSmall key={event.id} event={event} ctaLabel="En savoir plus" />
+            <EventCardSmall key={event.id} event={event} />
           );
         })}
       </Box>

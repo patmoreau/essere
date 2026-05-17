@@ -1,4 +1,4 @@
-import type { Instructor } from '../../../contact/core/instructor.ts';
+import type { Instructor } from '../../../instructors/core/instructor.ts';
 
 export type InstructorSchema = {
   id: string;

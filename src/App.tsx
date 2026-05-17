@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import ContactPage from './contact/ui/ContactPage.tsx';
 import EventsPage from './events/ui/EventsPage.tsx';
 import HomePage from './home/ui/HomePage.tsx';
+import InstructorsPage from './instructors/ui/InstructorsPage.tsx';
 import SchedulePage from './schedule/ui/SchedulePage.tsx';
 import Navbar from './shared/navbar/ui/Navbar';
 import Footer from './shared/ui/Footer.tsx';
@@ -19,9 +20,10 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/accueil" replace />} />
             <Route path="/accueil" element={<HomePage />} />
-            <Route path="/contact" element={<ContactPage />} />
             <Route path="/evenements" element={<EventsPage />} />
+            <Route path="/instructeurs" element={<InstructorsPage />} />
             <Route path="/cours" element={<SchedulePage />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </Box>
         <Footer />

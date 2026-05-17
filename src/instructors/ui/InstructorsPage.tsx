@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { useInstructors } from '../core/use-instructors.ts';
 import InstructorCard from './InstructorCard.tsx';
 
-const InstructorsSection = () => {
+const InstructorsPage = () => {
   const instructors = useInstructors();
 
   return (
@@ -32,4 +32,4 @@ const InstructorsSection = () => {
   );
 };
 
-export default InstructorsSection;
+export default InstructorsPage;

@@ -1,6 +1,6 @@
 import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
 
-import type { Instructor } from '../../../contact/core/instructor.ts';
+import type { Instructor } from '../../../instructors/core/instructor.ts';
 import type { Event } from '../../../events/core/event.ts';
 import type { EventsPage } from '../../../events/core/events-page.ts';
 import type { HomePage } from '../../../home/core/home-page.ts';

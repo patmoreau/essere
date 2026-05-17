@@ -15,6 +15,7 @@ import {
 import { useState } from 'react';
 
 import type { Event } from '../core/event.ts';
+import { useEventsPage } from '../core/use-events-page.ts';
 
 type Props = {
   open: boolean;
@@ -30,6 +31,7 @@ type FormErrors = {
 const EventRegistrationModal = ({ open, event, onClose }: Props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const eventsPage = useEventsPage();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<FormErrors>({ fullName: '', email: '' });
@@ -37,10 +39,10 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
 
   const validate = (): boolean => {
     const next: FormErrors = { fullName: '', email: '' };
-    if (!fullName.trim()) next.fullName = 'Le nom complet est requis.';
-    if (!email.trim()) next.email = "L'adresse courriel est requise.";
+    if (!fullName.trim()) next.fullName = eventsPage.registerFullNameError;
+    if (!email.trim()) next.email = eventsPage.registerEmailRequiredError;
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      next.email = "L'adresse courriel est invalide.";
+      next.email = eventsPage.registerEmailInvalidError;
     setErrors(next);
     return !next.fullName && !next.email;
   };
@@ -96,7 +98,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
                 mb: 0.5,
               }}
             >
-              Inscription
+              {eventsPage.registerEyebrow}
             </Typography>
             <Typography
               component="h2"
@@ -113,7 +115,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
           <IconButton
             onClick={handleClose}
             size="small"
-            aria-label="Fermer"
+            aria-label={eventsPage.registerCloseLabel}
             sx={{ mt: 0.5, color: 'var(--on-surface-variant)' }}
           >
             <CloseIcon />
@@ -135,7 +137,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
                 mb: 1.5,
               }}
             >
-              Demande reçue !
+              {eventsPage.confirmHeadline}
             </Typography>
             <Typography
               sx={{
@@ -145,11 +147,12 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
                 mb: 4,
               }}
             >
-              Merci, {fullName.trim().split(' ')[0]}. Vous recevrez sous peu un courriel à{' '}
+              {eventsPage.confirmBodyBeforeName} {fullName.trim().split(' ')[0]}
+              {eventsPage.confirmBodyBeforeEmail}{' '}
               <Box component="span" sx={{ fontWeight: 700, color: 'var(--on-surface)' }}>
                 {email}
               </Box>{' '}
-              avec les instructions pour finaliser votre inscription.
+              {eventsPage.confirmBodyAfterEmail}
             </Typography>
             <Button
               onClick={handleClose}
@@ -167,13 +170,13 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
                 '&:hover': { opacity: 0.9 },
               }}
             >
-              Fermer
+              {eventsPage.confirmCloseLabel}
             </Button>
           </Box>
         ) : (
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
             <TextField
-              label="Nom complet"
+              label={eventsPage.registerFullNameLabel}
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               error={!!errors.fullName}
@@ -184,7 +187,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
               sx={{ mb: 3 }}
             />
             <TextField
-              label="Adresse courriel"
+              label={eventsPage.registerEmailLabel}
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -211,7 +214,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
                 '&:hover': { opacity: 0.9, transform: 'translateY(-1px)' },
               }}
             >
-              Confirmer l'inscription
+              {eventsPage.registerSubmitLabel}
             </Button>
           </Box>
         )}

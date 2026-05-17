@@ -4,4 +4,17 @@ export type EventsPage = {
   heroHeadlineAccent: string;
   heroSubheading: string;
   eventFeaturedHeadline: string;
+  registerEyebrow: string;
+  registerCloseLabel: string;
+  registerFullNameLabel: string;
+  registerFullNameError: string;
+  registerEmailLabel: string;
+  registerEmailRequiredError: string;
+  registerEmailInvalidError: string;
+  registerSubmitLabel: string;
+  confirmHeadline: string;
+  confirmBodyBeforeName: string;
+  confirmBodyBeforeEmail: string;
+  confirmBodyAfterEmail: string;
+  confirmCloseLabel: string;
 };

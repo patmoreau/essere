@@ -2,20 +2,20 @@ import { createDirectus, readItems, readSingleton, rest } from '@directus/sdk';
 
 import type { Event } from '../../../events/core/event.ts';
 import type { EventsPage } from '../../../events/core/events-page.ts';
-import type { ContactData } from './contact-data.ts';
-import type { RegistrationData } from './registration-data.ts';
 import type { HomePage } from '../../../home/core/home-page.ts';
 import type { Instructor } from '../../../instructors/core/instructor.ts';
 import type { ClassesPage } from '../../../schedule/core/classes-page.ts';
 import type { ScheduleClass } from '../../../schedule/core/schedule-class.ts';
 import { Config } from '../../config/core/config';
 import { ClassesPageSchema } from './classes-page-schema.ts';
+import type { ContactData } from './contact-data.ts';
 import { EventSchema } from './event-schema.ts';
 import { EventsPageSchema } from './events-page-schema.ts';
 import { HomePageSchema } from './home-page-schema.ts';
 import { InstructorSchema } from './instructor-schema.ts';
 import type { LabelSchema } from './label-schema.ts';
 import { NavLinkSchema } from './nav-link-schema.ts';
+import type { RegistrationData } from './registration-data.ts';
 import { ScheduleClassSchema } from './schedule-class-schema.ts';
 
 type Schema = {

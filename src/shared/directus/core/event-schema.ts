@@ -11,7 +11,7 @@ export type EventSchema = {
   image: string;
   featured: boolean;
   booking_url?: string | null;
-  deposit?: string | null;
+  deposit?: number | null;
 };
 
 const toEvent = (schema: EventSchema): Event => ({

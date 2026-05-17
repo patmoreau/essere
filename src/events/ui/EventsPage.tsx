@@ -4,7 +4,6 @@ import Hero from '../../shared/ui/Hero.tsx';
 import { useEvents } from '../core/use-events.ts';
 import { useEventsPage } from '../core/use-events-page.ts';
 import EventsBentoGrid from './EventsBentoGrid.tsx';
-import EventsNewsletterSection from './EventsNewsletterSection.tsx';
 import EventTeaserCard from './EventTeaserCard.tsx';
 
 const EventsPage = () => {
@@ -28,7 +27,6 @@ const EventsPage = () => {
         }
       />
       <EventsBentoGrid events={events} />
-      <EventsNewsletterSection />
     </Box>
   );
 };

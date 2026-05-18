@@ -1,5 +1,14 @@
-import { Box, Button, InputBase, Stack, Typography } from '@mui/material';
-import { useCallback, useRef, useState } from 'react';
+import {
+  Box,
+  Button,
+  FilledInput,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Stack,
+  Typography,
+} from '@mui/material';
+import React, { useCallback, useRef, useState } from 'react';
 
 import TurnstileWidget, {
   type TurnstileInstance,
@@ -14,14 +23,19 @@ const fieldSx = {
   width: '100%',
   bgcolor: 'var(--surface-container-high)',
   borderRadius: 'var(--radius-md)',
-  px: 2,
-  py: 1.5,
   fontFamily: 'Manrope, sans-serif',
   fontSize: '1rem',
   color: 'var(--on-surface)',
   transition: 'outline 200ms ease-out',
+  '& .MuiInputBase-input': { px: 2, py: 1.5 },
+  '&:hover': { bgcolor: 'var(--surface-container-high)' },
   '&.Mui-focused': {
     outline: '2px solid var(--primary)',
+    outlineOffset: '-2px',
+  },
+  '&.Mui-error': {
+    outline: '2px solid',
+    outlineColor: 'error.main',
     outlineOffset: '-2px',
   },
 };
@@ -35,6 +49,13 @@ const labelSx = {
   color: 'var(--secondary)',
   mb: 0.75,
   display: 'block',
+  '&.Mui-error': { color: 'error.main' },
+};
+
+const helperTextSx = {
+  fontFamily: 'Manrope, sans-serif',
+  fontSize: '0.75rem',
+  ml: 0.5,
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -52,7 +73,7 @@ const ConnectWithUsCard = () => {
   const [message, setMessage] = useState('');
   const [state, setState] = useState<FormState>('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!EMAIL_RE.test(email)) {
       setEmailError(true);
@@ -139,6 +160,7 @@ const ConnectWithUsCard = () => {
           </Typography>
         </Box>
       )}
+
       <Stack
         component="form"
         onSubmit={handleSubmit}
@@ -152,27 +174,30 @@ const ConnectWithUsCard = () => {
             gap: 3,
           }}
         >
-          <Box>
-            <Typography component="label" htmlFor="contact-name" sx={labelSx}>
+          <FormControl fullWidth>
+            <FormLabel htmlFor="contact-name" sx={labelSx}>
               {labels['connect_with_us.name_label']}
-            </Typography>
-            <InputBase
+            </FormLabel>
+            <FilledInput
               id="contact-name"
               required
+              disableUnderline
               placeholder={labels['connect_with_us.name_placeholder']}
               value={name}
               onChange={e => setName(e.target.value)}
               sx={fieldSx}
             />
-          </Box>
-          <Box>
-            <Typography component="label" htmlFor="contact-email" sx={labelSx}>
+          </FormControl>
+
+          <FormControl fullWidth error={emailError}>
+            <FormLabel htmlFor="contact-email" sx={labelSx}>
               {labels['connect_with_us.email_label']}
-            </Typography>
-            <InputBase
+            </FormLabel>
+            <FilledInput
               id="contact-email"
               type="email"
               required
+              disableUnderline
               placeholder={labels['connect_with_us.email_placeholder']}
               value={email}
               onChange={e => {
@@ -182,38 +207,24 @@ const ConnectWithUsCard = () => {
               onBlur={() => {
                 if (email && !EMAIL_RE.test(email)) setEmailError(true);
               }}
-              sx={{
-                ...fieldSx,
-                ...(emailError && {
-                  outline: '2px solid',
-                  outlineColor: 'error.main',
-                  outlineOffset: '-2px',
-                }),
-              }}
+              sx={fieldSx}
             />
             {emailError && (
-              <Typography
-                sx={{
-                  fontFamily: 'Manrope, sans-serif',
-                  fontSize: '0.75rem',
-                  color: 'error.main',
-                  mt: 0.75,
-                  ml: 0.5,
-                }}
-              >
+              <FormHelperText sx={helperTextSx}>
                 {labels['connect_with_us.email_error']}
-              </Typography>
+              </FormHelperText>
             )}
-          </Box>
+          </FormControl>
         </Box>
 
-        <Box>
-          <Typography component="label" htmlFor="contact-message" sx={labelSx}>
+        <FormControl fullWidth>
+          <FormLabel htmlFor="contact-message" sx={labelSx}>
             {labels['connect_with_us.message_label']}
-          </Typography>
-          <InputBase
+          </FormLabel>
+          <FilledInput
             id="contact-message"
             required
+            disableUnderline
             multiline
             rows={5}
             placeholder={labels['connect_with_us.message_placeholder']}
@@ -221,7 +232,7 @@ const ConnectWithUsCard = () => {
             onChange={e => setMessage(e.target.value)}
             sx={{ ...fieldSx, alignItems: 'flex-start' }}
           />
-        </Box>
+        </FormControl>
 
         {state === 'error' && (
           <Typography

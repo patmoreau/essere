@@ -6,13 +6,16 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  FilledInput,
+  FormControl,
+  FormHelperText,
+  FormLabel,
   IconButton,
-  TextField,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 import TurnstileWidget, {
   type TurnstileInstance,
@@ -31,6 +34,45 @@ type Props = {
 type FormErrors = {
   fullName: string;
   email: string;
+};
+
+const fieldSx = {
+  width: '100%',
+  bgcolor: 'var(--surface-container-high)',
+  borderRadius: 'var(--radius-md)',
+  fontFamily: 'Manrope, sans-serif',
+  fontSize: '1rem',
+  color: 'var(--on-surface)',
+  transition: 'outline 200ms ease-out',
+  '& .MuiInputBase-input': { px: 2, py: 1.5 },
+  '&:hover': { bgcolor: 'var(--surface-container-high)' },
+  '&.Mui-focused': {
+    outline: '2px solid var(--primary)',
+    outlineOffset: '-2px',
+  },
+  '&.Mui-error': {
+    outline: '2px solid',
+    outlineColor: 'error.main',
+    outlineOffset: '-2px',
+  },
+};
+
+const labelSx = {
+  fontFamily: 'Manrope, sans-serif',
+  fontSize: '0.65rem',
+  fontWeight: 700,
+  textTransform: 'uppercase',
+  letterSpacing: '0.15em',
+  color: 'var(--secondary)',
+  mb: 0.75,
+  display: 'block',
+  '&.Mui-error': { color: 'error.main' },
+};
+
+const helperTextSx = {
+  fontFamily: 'Manrope, sans-serif',
+  fontSize: '0.75rem',
+  ml: 0.5,
 };
 
 const EventRegistrationModal = ({ open, event, onClose }: Props) => {
@@ -58,7 +100,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
     return !next.fullName && !next.email;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
@@ -152,42 +194,55 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
       </DialogTitle>
 
       <DialogContent sx={{ p: { xs: 3, md: 4 } }}>
-        <Box sx={{ display: submitted ? 'none' : 'flex', flexDirection: 'column', mt: 2 }}>
-          <TextField
-            label={eventsPage.registerFullNameLabel}
-            value={fullName}
-            onChange={e => setFullName(e.target.value)}
-            error={!!errors.fullName}
-            helperText={errors.fullName}
-            fullWidth
-            required
-            autoComplete="name"
-            sx={{ mb: 3 }}
-          />
-          <TextField
-            label={eventsPage.registerEmailLabel}
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            error={!!errors.email}
-            helperText={errors.email}
-            fullWidth
-            required
-            autoComplete="email"
-            sx={{ mb: 3 }}
-          />
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: submitted ? 'none' : 'flex', flexDirection: 'column', gap: 3, mt: 2 }}
+        >
+          <FormControl fullWidth error={!!errors.fullName}>
+            <FormLabel htmlFor="reg-full-name" sx={labelSx}>
+              {eventsPage.registerFullNameLabel}
+            </FormLabel>
+            <FilledInput
+              id="reg-full-name"
+              required
+              disableUnderline
+              autoComplete="name"
+              value={fullName}
+              onChange={e => setFullName(e.target.value)}
+              sx={fieldSx}
+            />
+            {errors.fullName && <FormHelperText sx={helperTextSx}>{errors.fullName}</FormHelperText>}
+          </FormControl>
+
+          <FormControl fullWidth error={!!errors.email}>
+            <FormLabel htmlFor="reg-email" sx={labelSx}>
+              {eventsPage.registerEmailLabel}
+            </FormLabel>
+            <FilledInput
+              id="reg-email"
+              type="email"
+              required
+              disableUnderline
+              autoComplete="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              sx={fieldSx}
+            />
+            {errors.email && <FormHelperText sx={helperTextSx}>{errors.email}</FormHelperText>}
+          </FormControl>
+
           <TurnstileWidget
             ref={captchaRef}
             siteKey={config.TURNSTILE_SITE_KEY}
             onToken={handleToken}
           />
+
           <Button
             type="submit"
             fullWidth
             disabled={submitting || !captchaToken}
-            onClick={handleSubmit}
             sx={{
-              mt: 1,
               background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
               color: 'var(--on-primary)',
               borderRadius: '9999px',

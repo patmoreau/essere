@@ -3,4 +3,5 @@ export type RegistrationData = {
   email: string;
   event: string;
   deposit: string;
+  captchaToken: string;
 };

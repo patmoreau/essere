@@ -1,3 +1,4 @@
 {
-  "DIRECTUS_URL": "https://essere.ca/directus/"
+  "DIRECTUS_URL": "https://essere.ca/directus/",
+  "TURNSTILE_SITE_KEY": "0x4AAAAAADRvDKTQK54idW30"
 }

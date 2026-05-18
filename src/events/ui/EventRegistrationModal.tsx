@@ -12,8 +12,12 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
+import TurnstileWidget, {
+  type TurnstileInstance,
+} from '../../shared/captcha/ui/TurnstileWidget.tsx';
+import { useConfig } from '../../shared/config/core/use-config.ts';
 import { useDirectus } from '../../shared/directus/core/use-directus.ts';
 import type { Event } from '../core/event.ts';
 import { useEventsPage } from '../core/use-events-page.ts';
@@ -32,8 +36,12 @@ type FormErrors = {
 const EventRegistrationModal = ({ open, event, onClose }: Props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const config = useConfig();
   const directus = useDirectus();
   const eventsPage = useEventsPage();
+  const captchaRef = useRef<TurnstileInstance>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const handleToken = useCallback((token: string | null) => setCaptchaToken(token), []);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<FormErrors>({ fullName: '', email: '' });
@@ -60,8 +68,10 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
         email: email.trim(),
         event: event.title,
         deposit: event.deposit?.toString() ?? '',
+        captchaToken: captchaToken!,
       });
       setSubmitted(true);
+      captchaRef.current?.reset();
     } finally {
       setSubmitting(false);
     }
@@ -83,6 +93,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
       fullScreen={fullScreen}
       fullWidth
       maxWidth="sm"
+      disableRestoreFocus
       PaperProps={{
         sx: {
           borderRadius: fullScreen ? 0 : 'var(--radius-xl)',
@@ -139,7 +150,59 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
       </DialogTitle>
 
       <DialogContent sx={{ p: { xs: 3, md: 4 } }}>
-        {submitted ? (
+        <Box sx={{ display: submitted ? 'none' : 'flex', flexDirection: 'column', mt: 2 }}>
+          <TextField
+            label={eventsPage.registerFullNameLabel}
+            value={fullName}
+            onChange={e => setFullName(e.target.value)}
+            error={!!errors.fullName}
+            helperText={errors.fullName}
+            fullWidth
+            required
+            autoComplete="name"
+            sx={{ mb: 3 }}
+          />
+          <TextField
+            label={eventsPage.registerEmailLabel}
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            error={!!errors.email}
+            helperText={errors.email}
+            fullWidth
+            required
+            autoComplete="email"
+            sx={{ mb: 3 }}
+          />
+          <TurnstileWidget
+            ref={captchaRef}
+            siteKey={config.TURNSTILE_SITE_KEY}
+            onToken={handleToken}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            disabled={submitting || !captchaToken}
+            onClick={handleSubmit}
+            sx={{
+              mt: 1,
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
+              color: 'var(--on-primary)',
+              borderRadius: '9999px',
+              fontFamily: 'Manrope, sans-serif',
+              fontWeight: 700,
+              py: 1.75,
+              fontSize: '0.9375rem',
+              textTransform: 'none',
+              transition: 'all 300ms ease-out',
+              '&:hover': { opacity: 0.9, transform: 'translateY(-1px)' },
+            }}
+          >
+            {eventsPage.registerSubmitLabel}
+          </Button>
+        </Box>
+
+        {submitted && (
           <Box sx={{ textAlign: 'center', py: { xs: 4, md: 6 } }}>
             <CheckCircleOutlineIcon sx={{ fontSize: '3.5rem', color: 'var(--primary)', mb: 2 }} />
             <Typography
@@ -186,51 +249,6 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
               }}
             >
               {eventsPage.confirmCloseLabel}
-            </Button>
-          </Box>
-        ) : (
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
-            <TextField
-              label={eventsPage.registerFullNameLabel}
-              value={fullName}
-              onChange={e => setFullName(e.target.value)}
-              error={!!errors.fullName}
-              helperText={errors.fullName}
-              fullWidth
-              required
-              autoComplete="name"
-              sx={{ mb: 3 }}
-            />
-            <TextField
-              label={eventsPage.registerEmailLabel}
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              error={!!errors.email}
-              helperText={errors.email}
-              fullWidth
-              required
-              autoComplete="email"
-              sx={{ mb: 4 }}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              disabled={submitting}
-              sx={{
-                background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
-                color: 'var(--on-primary)',
-                borderRadius: '9999px',
-                fontFamily: 'Manrope, sans-serif',
-                fontWeight: 700,
-                py: 1.75,
-                fontSize: '0.9375rem',
-                textTransform: 'none',
-                transition: 'all 300ms ease-out',
-                '&:hover': { opacity: 0.9, transform: 'translateY(-1px)' },
-              }}
-            >
-              {eventsPage.registerSubmitLabel}
             </Button>
           </Box>
         )}

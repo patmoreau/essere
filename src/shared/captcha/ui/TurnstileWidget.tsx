@@ -16,6 +16,7 @@ const TurnstileWidget = forwardRef<TurnstileInstance | undefined, Props>(
       onSuccess={onToken}
       onExpire={() => onToken(null)}
       onError={() => onToken(null)}
+      options={{ appearance: 'interaction-only', size: 'flexible' }}
     />
   ),
 );

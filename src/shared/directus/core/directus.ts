@@ -139,10 +139,18 @@ export const Directus = (config: Config): Directus => {
   };
 
   const submitRegistration = async (data: RegistrationData): Promise<void> => {
+    const formatted = new Intl.NumberFormat('fr-CA', {
+      style: 'currency',
+      currency: 'CAD',
+    }).format(data.deposit);
+
     const response = await fetch('/directus/flows/trigger/55434e74-19c5-4847-a9a6-a12f464941ae', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        deposit: formatted,
+      }),
     });
     if (!response.ok) throw new Error(`Erreur ${response.status}`);
   };

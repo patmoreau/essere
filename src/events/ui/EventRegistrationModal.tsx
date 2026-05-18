@@ -109,7 +109,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
         name: fullName.trim(),
         email: email.trim(),
         event: event.title,
-        deposit: event.deposit?.toString() ?? '',
+        deposit: event.deposit,
         captchaToken: captchaToken!,
       });
       setSubmitted(true);
@@ -212,7 +212,9 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
               onChange={e => setFullName(e.target.value)}
               sx={fieldSx}
             />
-            {errors.fullName && <FormHelperText sx={helperTextSx}>{errors.fullName}</FormHelperText>}
+            {errors.fullName && (
+              <FormHelperText sx={helperTextSx}>{errors.fullName}</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth error={!!errors.email}>

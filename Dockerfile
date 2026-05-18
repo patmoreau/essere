@@ -5,6 +5,11 @@ WORKDIR /app
 
 # Install pnpm and copy package manager files
 RUN npm install -g pnpm
+ENV PNPM_ALLOW_UNTRUSTED_SCRIPTS=true
+ENV CI=true
+RUN pnpm config set ignore-scripts false
+RUN pnpm config set dangerouslyAllowAllBuilds true
+
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 

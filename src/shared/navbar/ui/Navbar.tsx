@@ -139,23 +139,25 @@ export default function Navbar() {
           ))}
         </Stack>
 
-        <Button
-          variant="contained"
-          sx={{
-            mt: 6,
-            py: 1.5,
-            color: 'primary.contrastText',
-            background: 'linear-gradient(135deg, #4c644b, #405840)',
-            boxShadow: 'none',
-            '&:hover': {
+        {labels['nav.cta'] && (
+          <Button
+            variant="contained"
+            sx={{
+              mt: 6,
+              py: 1.5,
+              color: 'primary.contrastText',
               background: 'linear-gradient(135deg, #4c644b, #405840)',
-              opacity: 0.92,
               boxShadow: 'none',
-            },
-          }}
-        >
-          {labels['nav.cta'] || 'Book Now'}
-        </Button>
+              '&:hover': {
+                background: 'linear-gradient(135deg, #4c644b, #405840)',
+                opacity: 0.92,
+                boxShadow: 'none',
+              },
+            }}
+          >
+            {labels['nav.cta']}
+          </Button>
+        )}
       </Drawer>
     </>
   );

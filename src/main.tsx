@@ -4,7 +4,6 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-
 import App from './App.tsx';
 import { Config } from './shared/config/core/config.ts';
 import { ConfigProvider } from './shared/config/ui/ConfigProvider.tsx';

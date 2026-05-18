@@ -8,6 +8,7 @@ export type Event = {
   location?: string;
   imageUrl: string;
   featured: boolean;
+  full: boolean;
   bookingUrl?: string;
   deposit: number;
 };

@@ -20,6 +20,42 @@ const EventCardFeature = ({ event }: Props) => {
     }
   };
 
+  const registerButton = event.full ? (
+    <Button
+      disabled
+      sx={{
+        bgcolor: 'rgba(229,255,224,0.15)',
+        color: 'rgba(229,255,224,0.5)',
+        borderRadius: '9999px',
+        fontFamily: 'Manrope, sans-serif',
+        fontWeight: 700,
+        px: 5,
+        py: 2,
+        textTransform: 'uppercase',
+        letterSpacing: '0.06em',
+      }}
+    >
+      {labels['button_full']}
+    </Button>
+  ) : (
+    <Button
+      onClick={handleRegister}
+      sx={{
+        bgcolor: 'primary.contrastText',
+        color: 'primary.main',
+        borderRadius: '9999px',
+        fontFamily: 'Manrope, sans-serif',
+        fontWeight: 700,
+        px: 5,
+        py: 2,
+        transition: 'all 300ms ease-out',
+        '&:hover': { transform: 'scale(1.05)', bgcolor: 'primary.light' },
+      }}
+    >
+      {labels['button_register']}
+    </Button>
+  );
+
   return (
     <>
       <Box
@@ -115,25 +151,10 @@ const EventCardFeature = ({ event }: Props) => {
               </Box>
             )}
           </Stack>
-          <Button
-            onClick={handleRegister}
-            sx={{
-              bgcolor: 'primary.contrastText',
-              color: 'primary.main',
-              borderRadius: '9999px',
-              fontFamily: 'Manrope, sans-serif',
-              fontWeight: 700,
-              px: 5,
-              py: 2,
-              transition: 'all 300ms ease-out',
-              '&:hover': { transform: 'scale(1.05)', bgcolor: 'primary.light' },
-            }}
-          >
-            {labels['button_register']}
-          </Button>
+          {registerButton}
         </Box>
       </Box>
-      {!event.bookingUrl && (
+      {!event.full && !event.bookingUrl && (
         <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
       )}
     </>

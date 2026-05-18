@@ -114,29 +114,48 @@ const EventCardLarge = ({ event }: Props) => {
               dangerouslySetInnerHTML={{ __html: event.description }}
             />
           </Box>
-          <Button
-            onClick={handleRegister}
-            endIcon={<ArrowForwardIcon />}
-            sx={{
-              fontFamily: 'Manrope, sans-serif',
-              fontWeight: 700,
-              color: 'primary.main',
-              p: 0,
-              alignSelf: 'flex-start',
-              minWidth: 0,
-              bgcolor: 'transparent',
-              '&:hover': {
+          {event.full ? (
+            <Button
+              disabled
+              size="small"
+              sx={{
+                fontFamily: 'Manrope, sans-serif',
+                fontWeight: 600,
+                fontSize: '0.75rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+                p: 0,
+                alignSelf: 'flex-start',
+                minWidth: 0,
+              }}
+            >
+              {labels['button_full']}
+            </Button>
+          ) : (
+            <Button
+              onClick={handleRegister}
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                fontFamily: 'Manrope, sans-serif',
+                fontWeight: 700,
+                color: 'primary.main',
+                p: 0,
+                alignSelf: 'flex-start',
+                minWidth: 0,
                 bgcolor: 'transparent',
-                '& .MuiButton-endIcon': { transform: 'translateX(4px)' },
-              },
-              '& .MuiButton-endIcon': { transition: 'transform 300ms ease-out' },
-            }}
-          >
-            {labels['button_register']}
-          </Button>
+                '&:hover': {
+                  bgcolor: 'transparent',
+                  '& .MuiButton-endIcon': { transform: 'translateX(4px)' },
+                },
+                '& .MuiButton-endIcon': { transition: 'transform 300ms ease-out' },
+              }}
+            >
+              {labels['button_register']}
+            </Button>
+          )}
         </Stack>
       </Box>
-      {!event.bookingUrl && (
+      {!event.full && !event.bookingUrl && (
         <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
       )}
     </>

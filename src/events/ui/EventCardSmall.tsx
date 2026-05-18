@@ -85,41 +85,62 @@ const EventCardSmall = ({ event, variant = 'default' }: Props) => {
             dangerouslySetInnerHTML={{ __html: event.description }}
           />
         </Box>
-        <Button
-          onClick={handleRegister}
-          sx={{
-            mt: 4,
-            ...(variant === 'featured'
-              ? {
-                  background: 'linear-gradient(135deg, #4c644b, #405840)',
-                  color: 'primary.contrastText',
-                  '&:hover': {
-                    opacity: 0.9,
+        {event.full ? (
+          <Button
+            disabled
+            size="small"
+            sx={{
+              mt: 4,
+              borderRadius: 'var(--radius-md)',
+              fontFamily: 'Manrope, sans-serif',
+              fontWeight: 600,
+              fontSize: '0.75rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+              px: 1.5,
+              py: 0.5,
+              alignSelf: 'flex-start',
+            }}
+          >
+            {labels['button_full']}
+          </Button>
+        ) : (
+          <Button
+            onClick={handleRegister}
+            sx={{
+              mt: 4,
+              ...(variant === 'featured'
+                ? {
                     background: 'linear-gradient(135deg, #4c644b, #405840)',
-                  },
-                }
-              : {
-                  bgcolor: 'background.paper',
-                  color: 'text.primary',
-                  '&:hover': {
-                    bgcolor: '#ffffff',
-                    boxShadow: '0px 4px 12px rgba(46, 52, 45, 0.08)',
-                  },
-                }),
-            borderRadius: '9999px',
-            fontFamily: 'Manrope, sans-serif',
-            fontWeight: 700,
-            fontSize: '0.875rem',
-            px: 3,
-            py: 1.5,
-            alignSelf: 'flex-start',
-            transition: 'all 300ms ease-out',
-          }}
-        >
-          {labels['button_register']}
-        </Button>
+                    color: 'primary.contrastText',
+                    '&:hover': {
+                      opacity: 0.9,
+                      background: 'linear-gradient(135deg, #4c644b, #405840)',
+                    },
+                  }
+                : {
+                    bgcolor: 'background.paper',
+                    color: 'text.primary',
+                    '&:hover': {
+                      bgcolor: '#ffffff',
+                      boxShadow: '0px 4px 12px rgba(46, 52, 45, 0.08)',
+                    },
+                  }),
+              borderRadius: '9999px',
+              fontFamily: 'Manrope, sans-serif',
+              fontWeight: 700,
+              fontSize: '0.875rem',
+              px: 3,
+              py: 1.5,
+              alignSelf: 'flex-start',
+              transition: 'all 300ms ease-out',
+            }}
+          >
+            {labels['button_register']}
+          </Button>
+        )}
       </Box>
-      {!event.bookingUrl && (
+      {!event.full && !event.bookingUrl && (
         <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
       )}
     </>

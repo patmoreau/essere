@@ -10,6 +10,7 @@ export type EventSchema = {
   location?: string;
   image: string;
   featured: boolean;
+  full: boolean;
   booking_url?: string | null;
   deposit: number;
 };
@@ -24,6 +25,7 @@ const toEvent = (schema: EventSchema): Event => ({
   location: schema.location,
   imageUrl: schema.image,
   featured: schema.featured,
+  full: schema.full,
   bookingUrl: schema.booking_url ?? '',
   deposit: schema.deposit,
 });

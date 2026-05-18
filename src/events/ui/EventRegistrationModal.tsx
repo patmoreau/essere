@@ -94,11 +94,13 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
       fullWidth
       maxWidth="sm"
       disableRestoreFocus
-      PaperProps={{
-        sx: {
-          borderRadius: fullScreen ? 0 : 'var(--radius-xl)',
-          bgcolor: 'var(--background)',
-          boxShadow: '0px 24px 64px rgba(46, 52, 45, 0.12)',
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: fullScreen ? 0 : 'var(--radius-xl)',
+            bgcolor: 'var(--background)',
+            boxShadow: '0px 24px 64px rgba(46, 52, 45, 0.12)',
+          },
         },
       }}
     >

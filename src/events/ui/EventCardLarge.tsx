@@ -20,6 +20,14 @@ const EventCardLarge = ({ event }: Props) => {
   const labels = useLabels();
   const [modalOpen, setModalOpen] = useState(false);
 
+  const handleRegister = () => {
+    if (event.bookingUrl) {
+      window.open(event.bookingUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      setModalOpen(true);
+    }
+  };
+
   return (
     <>
       <Box
@@ -107,7 +115,7 @@ const EventCardLarge = ({ event }: Props) => {
             />
           </Box>
           <Button
-            onClick={() => setModalOpen(true)}
+            onClick={handleRegister}
             endIcon={<ArrowForwardIcon />}
             sx={{
               fontFamily: 'Manrope, sans-serif',
@@ -128,7 +136,9 @@ const EventCardLarge = ({ event }: Props) => {
           </Button>
         </Stack>
       </Box>
-      <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
+      {!event.bookingUrl && (
+        <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
+      )}
     </>
   );
 };

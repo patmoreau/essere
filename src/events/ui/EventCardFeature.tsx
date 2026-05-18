@@ -12,6 +12,14 @@ const EventCardFeature = ({ event }: Props) => {
   const labels = useLabels();
   const [modalOpen, setModalOpen] = useState(false);
 
+  const handleRegister = () => {
+    if (event.bookingUrl) {
+      window.open(event.bookingUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      setModalOpen(true);
+    }
+  };
+
   return (
     <>
       <Box
@@ -108,7 +116,7 @@ const EventCardFeature = ({ event }: Props) => {
             )}
           </Stack>
           <Button
-            onClick={() => setModalOpen(true)}
+            onClick={handleRegister}
             sx={{
               bgcolor: 'primary.contrastText',
               color: 'primary.main',
@@ -125,7 +133,9 @@ const EventCardFeature = ({ event }: Props) => {
           </Button>
         </Box>
       </Box>
-      <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
+      {!event.bookingUrl && (
+        <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
+      )}
     </>
   );
 };

@@ -100,7 +100,7 @@ const EventRegistrationModal = ({ open, event, onClose }: Props) => {
     return !next.fullName && !next.email;
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);

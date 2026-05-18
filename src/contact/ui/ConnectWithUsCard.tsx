@@ -73,7 +73,7 @@ const ConnectWithUsCard = () => {
   const [message, setMessage] = useState('');
   const [state, setState] = useState<FormState>('idle');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!EMAIL_RE.test(email)) {
       setEmailError(true);

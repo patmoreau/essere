@@ -122,26 +122,15 @@ Reference designs live in `design/<page>/code.html` (full HTML/CSS mockups) and 
 ### Color Tokens (`src/index.css` `:root`)
 
 ```css
---primary: #4c644b                  /* Deep Sage */
---primary-dim: #405840              /* Hover states */
---secondary: #6a5d51                /* Warm Taupe */
---background: #fafaf5               /* Warm Cream */
---surface-container-lowest: #ffffff
---surface-container-low: #f3f4ee
---surface-container: #ecefe7
---surface-container-high: #e5eae0
---surface-container-highest: #dee4da
---on-background: #2e342d
---on-surface: #2e342d
---on-surface-variant: #5b6159
---on-primary: #e5ffe0
---primary-container: #ceeaca
---on-primary-container: #40583f
---secondary-container: #f2dfd0
---outline-variant: #aeb4aa
---outline: #767c74
---radius-xl: 1.5rem
---radius-md: 0.75rem
+--primary: #4c644b /* Deep Sage */ --primary-dim: #405840 /* Hover states */
+  --secondary: #6a5d51 /* Warm Taupe */ --background: #fafaf5 /* Warm Cream */
+  --surface-container-lowest: #ffffff --surface-container-low: #f3f4ee
+  --surface-container: #ecefe7 --surface-container-high: #e5eae0
+  --surface-container-highest: #dee4da --on-background: #2e342d
+  --on-surface: #2e342d --on-surface-variant: #5b6159 --on-primary: #e5ffe0
+  --primary-container: #ceeaca --on-primary-container: #40583f
+  --secondary-container: #f2dfd0 --outline-variant: #aeb4aa --outline: #767c74
+  --radius-xl: 1.5rem --radius-md: 0.75rem;
 ```
 
 ### Typography
@@ -174,30 +163,30 @@ Each page is an independent feature in its own `src/<page>/` folder. Reference H
 
 ```ts
 type HomePage = {
-  estYear: string
-  heroImage: string          // pre-resolved asset URL
-  heroImageText: string
-  heroHeadline: string
-  heroHeadlineAccent: string
-  heroSubheading: string
-  heroCtaPrimaryLabel: string
-  heroCtaSecondaryLabel: string
-  philosophySectionLabel: string
-  philosophyCard1Icon: string  // MUI icon name (e.g. "Spa", "SelfImprovement")
-  philosophyCard1Title: string
-  philosophyCard1Body: string
-  philosophyCard2Icon: string
-  philosophyCard2Title: string
-  philosophyCard2Body: string
-}
+  estYear: string;
+  heroImage: string; // pre-resolved asset URL
+  heroImageText: string;
+  heroHeadline: string;
+  heroHeadlineAccent: string;
+  heroSubheading: string;
+  heroCtaPrimaryLabel: string;
+  heroCtaSecondaryLabel: string;
+  philosophySectionLabel: string;
+  philosophyCard1Icon: string; // MUI icon name (e.g. "Spa", "SelfImprovement")
+  philosophyCard1Title: string;
+  philosophyCard1Body: string;
+  philosophyCard2Icon: string;
+  philosophyCard2Title: string;
+  philosophyCard2Body: string;
+};
 ```
 
 **Sections** (top to bottom):
 
 1. **Hero** — 2-col grid: oversized serif headline + italic accent, eyebrow label, two CTAs (gradient pill button + text arrow link), hero image right (4:5 ratio).
 2. **Philosophy** — `var(--surface-container)` bg. Flex row: title left (1/3), two icon cards right (2/3). `DynamicMuiIcon` renders icon by name string.
-3. **Meet Instructor** — `var(--background)` bg. *(not yet implemented)*
-4. **Seasonal Workshops** — `var(--surface-container-low)` bg. *(not yet implemented)*
+3. **Meet Instructor** — `var(--background)` bg. _(not yet implemented)_
+4. **Seasonal Workshops** — `var(--surface-container-low)` bg. _(not yet implemented)_
 5. **Footer** — shared `<Footer />` component.
 
 ### 2. Events (`src/events/`)
@@ -208,29 +197,29 @@ type HomePage = {
 
 ```ts
 type EventsPage = {
-  heroEyebrow: string
-  heroHeadline: string
-  heroHeadlineAccent: string
-  heroSubheading: string
-  eventFeaturedHeadline: string
-}
+  heroEyebrow: string;
+  heroHeadline: string;
+  heroHeadlineAccent: string;
+  heroSubheading: string;
+  eventFeaturedHeadline: string;
+};
 ```
 
 **Domain type** (`events/core/event.ts`):
 
 ```ts
 type Event = {
-  id: string
-  title: string
-  dateStart: string
-  dateEnd?: string
-  category: 'Intensive' | 'Workshop' | 'Guest Event' | 'Retreat'
-  description: string
-  location?: string
-  imageUrl: string       // pre-resolved asset URL
-  featured: boolean
-  bookingUrl?: string
-}
+  id: string;
+  title: string;
+  dateStart: string;
+  dateEnd?: string;
+  category: 'Intensive' | 'Workshop' | 'Guest Event' | 'Retreat';
+  description: string;
+  location?: string;
+  imageUrl: string; // pre-resolved asset URL
+  featured: boolean;
+  bookingUrl?: string;
+};
 ```
 
 **Sections** (top to bottom):
@@ -247,35 +236,36 @@ type Event = {
 
 ```ts
 type ClassesPage = {
-  heroEyebrow: string
-  heroImage: string          // pre-resolved asset URL
-  heroHeadline: string
-  heroHeadlineAccent: string
-  heroSubheading: string
-  classesFeaturedHeadline: string
-}
+  heroEyebrow: string;
+  heroImage: string; // pre-resolved asset URL
+  heroHeadline: string;
+  heroHeadlineAccent: string;
+  heroSubheading: string;
+  classesFeaturedHeadline: string;
+};
 ```
 
 **Domain type** (`schedule/core/schedule-class.ts`):
 
 ```ts
 type ScheduleClass = {
-  id: string
-  title: string
-  category: 'Yoga' | 'Pilates' | 'Meditation'
-  instructorName: string
-  startDate: string   // "2024-04-20" — first occurrence; day-of-week derived from this
-  endDate: string     // "2024-04-27" — last occurrence
-  startTime: string   // "HH:MM" (seconds stripped in converter)
-  endTime: string     // "HH:MM"
-  bookingUrl?: string
-  full: boolean
-}
+  id: string;
+  title: string;
+  category: 'Yoga' | 'Pilates' | 'Meditation';
+  instructorName: string;
+  startDate: string; // "2024-04-20" — first occurrence; day-of-week derived from this
+  endDate: string; // "2024-04-27" — last occurrence
+  startTime: string; // "HH:MM" (seconds stripped in converter)
+  endTime: string; // "HH:MM"
+  bookingUrl?: string;
+  full: boolean;
+};
 ```
 
 **Directus schema** (`schedule-class-schema.ts`): `category` is lowercase (`'yoga'|'pilates'|'meditation'`); `class_title` maps to `title`.
 
 **Schedule logic** (`schedule/core/schedule-utils.ts`):
+
 - `getDayOfWeek(dateStr)` — derives `DayOfWeek` from `startDate` using local-time parsing.
 - `isActiveInWeek(cls, weekStart)` — checks if `[startDate, endDate]` overlaps the displayed week.
 - Week grid filters by `isActiveInWeek`, then groups by `getDayOfWeek(startDate)`.
@@ -290,28 +280,28 @@ type ScheduleClass = {
 
 ### 4. Contact (`src/contact/`)
 
-**Directus collection**: `studio_info` (singleton) — *not yet implemented*
+**Directus collection**: `studio_info` (singleton) — _not yet implemented_
 
 **Suggested type**:
 
 ```ts
 type StudioInfo = {
-  instructorName: string
-  instructorBioP1: string
-  instructorBioP2: string
-  instructorPhoto?: string   // pre-resolved asset URL
-  stat1Value: string
-  stat1Label: string
-  stat2Value: string
-  stat2Label: string
-  addressLine1: string
-  addressLine2: string
-  phone: string
-  email: string
-  mapImage?: string          // pre-resolved asset URL
-  instagramUrl?: string
-  facebookUrl?: string
-}
+  instructorName: string;
+  instructorBioP1: string;
+  instructorBioP2: string;
+  instructorPhoto?: string; // pre-resolved asset URL
+  stat1Value: string;
+  stat1Label: string;
+  stat2Value: string;
+  stat2Label: string;
+  addressLine1: string;
+  addressLine2: string;
+  phone: string;
+  email: string;
+  mapImage?: string; // pre-resolved asset URL
+  instagramUrl?: string;
+  facebookUrl?: string;
+};
 ```
 
 ---
@@ -324,16 +314,16 @@ Used by all pages. Props:
 
 ```ts
 type HeroProps = {
-  eyebrow?: string
-  headline: string
-  headlineAccent?: string     // rendered italic in primary color
-  subheading: string
-  imageUrl: string
-  imageAlt?: string
-  actions?: ReactNode         // CTA buttons
-  floatingCard?: ReactNode    // absolutely positioned over image column
-  fullViewport?: boolean
-}
+  eyebrow?: string;
+  headline: string;
+  headlineAccent?: string; // rendered italic in primary color
+  subheading: string;
+  imageUrl: string;
+  imageAlt?: string;
+  actions?: ReactNode; // CTA buttons
+  floatingCard?: ReactNode; // absolutely positioned over image column
+  fullViewport?: boolean;
+};
 ```
 
 ### `Footer` (`src/shared/ui/Footer.tsx`)
@@ -352,16 +342,16 @@ Glassmorphism fixed header. Nav links from `nav_links` collection. Responsive: h
 
 ## Directus CMS Collections
 
-| Collection    | Type      | Used by  |
-| ------------- | --------- | -------- |
-| `labels`      | list      | All pages |
-| `nav_links`   | list      | Navbar   |
-| `home_page`   | singleton | Home     |
-| `events_page` | singleton | Events   |
-| `events`      | list      | Events   |
-| `classes_page`| singleton | Schedule |
-| `classes`     | list      | Schedule |
-| `studio_info` | singleton | Contact  |
+| Collection     | Type      | Used by   |
+| -------------- | --------- | --------- |
+| `labels`       | list      | All pages |
+| `nav_links`    | list      | Navbar    |
+| `home_page`    | singleton | Home      |
+| `events_page`  | singleton | Events    |
+| `events`       | list      | Events    |
+| `classes_page` | singleton | Schedule  |
+| `classes`      | list      | Schedule  |
+| `studio_info`  | singleton | Contact   |
 
 ---
 
@@ -389,14 +379,14 @@ pnpm run deploy    # Build Docker image (linux/amd64) — use this when asked to
 
 ## Key Files to Search When…
 
-| Task | Files |
-|------|-------|
-| Add a page | `src/App.tsx`, `src/<page>/core/use-<page>.ts`, `design/<page>/code.html` |
-| Add Directus collection | `src/shared/directus/core/directus.ts` (Schema + factory) |
-| Change colors/tokens | `src/index.css` (CSS vars) |
-| Fix styling | Search `sx={{` in page component; check MUI Typography/Box/Button props |
-| Debug data flow | Add console.log in schema adapter or feature hook's `use()` call |
-| Update config | `env/prod/config.json` (production), `vite.config.ts` middleware (dev) |
+| Task                    | Files                                                                     |
+| ----------------------- | ------------------------------------------------------------------------- |
+| Add a page              | `src/App.tsx`, `src/<page>/core/use-<page>.ts`, `design/<page>/code.html` |
+| Add Directus collection | `src/shared/directus/core/directus.ts` (Schema + factory)                 |
+| Change colors/tokens    | `src/index.css` (CSS vars)                                                |
+| Fix styling             | Search `sx={{` in page component; check MUI Typography/Box/Button props   |
+| Debug data flow         | Add console.log in schema adapter or feature hook's `use()` call          |
+| Update config           | `env/prod/config.json` (production), `vite.config.ts` middleware (dev)    |
 
 ## Why This Architecture
 

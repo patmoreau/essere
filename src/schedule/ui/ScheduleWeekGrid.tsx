@@ -30,9 +30,9 @@ const ScheduleWeekGrid = ({ classes, weekStart }: Props) => {
       >
         {DAYS_OF_WEEK.map((day, i) => {
           const date = addDays(weekStart, i);
-          const dayClasses = activeClasses.filter(
-            c => getDayOfWeek(c.startDate) === (day as DayOfWeek),
-          );
+          const dayClasses = activeClasses
+            .filter(c => getDayOfWeek(c.startDate) === (day as DayOfWeek))
+            .sort((a, b) => a.startTime.localeCompare(b.startTime));
           return (
             <ScheduleDayColumn key={day} day={day as DayOfWeek} date={date} classes={dayClasses} />
           );

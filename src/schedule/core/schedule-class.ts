@@ -8,5 +8,6 @@ export type ScheduleClass = {
   startTime: string;
   endTime: string;
   bookingUrl?: string;
+  bookingByEmail: boolean;
   full: boolean;
 };

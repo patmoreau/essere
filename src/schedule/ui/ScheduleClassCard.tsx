@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
+import { useState } from 'react';
 
 import { useLabels } from '../../shared/labels/core/use-labels.ts';
 import type { ScheduleClass } from '../core/schedule-class.ts';
 import { CATEGORY_COLORS, CATEGORY_LABELS_FR } from '../core/schedule-utils.ts';
+import ClassBookingModal from './ClassBookingModal.tsx';
 
 type Props = {
   scheduleClass: ScheduleClass;
@@ -17,6 +19,7 @@ const CATEGORY_BG: Record<ScheduleClass['category'], string> = {
 const ScheduleClassCard = ({ scheduleClass }: Props) => {
   const labels = useLabels();
   const categoryColor = CATEGORY_COLORS[scheduleClass.category];
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   return (
     <Box
@@ -106,6 +109,30 @@ const ScheduleClassCard = ({ scheduleClass }: Props) => {
         >
           {labels['button_full']}
         </Button>
+      ) : scheduleClass.bookingByEmail ? (
+        <Button
+          onClick={() => setBookingOpen(true)}
+          size="small"
+          sx={{
+            fontSize: '0.6875rem',
+            fontFamily: 'Manrope, sans-serif',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
+            color: 'var(--primary)',
+            px: 1.5,
+            py: 0.5,
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--primary)',
+            '&:hover': {
+              bgcolor: 'var(--primary)',
+              color: 'var(--on-primary)',
+            },
+            transition: 'all 300ms ease-out',
+          }}
+        >
+          Réserver
+        </Button>
       ) : (
         scheduleClass.bookingUrl && (
           <Button
@@ -136,6 +163,12 @@ const ScheduleClassCard = ({ scheduleClass }: Props) => {
           </Button>
         )
       )}
+
+      <ClassBookingModal
+        open={bookingOpen}
+        scheduleClass={scheduleClass}
+        onClose={() => setBookingOpen(false)}
+      />
     </Box>
   );
 };

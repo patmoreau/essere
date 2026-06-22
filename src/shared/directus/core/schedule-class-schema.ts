@@ -10,6 +10,7 @@ export type ScheduleClassSchema = {
   start_time: string;
   end_time: string;
   booking_url?: string | null;
+  booking_by_email?: boolean | null;
   full: boolean;
 };
 
@@ -29,6 +30,7 @@ const toScheduleClass = (schema: ScheduleClassSchema): ScheduleClass => ({
   startTime: schema.start_time.slice(0, 5),
   endTime: schema.end_time.slice(0, 5),
   bookingUrl: schema.booking_url ?? undefined,
+  bookingByEmail: schema.booking_by_email ?? false,
   full: schema.full,
 });
 

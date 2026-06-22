@@ -7,6 +7,7 @@ import type { Instructor } from '../../../instructors/core/instructor.ts';
 import type { ClassesPage } from '../../../schedule/core/classes-page.ts';
 import type { ScheduleClass } from '../../../schedule/core/schedule-class.ts';
 import { Config } from '../../config/core/config';
+import type { ClassBookingData } from './class-booking-data.ts';
 import { ClassesPageSchema } from './classes-page-schema.ts';
 import type { ContactData } from './contact-data.ts';
 import { EventSchema } from './event-schema.ts';
@@ -40,6 +41,7 @@ export type Directus = {
   getInstructors(): Promise<Instructor[]>;
   submitContactForm(data: ContactData): Promise<void>;
   submitRegistration(data: RegistrationData): Promise<void>;
+  submitClassBooking(data: ClassBookingData): Promise<void>;
 };
 
 export const Directus = (config: Config): Directus => {
@@ -138,6 +140,15 @@ export const Directus = (config: Config): Directus => {
     if (!response.ok) throw new Error(`Erreur ${response.status}`);
   };
 
+  const submitClassBooking = async (data: ClassBookingData): Promise<void> => {
+    const response = await fetch('/directus/flows/trigger/0cbaf230-4d79-4b71-b491-a87a8bdf8f95', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error(`Erreur ${response.status}`);
+  };
+
   const submitRegistration = async (data: RegistrationData): Promise<void> => {
     const formatted = new Intl.NumberFormat('fr-CA', {
       style: 'currency',
@@ -166,5 +177,6 @@ export const Directus = (config: Config): Directus => {
     getInstructors: getInstructors,
     submitContactForm: submitContactForm,
     submitRegistration: submitRegistration,
+    submitClassBooking: submitClassBooking,
   };
 };

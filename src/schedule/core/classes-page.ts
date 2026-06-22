@@ -5,4 +5,16 @@ export type ClassesPage = {
   heroHeadlineAccent: string;
   heroSubheading: string;
   classesFeaturedHeadline: string;
+  registerCloseLabel: string;
+  registerFullNameLabel: string;
+  registerFullNameError: string;
+  registerEmailLabel: string;
+  registerEmailRequiredError: string;
+  registerEmailInvalidError: string;
+  registerSubmitLabel: string;
+  confirmHeadline: string;
+  confirmBodyBeforeName: string;
+  confirmBodyBeforeEmail: string;
+  confirmBodyAfterEmail: string;
+  confirmCloseLabel: string;
 };

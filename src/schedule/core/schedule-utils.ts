@@ -1,13 +1,7 @@
 import type { ScheduleClass } from './schedule-class.ts';
 
 export type DayOfWeek =
-  | 'Monday'
-  | 'Tuesday'
-  | 'Wednesday'
-  | 'Thursday'
-  | 'Friday'
-  | 'Saturday'
-  | 'Sunday';
+  'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
 
 export const DAYS_OF_WEEK: DayOfWeek[] = [
   'Monday',

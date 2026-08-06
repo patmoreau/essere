@@ -84,10 +84,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
   const classesPage = useClassesPage();
   const captchaRef = useRef<TurnstileInstance>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const handleToken = useCallback(
-    (token: string | null) => setCaptchaToken(token),
-    [],
-  );
+  const handleToken = useCallback((token: string | null) => setCaptchaToken(token), []);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<FormErrors>({ fullName: '', email: '' });
@@ -149,7 +146,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
       onClose={handleClose}
       fullScreen={fullScreen}
       fullWidth
-      maxWidth='sm'
+      maxWidth="sm"
       disableRestoreFocus
       slotProps={{
         paper: {
@@ -172,7 +169,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
         >
           <Box>
             <Typography
-              component='p'
+              component="p"
               sx={{
                 fontFamily: 'Manrope, sans-serif',
                 fontSize: '0.75rem',
@@ -188,7 +185,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
               {scheduleClass.startTime} – {scheduleClass.endTime}
             </Typography>
             <Typography
-              component='h2'
+              component="h2"
               sx={{
                 fontFamily: 'Noto Serif, serif',
                 fontSize: { xs: '1.375rem', md: '1.75rem' },
@@ -201,7 +198,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
           </Box>
           <IconButton
             onClick={handleClose}
-            size='small'
+            size="small"
             aria-label={classesPage.registerCloseLabel}
             sx={{ mt: 0.5, color: 'var(--on-surface-variant)' }}
           >
@@ -212,7 +209,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
 
       <DialogContent sx={{ p: { xs: 3, md: 4 } }}>
         <Box
-          component='form'
+          component="form"
           onSubmit={handleSubmit}
           sx={{
             display: submitted ? 'none' : 'flex',
@@ -222,42 +219,38 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
           }}
         >
           <FormControl fullWidth error={!!errors.fullName}>
-            <FormLabel htmlFor='booking-full-name' sx={labelSx}>
+            <FormLabel htmlFor="booking-full-name" sx={labelSx}>
               {classesPage.registerFullNameLabel}
             </FormLabel>
             <FilledInput
-              id='booking-full-name'
+              id="booking-full-name"
               required
               disableUnderline
-              autoComplete='name'
+              autoComplete="name"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={e => setFullName(e.target.value)}
               sx={fieldSx}
             />
             {errors.fullName && (
-              <FormHelperText sx={helperTextSx}>
-                {errors.fullName}
-              </FormHelperText>
+              <FormHelperText sx={helperTextSx}>{errors.fullName}</FormHelperText>
             )}
           </FormControl>
 
           <FormControl fullWidth error={!!errors.email}>
-            <FormLabel htmlFor='booking-email' sx={labelSx}>
+            <FormLabel htmlFor="booking-email" sx={labelSx}>
               {classesPage.registerEmailLabel}
             </FormLabel>
             <FilledInput
-              id='booking-email'
-              type='email'
+              id="booking-email"
+              type="email"
               required
               disableUnderline
-              autoComplete='email'
+              autoComplete="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               sx={fieldSx}
             />
-            {errors.email && (
-              <FormHelperText sx={helperTextSx}>{errors.email}</FormHelperText>
-            )}
+            {errors.email && <FormHelperText sx={helperTextSx}>{errors.email}</FormHelperText>}
           </FormControl>
 
           <TurnstileWidget
@@ -267,12 +260,11 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
           />
 
           <Button
-            type='submit'
+            type="submit"
             fullWidth
             disabled={submitting || !captchaToken}
             sx={{
-              background:
-                'linear-gradient(135deg, var(--primary), var(--primary-dim))',
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
               color: 'var(--on-primary)',
               borderRadius: '9999px',
               fontFamily: 'Manrope, sans-serif',
@@ -290,11 +282,9 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
 
         {submitted && (
           <Box sx={{ textAlign: 'center', py: { xs: 4, md: 6 } }}>
-            <CheckCircleOutlineIcon
-              sx={{ fontSize: '3.5rem', color: 'var(--primary)', mb: 2 }}
-            />
+            <CheckCircleOutlineIcon sx={{ fontSize: '3.5rem', color: 'var(--primary)', mb: 2 }} />
             <Typography
-              component='h3'
+              component="h3"
               sx={{
                 fontFamily: 'Noto Serif, serif',
                 fontSize: '1.5rem',
@@ -313,13 +303,9 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
                 mb: 4,
               }}
             >
-              {classesPage.confirmBodyBeforeName}{' '}
-              {fullName.trim().split(' ')[0]}
+              {classesPage.confirmBodyBeforeName} {fullName.trim().split(' ')[0]}
               {classesPage.confirmBodyBeforeEmail}{' '}
-              <Box
-                component='span'
-                sx={{ fontWeight: 700, color: 'var(--on-surface)' }}
-              >
+              <Box component="span" sx={{ fontWeight: 700, color: 'var(--on-surface)' }}>
                 {email}
               </Box>{' '}
               {classesPage.confirmBodyAfterEmail}
@@ -327,8 +313,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
             <Button
               onClick={handleClose}
               sx={{
-                background:
-                  'linear-gradient(135deg, var(--primary), var(--primary-dim))',
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-dim))',
                 color: 'var(--on-primary)',
                 borderRadius: '9999px',
                 fontFamily: 'Manrope, sans-serif',

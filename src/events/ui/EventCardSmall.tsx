@@ -141,7 +141,11 @@ const EventCardSmall = ({ event, variant = 'default' }: Props) => {
         )}
       </Box>
       {!event.full && !event.bookingUrl && (
-        <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
+        <EventRegistrationModal
+          open={modalOpen}
+          event={event}
+          onClose={() => setModalOpen(false)}
+        />
       )}
     </>
   );

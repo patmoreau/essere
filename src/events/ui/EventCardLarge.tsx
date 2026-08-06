@@ -156,7 +156,11 @@ const EventCardLarge = ({ event }: Props) => {
         </Stack>
       </Box>
       {!event.full && !event.bookingUrl && (
-        <EventRegistrationModal open={modalOpen} event={event} onClose={() => setModalOpen(false)} />
+        <EventRegistrationModal
+          open={modalOpen}
+          event={event}
+          onClose={() => setModalOpen(false)}
+        />
       )}
     </>
   );

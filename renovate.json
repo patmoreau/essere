@@ -2,6 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>patmoreau/renovate-config"],
   "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "matchPackageNames": ["pnpm"],
+      "groupName": "pnpm"
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",

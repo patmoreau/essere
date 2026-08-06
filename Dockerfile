@@ -3,8 +3,8 @@ FROM node:26-alpine AS builder
 
 WORKDIR /app
 
-# Install pnpm and copy package manager files
-RUN npm install -g pnpm
+# Install pnpm (version kept in sync with mise.toml)
+RUN npm install -g pnpm@10.34.5
 ENV PNPM_ALLOW_UNTRUSTED_SCRIPTS=true
 ENV CI=true
 RUN pnpm config set ignore-scripts false
@@ -12,6 +12,7 @@ RUN pnpm config set dangerouslyAllowAllBuilds true
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile

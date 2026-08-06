@@ -11,15 +11,6 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-const prettierOptions = {
-  singleQuote: true,
-  trailingComma: 'all',
-  printWidth: 100,
-  semi: true,
-  tabWidth: 2,
-  arrowParens: 'avoid',
-};
-
 export default defineConfig([
   globalIgnores(['dist', 'node_modules', 'build', '.env', '**/*.svg']),
   {
@@ -65,7 +56,7 @@ export default defineConfig([
       prettier: prettierPlugin,
     },
     rules: {
-      'prettier/prettier': ['error', prettierOptions],
+      'prettier/prettier': 'error',
     },
   },
   eslintConfigPrettier,

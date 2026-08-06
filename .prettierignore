@@ -1,5 +1,11 @@
 node_modules/
 dist/
+build/
 .env
 *.svg
+
+# Generated or verbatim files — never reformat
+pnpm-lock.yaml
+design/
+.claude/
 

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "deploy": "docker build --platform linux/amd64 -t essere-app .",
+    "deploy": "podman build --platform linux/amd64 -t essere-app .",
     "lint": "eslint .",
     "format": "prettier --write .",
     "preview": "vite preview"

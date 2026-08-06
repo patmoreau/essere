@@ -374,7 +374,7 @@ pnpm dev           # Start dev server (Vite + config middleware + Directus proxy
 pnpm build         # TypeScript check + Vite build (outputs dist/)
 pnpm lint          # ESLint
 pnpm preview       # Preview production build
-pnpm run deploy    # Build Docker image (linux/amd64) — use this when asked to deploy
+pnpm run deploy    # Build container image with Podman (linux/amd64) — use this when asked to deploy
 ```
 
 ## Key Files to Search When…

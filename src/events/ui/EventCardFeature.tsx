@@ -111,7 +111,11 @@ const EventCardFeature = ({ event }: Props) => {
             }}
             dangerouslySetInnerHTML={{ __html: event.description }}
           />
-          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" sx={{ mb: 5 }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ justifyContent: 'center', flexWrap: 'wrap', mb: 5 }}
+          >
             <Box
               component="span"
               sx={{

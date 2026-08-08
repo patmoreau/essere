@@ -59,7 +59,7 @@ const Footer = () => {
           gap: { xs: 6, md: 12 },
         }}
       >
-        <Stack gap={3}>
+        <Stack sx={{ gap: 3 }}>
           <Typography
             sx={{
               fontFamily: 'Noto Serif, serif',
@@ -82,9 +82,9 @@ const Footer = () => {
           </Typography>
         </Stack>
 
-        <Stack gap={3}>
+        <Stack sx={{ gap: 3 }}>
           <FooterColumnHeading>{labels['footer.connect_label'] ?? 'Connexion'}</FooterColumnHeading>
-          <Stack component="nav" gap={2}>
+          <Stack component="nav" sx={{ gap: 2 }}>
             <FooterLink href={labels['footer.instagram_url'] ?? '#'}>
               {labels['footer.instagram_label'] ?? 'Instagram'}
             </FooterLink>
@@ -94,9 +94,9 @@ const Footer = () => {
           </Stack>
         </Stack>
 
-        <Stack gap={3}>
+        <Stack sx={{ gap: 3 }}>
           <FooterColumnHeading>{labels['footer.legal_label']}</FooterColumnHeading>
-          <Stack component="nav" gap={2}>
+          <Stack component="nav" sx={{ gap: 2 }}>
             <FooterLink href={labels['footer.privacy_url'] ?? '#'}>
               {labels['footer.privacy_label']}
             </FooterLink>

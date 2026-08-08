@@ -34,7 +34,7 @@ export default function Navbar() {
         }}
       >
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 6 }, py: 2.5 }}>
-          <Stack direction="row" alignItems="center" spacing={1.5}>
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
             <Box
               component="img"
               src="/essere_logo_round.png"

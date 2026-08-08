@@ -367,6 +367,59 @@ Glassmorphism fixed header. Nav links from `nav_links` collection. Responsive: h
 
 ---
 
+## Git & Commits
+
+### Never commit without consent
+
+- **NEVER** run `git commit`, `git push`, `git tag`, or create a PR unless the user explicitly asks for it in that message ("commit", "commit this", "push", "open a PR").
+- Finishing a code change is **not** permission to commit. Stop after the edits and report what changed.
+- Approval for one commit does not carry over to the next one — ask every time.
+- Same rule for anything outward-facing: force-push, branch deletion, rebase of shared history, release tags.
+- Before committing, always run `pnpm lint` and fix every reported error.
+
+### Never create branches — commit straight to `main`
+
+- **NEVER** run `git checkout -b` / `git switch -c`, and never open a pull request. This project does not use PRs.
+- When the user says "commit", commit on the branch that is already checked out — normally `main`.
+- The test suite and `pnpm lint` are the safety net; a branch adds nothing here.
+- If work truly needs isolation, ask first instead of branching on your own.
+
+### Commit message format
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+
+```
+type: lowercase subject (no trailing period)
+
+- Past-tense bullet describing what changed (capitalized first word).
+- Second bullet if needed.
+
+Co-Authored-By: <Model Name> <noreply@anthropic.com>
+```
+
+Rules:
+
+- Types in use: `feat`, `fix`, `refactor`, `chore`, `ci`, `docs`, `ai`
+- No scope in parentheses — `feat: add hero card`, not `feat(home): add hero card`
+- Subject is lowercase after the colon and starts with an action verb (add, fix, integrate, remove, simplify…)
+- Body uses `-` bullets, capitalized, past tense
+- Omit the body only for truly trivial one-liners
+- No breaking-change footer unless warranted
+
+### Co-author trailer
+
+Every commit an agent writes must end with a `Co-Authored-By` trailer naming **the model that actually produced the work** — not a generic "AI" label. Use the model's own identity, blank line before the trailer.
+
+| Model                | Trailer                                                                 |
+| -------------------- | ----------------------------------------------------------------------- |
+| Claude Opus 5        | `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`                 |
+| Claude Opus 5 (1M)   | `Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>`    |
+| Claude Sonnet 5      | `Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>`               |
+| Claude Haiku 4.5     | `Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>`              |
+| Other agent / model  | `Co-Authored-By: <Product> <Model Name> <noreply@<vendor domain>>`      |
+
+If the running model is not in the table, use its own product + model name rather than guessing at one from the list.
+
 ## Commands
 
 ```bash

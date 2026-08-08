@@ -1,4 +1,4 @@
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
@@ -282,7 +282,7 @@ const ClassBookingModal = ({ open, scheduleClass, onClose }: Props) => {
 
         {submitted && (
           <Box sx={{ textAlign: 'center', py: { xs: 4, md: 6 } }}>
-            <CheckCircleOutlineIcon sx={{ fontSize: '3.5rem', color: 'var(--primary)', mb: 2 }} />
+            <CheckCircleOutlinedIcon sx={{ fontSize: '3.5rem', color: 'var(--primary)', mb: 2 }} />
             <Typography
               component="h3"
               sx={{

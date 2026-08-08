@@ -9,7 +9,7 @@ const config = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       server.middlewares.use(async (req: any, res: any, next: any) => {
         if (req.url === '/config.json') {
-          const content = await import('./env/prod/config.json');
+          const content = await import('./env/prod/config.json', { with: { type: 'json' } });
           const localConfig = {
             ...content.default,
             // Use Vite proxy in local dev to keep API calls same-origin.

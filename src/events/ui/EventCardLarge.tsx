@@ -61,7 +61,7 @@ const EventCardLarge = ({ event }: Props) => {
         </Box>
         <Stack sx={{ flex: 1, p: { xs: 4, md: 5 }, justifyContent: 'space-between' }}>
           <Box>
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
+            <Stack direction="row" spacing={2} sx={{ alignItems: 'center', mb: 3 }}>
               <Box
                 component="span"
                 sx={{

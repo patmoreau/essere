@@ -427,8 +427,16 @@ pnpm dev           # Start dev server (Vite + config middleware + Directus proxy
 pnpm build         # TypeScript check + Vite build (outputs dist/)
 pnpm lint          # ESLint
 pnpm preview       # Preview production build
-pnpm run deploy    # Build container image with Podman (linux/amd64) — use this when asked to deploy
+pnpm run deploy    # Build the container image locally with Podman (linux/amd64) — debugging only
 ```
+
+## Deployment
+
+Deployment is handled by CI — **never deploy by hand**. `.github/workflows/ci.yml` lints and
+builds on every push and pull request, then on a push to `main` publishes
+`ghcr.io/patmoreau/essere/essere-app:latest` and rolls it out to the homelab through a self-hosted
+runner. Shipping a change therefore means pushing to `main` and letting the workflow run;
+`pnpm run deploy` only builds an image locally for debugging.
 
 ## Key Files to Search When…
 

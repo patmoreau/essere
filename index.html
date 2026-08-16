@@ -97,7 +97,7 @@
     </script>
 
     <style>
-      /* Pre-hydration shell only. React replaces #root once the app boots. */
+      /* Crawler fallback only — rendered when scripting is off, never by the app. */
       .seo-shell {
         max-width: 46rem;
         margin: 0 auto;
@@ -119,7 +119,8 @@
   </head>
 
   <body>
-    <div id="root">
+    <div id="root"></div>
+    <noscript>
       <div class="seo-shell">
         <h1>essere — fusion pilates yoga à Boucherville</h1>
         <p>Bouger, respirer, être. Studio de pilates et de yoga établi depuis 2009.</p>
@@ -140,7 +141,7 @@
           <li><a href="/contact">Contactez-nous</a></li>
         </ul>
       </div>
-    </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
     <script
       defer

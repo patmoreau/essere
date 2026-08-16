@@ -96,7 +96,51 @@
       }
     </script>
 
+    <link rel="preload" as="image" href="/essere_logo_round.png" />
+
+    <script>
+      // Marks scripting as available so the splash is shown only when the app can boot.
+      document.documentElement.classList.add('js');
+    </script>
+
     <style>
+      /* Splash — covers the boot gap until the app has real content to show. */
+      .splash {
+        display: none;
+      }
+      .js .splash {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: grid;
+        place-items: center;
+        gap: 1.25rem;
+        align-content: center;
+        background-color: #fafaf5;
+        transition: opacity 300ms ease-out;
+      }
+      .splash img {
+        width: 7.5rem;
+        height: 7.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .splash p {
+        font-family: 'Noto Serif', Georgia, serif;
+        font-size: 1.125rem;
+        letter-spacing: -0.02em;
+        color: #6a5d51;
+      }
+      .splash--hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .js .splash {
+          transition: none;
+        }
+      }
+
       /* Crawler fallback only — rendered when scripting is off, never by the app. */
       .seo-shell {
         max-width: 46rem;
@@ -119,6 +163,10 @@
   </head>
 
   <body>
+    <div id="splash" class="splash" role="status" aria-label="Chargement">
+      <img src="/essere_logo_round.png" alt="" />
+      <p>fusion pilates yoga</p>
+    </div>
     <div id="root"></div>
     <noscript>
       <div class="seo-shell">
@@ -142,6 +190,15 @@
         </ul>
       </div>
     </noscript>
+    <script>
+      // Safety net: never let a failed boot leave the splash covering the page.
+      window.setTimeout(function () {
+        var splash = document.getElementById('splash');
+        if (splash) {
+          splash.remove();
+        }
+      }, 10000);
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <script
       defer

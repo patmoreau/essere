@@ -9,6 +9,7 @@ import InstructorsPage from './instructors/ui/InstructorsPage.tsx';
 import SchedulePage from './schedule/ui/SchedulePage.tsx';
 import Navbar from './shared/navbar/ui/Navbar';
 import { usePageMeta } from './shared/seo/core/use-page-meta.ts';
+import SplashGate from './shared/splash/ui/SplashGate.tsx';
 import Footer from './shared/ui/Footer.tsx';
 import LoadingFallback from './shared/ui/LoadingFallback';
 
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+        <SplashGate />
         <Navbar />
         <Box component="main" sx={{ pt: 14 }}>
           <Routes>

@@ -6,7 +6,7 @@ type LoadingFallbackProps = {
 };
 
 export default function LoadingFallback({
-  label = 'Loading...',
+  label = 'Chargement…',
   fullScreen = true,
 }: LoadingFallbackProps) {
   return (

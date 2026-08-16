@@ -97,15 +97,31 @@
     </script>
 
     <link rel="preload" as="image" href="/essere_logo_round.png" />
+    <link rel="preload" as="fetch" href="/config.json" crossorigin />
 
     <script>
       // Marks scripting as available so the splash is shown only when the app can boot.
       document.documentElement.classList.add('js');
+
+      // The splash is for the cold start only. Once this tab has booted the app,
+      // later loads skip it — the data is already warm and the wait is short.
+      try {
+        if (sessionStorage.getItem('essere.booted')) {
+          document.documentElement.classList.add('booted');
+        } else {
+          sessionStorage.setItem('essere.booted', '1');
+        }
+      } catch (error) {
+        // Storage can be blocked; showing the splash is the safe fallback.
+      }
     </script>
 
     <style>
       /* Splash — covers the boot gap until the app has real content to show. */
       .splash {
+        display: none;
+      }
+      .js.booted .splash {
         display: none;
       }
       .js .splash {

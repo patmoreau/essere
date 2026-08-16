@@ -1,20 +1,10 @@
 import { use } from 'react';
 
-import type { Directus } from '../../shared/directus/core/directus.ts';
+import { createDirectusResource } from '../../shared/directus/core/directus-resource.ts';
 import { useDirectus } from '../../shared/directus/core/use-directus.ts';
-import type { HomePage } from './home-page.ts';
 
-const homePageRequests = new WeakMap<Directus, Promise<HomePage>>();
+const homePageResource = createDirectusResource(directus => directus.getHomePage());
 
-export const useHomePage = () => {
-  const directus = useDirectus();
+export const preloadHomePage = homePageResource.preload;
 
-  let dataPromise = homePageRequests.get(directus);
-
-  if (!dataPromise) {
-    dataPromise = directus.getHomePage();
-    homePageRequests.set(directus, dataPromise);
-  }
-
-  return use(dataPromise);
-};
+export const useHomePage = () => use(homePageResource.load(useDirectus()));

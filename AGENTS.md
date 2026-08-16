@@ -81,7 +81,8 @@ App renders page → Feature hook (useHomePage) → Directus factory (directus.t
   → Directus SDK → Convert schema via adapter (home-page-schema.ts) → Use camelCase model
 ```
 
-- **Feature hooks** (e.g. `use-home-page.ts`) use React 19's `use()` with Suspense, caching results in a `WeakMap<Directus>` to deduplicate requests.
+- **Feature hooks** (e.g. `use-home-page.ts`) use React 19's `use()` with Suspense, over a resource built by `createDirectusResource()` which caches the promise in a `WeakMap<Directus>` to deduplicate requests.
+- **Boot preload** (`src/preload-app-data.ts`) starts every collection request in parallel from `main.tsx`. Without it each hook fires only when its component first renders, so Suspense resolves them one round trip at a time.
 - **Schema adapters** (e.g. `home-page-schema.ts`) convert Directus snake_case fields to camelCase TypeScript models, decoupling CMS schema from component code.
 - **Directus factory** (`directus.ts`) exposes methods like `getHomePage()`, `getNavLinks()` — never called directly from components.
 - **Asset resolution** converts Directus file IDs to full asset URLs, with fallback SVG for missing images.
@@ -91,7 +92,8 @@ App renders page → Feature hook (useHomePage) → Directus factory (directus.t
 - **Clean Code** — small, single-responsibility functions and components; meaningful names; no dead code.
 - **Feature folder** — every page in its own folder (e.g. `src/home/`). Keep `core/` (types, data) separate from `ui/` (components).
 - **Directus data** — add new collection types in `shared/directus/core/` and expose through the `Directus` factory. Never call the Directus SDK directly from a component.
-- **One hook per collection** — follow the pattern in `use-labels.ts`: call `useDirectus()`, cache the promise in a `WeakMap<Directus, Promise<T>>`, return `use(promise)` (React 19 Suspense).
+- **One hook per collection** — follow the pattern in `use-labels.ts`: build the resource with `createDirectusResource(directus => directus.getX())`, export `preloadX = resource.preload`, and export `useX = () => use(resource.load(useDirectus()))`. Register the new `preloadX` in `src/preload-app-data.ts`.
+- **Internal navigation** — always use `component={RouterLink} to="/path"` on MUI `Link`/`Button`. A plain `href` or `window.location` triggers a full page reload, which drops the Directus cache and refetches everything.
 - **Schema files** — one `*-schema.ts` per Directus collection. Export a type (`FooSchema`) and a namespace with the converter (`FooSchema.toFoo`). The factory in `directus.ts` calls `resolveAssetUrl()` on any image file IDs before passing to the converter.
 - **MUI + theme only** — use MUI components (`Box`, `Typography`, `Button`, `Stack`, …) and `sx` props with CSS variable tokens. No raw CSS, inline styles, CSS modules, Tailwind, or styled-components.
 - **No CSS borders for sectioning** — use background color transitions (design rule: "No-Line Rule").
@@ -103,8 +105,9 @@ App renders page → Feature hook (useHomePage) → Directus factory (directus.t
 2. Create **model type** in `src/<feature>/core/<model>.ts` (camelCase, what components use)
 3. Add **schema adapter** in the same schema file with a `to<Model>()` transformer
 4. Add **factory method** in `directus.ts`: update `Schema` type + add `get<Collection>()` method
-5. Create **feature hook** `src/<feature>/core/use-<collection>.ts` with WeakMap caching + `use()`
-6. Wire into `App.tsx` router
+5. Create **feature hook** `src/<feature>/core/use-<collection>.ts` with `createDirectusResource()` + `use()`, exporting both `useX` and `preloadX`
+6. Register `preloadX` in `src/preload-app-data.ts` so it loads with the boot batch
+7. Wire into `App.tsx` router
 
 ### Development Server
 
@@ -360,10 +363,11 @@ Glassmorphism fixed header. Nav links from `nav_links` collection. Responsive: h
 1. Create domain type in `src/<page>/core/<type>.ts`
 2. Create schema + converter in `src/shared/directus/core/<collection>-schema.ts`
 3. Add collection to `Schema` type and factory method in `src/shared/directus/core/directus.ts`
-4. Create hook in `src/<page>/core/use-<collection>.ts` (WeakMap + `use()` pattern)
-5. Build UI components in `src/<page>/ui/`
-6. Wire route in `src/App.tsx`
-7. Reference `design/<page>/code.html` for layout and `design/<page>/DESIGN.md` for design rules
+4. Create hook in `src/<page>/core/use-<collection>.ts` (`createDirectusResource()` + `use()`), exporting `useX` and `preloadX`
+5. Register `preloadX` in `src/preload-app-data.ts`
+6. Build UI components in `src/<page>/ui/`
+7. Wire route in `src/App.tsx`, and add the page's title and description to `src/shared/seo/core/page-meta.ts` and `public/sitemap.xml`
+8. Reference `design/<page>/code.html` for layout and `design/<page>/DESIGN.md` for design rules
 
 ---
 
@@ -452,7 +456,8 @@ runner. Shipping a change therefore means pushing to `main` and letting the work
 ## Why This Architecture
 
 - **Schema adapters** — CMS schema evolves independently; components see stable TypeScript interfaces.
-- **WeakMap request caching** — deduplicates identical requests in the same render pass (React 19 Suspense).
+- **WeakMap request caching** — deduplicates identical requests in the same render pass (React 19 Suspense). The cache is keyed by the Directus instance, which lives for one page load: client-side navigation is a cache hit, a full reload refetches everything, and CMS edits appear only after a reload.
+- **Boot preload + router navigation** — together they keep the app to a single parallel data burst per page load. Either one alone is undone by the other.
 - **Feature folders** — each page is self-contained; scales to many pages without coupling.
 - **MUI sx + CSS vars** — balances expressiveness with lightweight custom properties.
 - **Directus factory pattern** — single typed instance passed through context; avoids SDK calls scattered in components.

@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.tsx';
+import { preloadAppData } from './preload-app-data.ts';
 import { Config } from './shared/config/core/config.ts';
 import { ConfigProvider } from './shared/config/ui/ConfigProvider.tsx';
 import { Directus } from './shared/directus/core/directus.ts';
@@ -15,6 +16,8 @@ import { materialTheme } from './theme/material-theme.ts';
 const initializeApp = async () => {
   const config = await Config.load();
   const directus = Directus(config);
+
+  preloadAppData(directus);
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>

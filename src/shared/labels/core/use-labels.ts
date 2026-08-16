@@ -1,18 +1,10 @@
 import { use } from 'react';
 
-import type { Directus } from '../../directus/core/directus.ts';
+import { createDirectusResource } from '../../directus/core/directus-resource.ts';
 import { useDirectus } from '../../directus/core/use-directus.ts';
 
-const labelRequests = new WeakMap<Directus, Promise<Record<string, string>>>();
+const labelsResource = createDirectusResource(directus => directus.getLabels());
 
-export const useLabels = () => {
-  const directus = useDirectus();
-  let labelsPromise = labelRequests.get(directus);
+export const preloadLabels = labelsResource.preload;
 
-  if (!labelsPromise) {
-    labelsPromise = directus.getLabels();
-    labelRequests.set(directus, labelsPromise);
-  }
-
-  return use(labelsPromise);
-};
+export const useLabels = () => use(labelsResource.load(useDirectus()));

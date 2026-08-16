@@ -1,17 +1,11 @@
 import { use } from 'react';
 
-import type { Directus } from '../../shared/directus/core/directus.ts';
+import { createDirectusResource } from '../../shared/directus/core/directus-resource.ts';
 import { useDirectus } from '../../shared/directus/core/use-directus.ts';
 import type { ClassesPage } from './classes-page.ts';
 
-const classesPageRequests = new WeakMap<Directus, Promise<ClassesPage>>();
+const classesPageResource = createDirectusResource(directus => directus.getClassesPage());
 
-export const useClassesPage = (): ClassesPage => {
-  const directus = useDirectus();
-  let promise = classesPageRequests.get(directus);
-  if (!promise) {
-    promise = directus.getClassesPage();
-    classesPageRequests.set(directus, promise);
-  }
-  return use(promise);
-};
+export const preloadClassesPage = classesPageResource.preload;
+
+export const useClassesPage = (): ClassesPage => use(classesPageResource.load(useDirectus()));

@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { useLabels } from '../../labels/core/use-labels.ts';
 import { useNavLinks } from '../core/use-nav-links.ts';
@@ -53,7 +54,8 @@ export default function Navbar() {
             {links.map(link => (
               <Link
                 key={link.href}
-                href={link.href}
+                component={RouterLink}
+                to={link.href}
                 underline="none"
                 color="text.primary"
                 sx={{ fontSize: '0.875rem', fontWeight: 500, '&:hover': { opacity: 0.72 } }}
@@ -122,7 +124,8 @@ export default function Navbar() {
           {links.map(link => (
             <Link
               key={link.href}
-              href={link.href}
+              component={RouterLink}
+              to={link.href}
               underline="none"
               color="text.primary"
               onClick={() => setOpen(false)}

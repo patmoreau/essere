@@ -1,20 +1,10 @@
 import { use } from 'react';
 
-import type { Directus } from '../../shared/directus/core/directus.ts';
+import { createDirectusResource } from '../../shared/directus/core/directus-resource.ts';
 import { useDirectus } from '../../shared/directus/core/use-directus.ts';
-import type { Event } from './event.ts';
 
-const eventsRequests = new WeakMap<Directus, Promise<Event[]>>();
+const eventsResource = createDirectusResource(directus => directus.getEvents());
 
-export const useEvents = () => {
-  const directus = useDirectus();
+export const preloadEvents = eventsResource.preload;
 
-  let dataPromise = eventsRequests.get(directus);
-
-  if (!dataPromise) {
-    dataPromise = directus.getEvents();
-    eventsRequests.set(directus, dataPromise);
-  }
-
-  return use(dataPromise);
-};
+export const useEvents = () => use(eventsResource.load(useDirectus()));

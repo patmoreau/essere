@@ -1,21 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { use } from 'react';
 
+import { createDirectusResource } from '../../directus/core/directus-resource.ts';
 import { useDirectus } from '../../directus/core/use-directus.ts';
 import type { NavLink } from './nav-link.ts';
 
-export const useNavLinks = () => {
-  const [links, setLinks] = useState<NavLink[]>([]);
-  const { getNavLinks } = useDirectus();
+const navLinksResource = createDirectusResource(directus => directus.getNavLinks());
 
-  const fetch = useCallback(async () => {
-    const result = await getNavLinks();
-    setLinks(result);
-  }, [getNavLinks]);
+export const preloadNavLinks = navLinksResource.preload;
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetch().then();
-  }, [fetch]);
-
-  return links;
-};
+export const useNavLinks = (): NavLink[] => use(navLinksResource.load(useDirectus()));

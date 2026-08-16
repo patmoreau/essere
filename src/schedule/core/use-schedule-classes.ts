@@ -1,17 +1,12 @@
 import { use } from 'react';
 
-import type { Directus } from '../../shared/directus/core/directus.ts';
+import { createDirectusResource } from '../../shared/directus/core/directus-resource.ts';
 import { useDirectus } from '../../shared/directus/core/use-directus.ts';
 import type { ScheduleClass } from './schedule-class.ts';
 
-const scheduleRequests = new WeakMap<Directus, Promise<ScheduleClass[]>>();
+const scheduleClassesResource = createDirectusResource(directus => directus.getScheduleClasses());
 
-export const useScheduleClasses = (): ScheduleClass[] => {
-  const directus = useDirectus();
-  let promise = scheduleRequests.get(directus);
-  if (!promise) {
-    promise = directus.getScheduleClasses();
-    scheduleRequests.set(directus, promise);
-  }
-  return use(promise);
-};
+export const preloadScheduleClasses = scheduleClassesResource.preload;
+
+export const useScheduleClasses = (): ScheduleClass[] =>
+  use(scheduleClassesResource.load(useDirectus()));

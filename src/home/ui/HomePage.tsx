@@ -1,4 +1,5 @@
 import { Box, Button, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { useLabels } from '../../shared/labels/core/use-labels.ts';
 import Hero from '../../shared/ui/Hero.tsx';
@@ -37,14 +38,14 @@ const HomePage = () => {
                   boxShadow: 'none',
                 },
               }}
-              onClick={() => {
-                window.location.href = '/evenements';
-              }}
+              component={RouterLink}
+              to="/evenements"
             >
               {data.heroCtaPrimaryLabel}
             </Button>
             <Link
-              href="/cours"
+              component={RouterLink}
+              to="/cours"
               underline="none"
               color="text.primary"
               sx={{ fontSize: '0.875rem', fontWeight: 500 }}

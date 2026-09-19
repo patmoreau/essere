@@ -1,3 +1,4 @@
-managePackageManagerVersions: false
+# mise owns the pnpm version; don't let pnpm self-download from packageManager
+pmOnFail: ignore
 # supply-chain guard; keep in sync with renovate.json minimumReleaseAge (3 days)
 minimumReleaseAge: 4320

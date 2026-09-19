@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: ^24.0.0
-        version: 24.0.0
+        specifier: ^25.0.1
+        version: 25.0.1
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.0)
@@ -186,8 +186,8 @@ packages:
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
 
-  '@directus/sdk@24.0.0':
-    resolution: {integrity: sha512-8sibVOa1OZAgDg9d3NwIX51mhXrvUmobChYe4QvaVCyq/rECD57yHYzKfjfjmbFMogkVxI8tnqyoA+TIJVcAoQ==}
+  '@directus/sdk@25.0.1':
+    resolution: {integrity: sha512-7YatQh8aKDN6iIPyXmbUc3HW/jdKveiwFP+oFSKs0/W/IKX+ZpnwsN1NQLI6PpcmU2/rLuYK8knQaQr5F0gKNw==}
     engines: {node: '>=22'}
 
   '@emotion/babel-plugin@11.13.5':
@@ -1948,7 +1948,7 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@directus/sdk@24.0.0': {}
+  '@directus/sdk@25.0.1': {}
 
   '@emotion/babel-plugin@11.13.5':
     dependencies:

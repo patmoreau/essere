@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install pnpm (version kept in sync with mise.toml)
 # renovate: datasource=npm depName=pnpm
-RUN npm install -g pnpm@12.8.0
+RUN npm install -g pnpm@12.8.1
 ENV PNPM_ALLOW_UNTRUSTED_SCRIPTS=true
 ENV CI=true
 RUN pnpm config set ignore-scripts false

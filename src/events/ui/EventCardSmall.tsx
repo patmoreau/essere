@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useLabels } from '../../shared/labels/core/use-labels.ts';
 import type { Event } from '../core/event.ts';
 import { formatEventDateRange } from '../core/format-event-date.ts';
+import EventImage from './EventImage.tsx';
 import EventRegistrationModal from './EventRegistrationModal.tsx';
 
 type Props = {
@@ -36,21 +37,14 @@ const EventCardSmall = ({ event, variant = 'default' }: Props) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          '& img': { transition: 'transform 700ms ease-out' },
-          '&:hover img': { transform: 'scale(1.05)' },
         }}
       >
         <Box>
-          <Box
-            sx={{ aspectRatio: '1/1', borderRadius: 'var(--radius-md)', overflow: 'hidden', mb: 3 }}
-          >
-            <Box
-              component="img"
-              src={event.imageUrl}
-              alt={event.title}
-              sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </Box>
+          <EventImage
+            src={event.imageUrl}
+            alt={event.title}
+            sx={{ width: '100%', aspectRatio: '1/1', borderRadius: 'var(--radius-md)', mb: 3 }}
+          />
           <Typography
             sx={{
               fontFamily: 'Manrope, sans-serif',

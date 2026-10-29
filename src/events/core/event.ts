@@ -7,6 +7,7 @@ export type Event = {
   description: string;
   location?: string;
   imageUrl: string;
+  imageAspectRatio?: number;
   featured: boolean;
   full: boolean;
   bookingUrl?: string;

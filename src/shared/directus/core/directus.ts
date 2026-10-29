@@ -101,10 +101,22 @@ export const Directus = (config: Config): Directus => {
   };
 
   const getEvents = async (): Promise<Event[]> => {
-    const response = await directus.request(readItems('events', { sort: ['date_start'] }));
+    const response = await directus.request(
+      readItems('events', {
+        sort: ['date_start'],
+        fields: ['*', { image: ['id', 'width', 'height'] }],
+      }),
+    );
 
     return response.map(item =>
-      EventSchema.toEvent({ ...item, image: resolveAssetUrl(item.image) }),
+      EventSchema.toEvent({
+        ...item,
+        image: {
+          id: resolveAssetUrl(item.image?.id),
+          width: item.image?.width ?? null,
+          height: item.image?.height ?? null,
+        },
+      }),
     );
   };
 

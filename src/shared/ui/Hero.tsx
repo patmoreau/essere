@@ -1,6 +1,8 @@
 import { Box, Stack, Typography } from '@mui/material';
 import type { ReactNode } from 'react';
 
+import BlurFillImage from './BlurFillImage.tsx';
+
 export type HeroProps = {
   eyebrow?: string;
   headline: string;
@@ -8,9 +10,11 @@ export type HeroProps = {
   subheading: string;
   imageUrl: string;
   imageAlt?: string;
+  imageFit?: 'cover' | 'contain';
   actions?: ReactNode;
   floatingCard?: ReactNode;
   fullViewport?: boolean;
+  hideImageOnMobile?: boolean;
 };
 
 export default function Hero({
@@ -20,9 +24,11 @@ export default function Hero({
   subheading,
   imageUrl,
   imageAlt,
+  imageFit = 'cover',
   actions,
   floatingCard,
   fullViewport = false,
+  hideImageOnMobile = false,
 }: HeroProps) {
   return (
     <Box
@@ -92,9 +98,15 @@ export default function Hero({
         {actions}
       </Stack>
 
-      <Box sx={{ position: 'relative' }}>
+      <Box
+        sx={{
+          position: 'relative',
+          display: hideImageOnMobile ? { xs: 'none', md: 'block' } : undefined,
+        }}
+      >
         <Box
           sx={{
+            position: 'relative',
             backgroundColor: '#ecefe7',
             borderRadius: 3,
             aspectRatio: '4/5',
@@ -102,7 +114,9 @@ export default function Hero({
             boxShadow: '0px 12px 32px rgba(46, 52, 45, 0.06)',
           }}
         >
-          {imageUrl ? (
+          {imageUrl && imageFit === 'contain' ? (
+            <BlurFillImage src={imageUrl} alt={imageAlt ?? ''} />
+          ) : imageUrl ? (
             <Box
               component="img"
               src={imageUrl}

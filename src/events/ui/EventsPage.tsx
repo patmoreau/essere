@@ -20,6 +20,8 @@ const EventsPage = () => {
         subheading={eventsPage.heroSubheading}
         imageUrl={events[0]?.imageUrl ?? ''}
         imageAlt={events[0]?.title}
+        imageFit="contain"
+        hideImageOnMobile
         floatingCard={
           featuredEvent && (
             <EventTeaserCard headline={eventsPage.eventFeaturedHeadline} event={featuredEvent} />

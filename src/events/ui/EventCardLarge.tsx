@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useLabels } from '../../shared/labels/core/use-labels.ts';
 import type { Event } from '../core/event.ts';
 import { formatEventDateRange } from '../core/format-event-date.ts';
+import EventImage from './EventImage.tsx';
 import EventRegistrationModal from './EventRegistrationModal.tsx';
 
 const categoryLabel: Record<Event['category'], string> = {
@@ -18,6 +19,7 @@ type Props = { event: Event };
 
 const EventCardLarge = ({ event }: Props) => {
   const labels = useLabels();
+  const imageOnTop = (event.imageAspectRatio ?? 0) >= 1;
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleRegister = () => {
@@ -38,27 +40,28 @@ const EventCardLarge = ({ event }: Props) => {
           borderRadius: 'var(--radius-xl)',
           overflow: 'hidden',
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
+          flexDirection: imageOnTop ? 'column' : { xs: 'column', md: 'row' },
           transition: 'all 300ms ease-out',
-          '& img': { transition: 'transform 700ms ease-out' },
-          '&:hover img': { transform: 'scale(1.05)' },
         }}
       >
-        <Box
-          sx={{
-            width: { xs: '100%', md: '50%' },
-            overflow: 'hidden',
-            height: { xs: '16rem', md: 'auto' },
-            flexShrink: 0,
-          }}
-        >
-          <Box
-            component="img"
-            src={event.imageUrl}
-            alt={event.title}
-            sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </Box>
+        <EventImage
+          src={event.imageUrl}
+          alt={event.title}
+          sx={
+            imageOnTop
+              ? {
+                  width: '100%',
+                  aspectRatio: String(event.imageAspectRatio),
+                  maxHeight: '28rem',
+                  flexShrink: 0,
+                }
+              : {
+                  width: { xs: '100%', md: '50%' },
+                  height: { xs: '16rem', md: 'auto' },
+                  flexShrink: 0,
+                }
+          }
+        />
         <Stack sx={{ flex: 1, p: { xs: 4, md: 5 }, justifyContent: 'space-between' }}>
           <Box>
             <Stack direction="row" spacing={2} sx={{ alignItems: 'center', mb: 3 }}>
